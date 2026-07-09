@@ -161,7 +161,7 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
       transition={{ duration: 1, delay: 2.2, ease: "easeInOut" }}
       onAnimationComplete={onComplete}
     >
-      <svg width="200" height="150" viewBox="0 0 200 150" className="text-champagne drop-shadow-sm">
+      <svg width="240" height="150" viewBox="0 0 240 150" className="text-champagne drop-shadow-sm overflow-visible">
         <motion.text
           x="50%"
           y="50%"
