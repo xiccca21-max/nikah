@@ -495,7 +495,7 @@ function SilkImage({
           viewport={{ once: true, margin: "-12% 0px" }}
           variants={cardReveal}
           transition={{ duration: 1.1, ease }}
-          className={`w-full overflow-hidden rounded-[1.65rem] shadow-luxury relative z-10 ${className}`}
+          className={`w-full overflow-hidden rounded-[1.65rem] shadow-luxury relative z-10 bg-white ${className}`}
         >
           <Image
             src={src!}
@@ -823,7 +823,7 @@ export default function Home() {
       </Section>
 
       <Section eyebrow="Программа">
-        <Unroll>
+        <div className="relative">
           <Reveal>
             <h2 className="heading text-center shimmer-espresso">Расписание дня</h2>
           </Reveal>
@@ -863,7 +863,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </Unroll>
+        </div>
       </Section>
 
       <Section eyebrow="Дресс-код">
