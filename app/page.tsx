@@ -694,16 +694,6 @@ export default function Home() {
             variants={{ visible: { transition: { staggerChildren: 0.14 } } }}
             className="hero-card"
           >
-            <motion.p
-              variants={textReveal}
-              transition={{ duration: 0.9, ease }}
-              className="section-label mb-8 shimmer-gold mx-auto w-fit text-center"
-            >
-              Приглашение на никах
-            </motion.p>
-
-            <span className="hero-border-dot" />
-
             <motion.h1
               variants={textReveal}
               transition={{ duration: 1.1, ease }}
@@ -715,6 +705,14 @@ export default function Home() {
             </motion.h1>
 
             <DecorativeDivider className="my-9" delay={0.3} />
+
+            <motion.p
+              variants={textReveal}
+              transition={{ duration: 0.9, ease }}
+              className="section-label mb-4 shimmer-gold mx-auto w-fit text-center"
+            >
+              Приглашение на никах
+            </motion.p>
 
             <motion.p
               variants={textReveal}
