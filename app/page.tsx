@@ -161,9 +161,9 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
       transition={{ duration: 1, delay: 2.2, ease: "easeInOut" }}
       onAnimationComplete={onComplete}
     >
-      <svg width="240" height="150" viewBox="0 0 240 150" className="text-champagne drop-shadow-sm overflow-visible">
+      <svg width="400" height="200" viewBox="-50 -25 400 200" className="text-champagne drop-shadow-sm overflow-visible">
         <motion.text
-          x="50%"
+          x="150"
           y="50%"
           textAnchor="middle"
           dominantBaseline="middle"
@@ -172,11 +172,11 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
           strokeWidth="1.5"
           style={{ fontFamily: "var(--font-script)" }}
           className="text-[4.5rem]"
-          initial={{ strokeDasharray: 300, strokeDashoffset: 300 }}
+          initial={{ strokeDasharray: 1000, strokeDashoffset: 1000 }}
           animate={{ strokeDashoffset: 0, fill: "var(--champagne)" }}
           transition={{
-            strokeDashoffset: { duration: 1.5, ease: "easeInOut" },
-            fill: { duration: 0.8, delay: 1.2, ease: "easeIn" }
+            strokeDashoffset: { duration: 2, ease: "easeInOut" },
+            fill: { duration: 0.8, delay: 1.5, ease: "easeIn" }
           }}
         >
           Д & И
@@ -766,7 +766,7 @@ export default function Home() {
 
       <Section eyebrow="О дне">
         <div className="feature-pair grid gap-6 md:grid-cols-2 md:items-center">
-          <SilkImage src="/couple.png" alt="Danis and Inessa" className="feature-block" uncropped />
+          <SilkImage src="/couple-rsvp.png" alt="Danis and Inessa" className="feature-block" uncropped />
           <Card className="feature-block flex flex-col justify-center">
             <Reveal>
               <h2 className="feature-heading shimmer-espresso">День начинается с благословения.</h2>
@@ -867,7 +867,7 @@ export default function Home() {
       </Section>
 
       <Section eyebrow="Дресс-код">
-        <div className="grid gap-6 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+        <div className="max-w-2xl mx-auto">
           <Card>
             <Reveal>
               <h2 className="heading shimmer-espresso">Классика и уважение к традициям.</h2>
@@ -894,7 +894,6 @@ export default function Home() {
               ))}
             </div>
           </Card>
-          <GlassPeekImage src="/couple-rsvp.png" alt="Danis and Inessa" />
         </div>
       </Section>
 
