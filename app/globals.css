@@ -632,3 +632,24 @@ textarea {
   100% { transform: translateX(-50%); }
 }
 
+.rsvp-backdrop {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+@media (max-width: 767px) {
+  .rsvp-backdrop {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .magic-dust {
+    display: none;
+  }
+
+  .paper-grain {
+    opacity: 0.14;
+    mix-blend-mode: normal;
+  }
+}
+

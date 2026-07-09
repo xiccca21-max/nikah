@@ -215,7 +215,7 @@ function Countdown() {
       {Object.entries(timeLeft).map(([unit, value], idx, arr) => (
         <React.Fragment key={unit}>
           <div className="flex flex-col items-center">
-            <span className="number-value text-3xl md:text-4xl text-champagne shimmer-gold min-w-[2.5rem] text-center">
+            <span className="number-value text-3xl md:text-4xl text-champagne min-w-[2.5rem] text-center">
               {value.toString().padStart(2, '0')}
             </span>
             <span className="text-[0.55rem] uppercase tracking-widest text-espresso/50 mt-2 font-bold">
@@ -558,17 +558,8 @@ function GlassPeekImage({
   src: string;
   alt?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-  
-  const y = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
-
   return (
     <motion.div
-      ref={ref}
       initial={false}
       whileInView="visible"
       viewport={{ once: true, margin: "-12% 0px" }}
@@ -578,7 +569,7 @@ function GlassPeekImage({
     >
       <div className="absolute inset-0 z-10 rounded-[8rem] shadow-[inset_0_0_40px_rgba(31,24,20,0.2)] pointer-events-none" />
       <div className="absolute inset-0 z-10 rounded-[8rem] border border-white/40 mix-blend-overlay pointer-events-none" />
-      <motion.div style={{ y, height: "130%", top: "-15%" }} className="absolute w-full">
+      <div className="absolute inset-0 w-full">
         <Image
           src={src}
           alt={alt}
@@ -587,7 +578,7 @@ function GlassPeekImage({
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
         />
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
@@ -600,7 +591,7 @@ function Watermark() {
           Д & И
         </span>
       </div>
-      <div className="fixed inset-0 pointer-events-none z-[1] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTQwIDBDNjAgMCA4MCAyMCA4MCA0MEM4MCA2MCA2MCA4MCA0MCA4MEMyMCA4MCAwIDYwIDAgNDBDMCAyMCAyMCAwIDQwIDBaTTQwIDhDMjIuNCA4IDggMjIuNCA4IDQwQzggNTcuNiAyMi40IDcyIDQwIDcyQzU3LjYgNzIgNzIgNTcuNiA3MiA0MEM3MiAyMi40IDU3LjYgOCA0MCA4Wk00MCAxNkM1My4zIDE2 NjQgMjYuNyA2NCA0MEM2NCA1My4zIDUzLjMgNjQgNDAgNjRDMjYuNyA2NCAxNiA1My4zIDE2IDQwQzE2IDI2LjcgMjYuNyAxNiA0MCAxNlpNNDAgMjRDMzEuMiAyNCAyNCAzMS4yIDI0IDQwQzI0IDQ4LjggMzEuMiA1NiA0MCA1NkM0OC44 NTYgNTYgNDguOCA1NiA0MEM1NiAzMS4yIDQ4LjggMjQgNDAgMjRaIiBmaWxsPSIjYTk4NTRkIi8+PC9zdmc+')] bg-repeat opacity-[0.03] mix-blend-multiply" />
+      <div className="fixed inset-0 pointer-events-none z-[1] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTQwIDBDNjAgMCA4MCAyMCA4MCA0MEM4MCA2MCA2MCA4MCA0MCA4MEMyMCA4MCAwIDYwIDAgNDBDMCAyMCAyMCAwIDQwIDBaTTQwIDhDMjIuNCA4IDggMjIuNCA4IDQwQzggNTcuNiAyMi40IDcyIDQwIDcyQzU3LjYgNzIgNzIgNTcuNiA3MiA0MEM3MiAyMi40IDU3LjYgOCA0MCA4Wk00MCAxNkM1My4zIDE2 NjQgMjYuNyA2NCA0MEM2NCA1My4zIDUzLjMgNjQgNDAgNjRDMjYuNyA2NCAxNiA1My4zIDE2IDQwQzE2IDI2LjcgMjYuNyAxNiA0MCAxNlpNNDAgMjRDMzEuMiAyNCAyNCAzMS4yIDI0IDQwQzI0IDQ4LjggMzEuMiA1NiA0MCA1NkM0OC44 NTYgNTYgNDguOCA1NiA0MEM1NiAzMS4yIDQ4LjggMjQgNDAgMjRaIiBmaWxsPSIjYTk4NTRkIi8+PC9zdmc+')] bg-repeat opacity-[0.03]" />
     </>
   );
 }
@@ -640,6 +631,13 @@ export default function Home() {
   }, [isPreloaderDone, isRsvpOpen]);
 
   useEffect(() => {
+    const isMobileDevice =
+      typeof window !== "undefined" &&
+      (window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches);
+    if (isMobileDevice) {
+      return;
+    }
+
     const lenis = new Lenis({
       duration: 1.05,
       easing: (t) => 0.5 - Math.cos(Math.PI * t) / 2,
@@ -748,7 +746,7 @@ export default function Home() {
             <motion.div
               variants={cardReveal}
               transition={{ duration: 1, ease, delay: 0.2 }}
-              className="mt-8 shimmer-gold"
+              className="mt-8"
             >
               <Countdown />
             </motion.div>
@@ -776,15 +774,9 @@ export default function Home() {
               <h2 className="feature-heading shimmer-espresso">День начинается с благословения.</h2>
             </Reveal>
             <Reveal delay={0.08}>
-              <div className="mt-7 text-sm leading-8 text-espresso/64 md:text-base">
-                <motion.div variants={{ visible: { transition: { staggerChildren: 0.05 } } }} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-                  {"Никах пройдёт в кругу семьи и близких. Мы хотим, чтобы этот день был спокойным, красивым и наполненным уважением к традициям.".split(" ").map((word, idx) => (
-                    <motion.span key={idx} variants={textReveal} className="inline-block mr-1">
-                      {word}
-                    </motion.span>
-                  ))}
-                </motion.div>
-              </div>
+              <p className="mt-7 text-sm leading-8 text-espresso/64 md:text-base">
+                Никах пройдёт в кругу семьи и близких. Мы хотим, чтобы этот день был спокойным, красивым и наполненным уважением к традициям.
+              </p>
             </Reveal>
           </Card>
         </div>
@@ -996,14 +988,15 @@ export default function Home() {
                   setIsRsvpOpen(false);
                 }
               }}
-              className="fixed inset-0 z-40 bg-espresso/40 backdrop-blur-sm"
+              className="fixed inset-0 z-40 bg-espresso/50 rsvp-backdrop"
             />
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-y-0 right-0 z-50 w-full max-w-md overflow-y-auto bg-ivory/95 px-6 py-12 shadow-2xl md:px-10"
+              transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed inset-y-0 right-0 z-50 w-full max-w-md overflow-y-auto overscroll-contain touch-pan-y bg-ivory/95 px-6 py-12 shadow-2xl md:px-10"
+              style={{ WebkitOverflowScrolling: "touch" }}
             >
               <button 
                 onClick={() => {
