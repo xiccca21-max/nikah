@@ -151,9 +151,51 @@ textarea {
   content: "";
   pointer-events: none;
   border: 1px solid rgba(169, 133, 77, 0.3);
-  border-bottom-color: rgba(169, 133, 77, 0.12);
+  border-bottom-color: rgba(169, 133, 77, 0.22);
   border-radius: 999px 999px 2rem 2rem;
-  animation: frameShimmer 4s linear infinite;
+}
+
+.hero-border-dot {
+  position: absolute;
+  inset: 1.05rem;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-border-dot::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--champagne);
+  box-shadow: 0 0 8px rgba(169, 133, 77, 0.9);
+  animation: borderDotRun 6s linear infinite;
+}
+
+@keyframes borderDotRun {
+  0% {
+    top: 0;
+    left: 0;
+  }
+  25% {
+    top: 0;
+    left: calc(100% - 0.4rem);
+  }
+  50% {
+    top: calc(100% - 0.4rem);
+    left: calc(100% - 0.4rem);
+  }
+  75% {
+    top: calc(100% - 0.4rem);
+    left: 0;
+  }
+  100% {
+    top: 0;
+    left: 0;
+  }
 }
 
 @keyframes frameShimmer {

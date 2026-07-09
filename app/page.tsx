@@ -258,9 +258,7 @@ function AudioPlayer() {
           .then(() => setIsPlaying(true))
           .catch((err) => {
             console.error("Audio play failed:", err);
-            // Если файла нет или браузер блокирует автоплей
             setIsPlaying(false);
-            alert("Пожалуйста, добавьте свой трек music.mp3 в папку public");
           });
       }
     }
@@ -278,7 +276,7 @@ function AudioPlayer() {
             <rect x="14" y="4" width="4" height="16" fill="currentColor"/>
           </svg>
         ) : (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="ml-1">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="-ml-0.5">
             <path d="M9 18V5l12-2v13" strokeLinecap="round" strokeLinejoin="round"/>
             <circle cx="6" cy="18" r="3" fill="currentColor"/>
             <circle cx="18" cy="16" r="3" fill="currentColor"/>
@@ -699,10 +697,12 @@ export default function Home() {
             <motion.p
               variants={textReveal}
               transition={{ duration: 0.9, ease }}
-              className="section-label mb-8 shimmer-gold"
+              className="section-label mb-8 shimmer-gold mx-auto w-fit text-center"
             >
               Приглашение на никах
             </motion.p>
+
+            <span className="hero-border-dot" />
 
             <motion.h1
               variants={textReveal}
@@ -994,8 +994,8 @@ export default function Home() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-y-0 right-0 z-50 w-full max-w-md overflow-y-auto overscroll-contain touch-pan-y bg-ivory/95 px-6 py-12 shadow-2xl md:px-10"
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed inset-y-0 right-0 z-50 h-[100dvh] w-full max-w-md overflow-y-auto overscroll-contain touch-pan-y bg-ivory/95 px-6 py-12 shadow-2xl md:px-10"
               style={{ WebkitOverflowScrolling: "touch" }}
             >
               <button 
@@ -1013,7 +1013,7 @@ export default function Home() {
                 </svg>
               </button>
               
-              <form onSubmit={handleRSVPSubmit} className="mt-8">
+              <form onSubmit={handleRSVPSubmit} className="mt-8 pb-16">
                 {isSubmitted ? (
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.9 }}
