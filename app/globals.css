@@ -121,10 +121,7 @@ textarea {
 .premium-card {
   position: relative;
   overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.9);
-  border-left: 1px solid rgba(255, 255, 255, 0.5);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.54);
   background:
     linear-gradient(136deg, rgba(255, 255, 255, 0.68) 0%, rgba(251, 247, 239, 0.28) 42%, rgba(139, 118, 99, 0.08) 100%),
     rgba(251, 247, 239, 0.26);
@@ -160,7 +157,6 @@ textarea {
     linear-gradient(rgba(31, 24, 20, 0.014) 1px, transparent 1px),
     linear-gradient(90deg, rgba(31, 24, 20, 0.01) 1px, transparent 1px);
   background-size: auto, auto, 42px 42px, 42px 42px;
-  mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
 }
 
 .hero-card::after {
@@ -198,10 +194,7 @@ textarea {
 .image-frame,
 .field-input,
 .menu-option {
-  border-top: 1px solid rgba(255, 255, 255, 0.7);
-  border-left: 1px solid rgba(255, 255, 255, 0.4);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.48);
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.5), rgba(251, 247, 239, 0.18)),
     rgba(251, 247, 239, 0.22);
@@ -586,11 +579,6 @@ textarea {
   .passepartout-frame {
     border-width: 8px;
   }
-}
-
-.fading-glass {
-  mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
 }
 
 .scroll-blur-top {

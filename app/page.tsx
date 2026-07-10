@@ -485,7 +485,7 @@ function Card({
       viewport={{ once: true, margin: "-10% 0px" }}
       variants={cardReveal}
       transition={{ duration: 1, ease, delay }}
-      className={`premium-card fading-glass ${className}`}
+      className={`premium-card ${className}`}
     >
       {children}
     </motion.div>
