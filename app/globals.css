@@ -34,6 +34,10 @@ html {
   background: var(--ivory);
   color: var(--espresso);
   scroll-behavior: auto;
+  font-variant-ligatures: common-ligatures discretionary-ligatures;
+  -moz-font-feature-settings: "liga", "dlig";
+  -webkit-font-feature-settings: "liga", "dlig";
+  font-feature-settings: "liga", "dlig";
 }
 
 ::-webkit-scrollbar {
@@ -117,7 +121,10 @@ textarea {
 .premium-card {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.54);
+  border-top: 1px solid rgba(255, 255, 255, 0.9);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   background:
     linear-gradient(136deg, rgba(255, 255, 255, 0.68) 0%, rgba(251, 247, 239, 0.28) 42%, rgba(139, 118, 99, 0.08) 100%),
     rgba(251, 247, 239, 0.26);
@@ -191,7 +198,10 @@ textarea {
 .image-frame,
 .field-input,
 .menu-option {
-  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-top: 1px solid rgba(255, 255, 255, 0.7);
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.5), rgba(251, 247, 239, 0.18)),
     rgba(251, 247, 239, 0.22);
@@ -563,6 +573,25 @@ textarea {
   height: 6rem;
   pointer-events: none;
   z-index: 40;
+}
+
+.passepartout-frame {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  border: 12px solid var(--ivory);
+}
+
+@media (max-width: 767px) {
+  .passepartout-frame {
+    border-width: 8px;
+  }
+}
+
+.fading-glass {
+  mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
 }
 
 .scroll-blur-top {

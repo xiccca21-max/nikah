@@ -485,7 +485,7 @@ function Card({
       viewport={{ once: true, margin: "-10% 0px" }}
       variants={cardReveal}
       transition={{ duration: 1, ease, delay }}
-      className={`premium-card ${className}`}
+      className={`premium-card fading-glass ${className}`}
     >
       {children}
     </motion.div>
@@ -707,6 +707,7 @@ export default function Home() {
         {!isPreloaderDone && <Preloader onComplete={() => setIsPreloaderDone(true)} />}
       </AnimatePresence>
 
+      <div className="passepartout-frame" />
       <div className="vignette-overlay" />
       <div className="editorial-grid" />
       <div className="scroll-blur-top" />
@@ -1110,8 +1111,8 @@ export default function Home() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-r from-champagne/20 to-transparent opacity-0 peer-checked:opacity-100 transition-opacity duration-500" />
                             <span className="relative z-10 flex items-center gap-3">
-                              <span className="flex-shrink-0 flex items-center justify-center w-4 h-4 rounded-full border border-champagne/50 peer-checked:border-champagne transition-colors">
-                                <span className={`w-2 h-2 rounded-full bg-champagne transition-transform duration-300 ${course1 === item ? 'scale-100' : 'scale-0'}`} />
+                              <span className="flex-shrink-0 flex items-center justify-center w-4 h-4 rounded-full border border-champagne/50 peer-checked:border-champagne bg-white/50 shadow-inner transition-all duration-300">
+                                <span className={`w-2 h-2 rounded-full bg-champagne shadow-[0_0_8px_rgba(169,133,77,0.8)] transition-transform duration-300 ${course1 === item ? 'scale-100' : 'scale-0'}`} />
                               </span>
                               {item}
                             </span>
@@ -1135,8 +1136,8 @@ export default function Home() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-r from-champagne/20 to-transparent opacity-0 peer-checked:opacity-100 transition-opacity duration-500" />
                             <span className="relative z-10 flex items-center gap-3">
-                              <span className="flex-shrink-0 flex items-center justify-center w-4 h-4 rounded-full border border-champagne/50 peer-checked:border-champagne transition-colors">
-                                <span className={`w-2 h-2 rounded-full bg-champagne transition-transform duration-300 ${course2 === item ? 'scale-100' : 'scale-0'}`} />
+                              <span className="flex-shrink-0 flex items-center justify-center w-4 h-4 rounded-full border border-champagne/50 peer-checked:border-champagne bg-white/50 shadow-inner transition-all duration-300">
+                                <span className={`w-2 h-2 rounded-full bg-champagne shadow-[0_0_8px_rgba(169,133,77,0.8)] transition-transform duration-300 ${course2 === item ? 'scale-100' : 'scale-0'}`} />
                               </span>
                               {item}
                             </span>
@@ -1160,8 +1161,8 @@ export default function Home() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-r from-champagne/20 to-transparent opacity-0 peer-checked:opacity-100 transition-opacity duration-500" />
                             <span className="relative z-10 flex items-center gap-3">
-                              <span className="flex-shrink-0 flex items-center justify-center w-4 h-4 rounded-full border border-champagne/50 peer-checked:border-champagne transition-colors">
-                                <span className={`w-2 h-2 rounded-full bg-champagne transition-transform duration-300 ${course3 === item ? 'scale-100' : 'scale-0'}`} />
+                              <span className="flex-shrink-0 flex items-center justify-center w-4 h-4 rounded-full border border-champagne/50 peer-checked:border-champagne bg-white/50 shadow-inner transition-all duration-300">
+                                <span className={`w-2 h-2 rounded-full bg-champagne shadow-[0_0_8px_rgba(169,133,77,0.8)] transition-transform duration-300 ${course3 === item ? 'scale-100' : 'scale-0'}`} />
                               </span>
                               {item}
                             </span>
