@@ -234,6 +234,7 @@ textarea {
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.1;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8), -1px -1px 1px rgba(31, 24, 20, 0.05);
 }
 
 .hero-name {
@@ -272,6 +273,7 @@ textarea {
   font-weight: 500;
   line-height: 0.94;
   letter-spacing: -0.055em;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8), -1px -1px 1px rgba(31, 24, 20, 0.05);
 }
 
 .feature-pair {
@@ -289,6 +291,7 @@ textarea {
   font-weight: 500;
   line-height: 0.92;
   letter-spacing: -0.06em;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8), -1px -1px 1px rgba(31, 24, 20, 0.05);
 }
 
 .detail-label {
@@ -413,6 +416,18 @@ textarea {
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.04em;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8), -1px -1px 1px rgba(31, 24, 20, 0.05);
+}
+
+.drop-cap::first-letter {
+  font-family: var(--font-display), serif;
+  font-size: 3.8em;
+  float: left;
+  line-height: 0.75;
+  padding-top: 0.05em;
+  padding-right: 0.12em;
+  color: var(--champagne);
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8), -1px -1px 1px rgba(31, 24, 20, 0.05);
 }
 
 .menu-title {
@@ -558,6 +573,21 @@ textarea {
     transparent 50%,
     rgba(31, 24, 20, 0.08) 130%
   );
+}
+
+.editorial-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    linear-gradient(to right, transparent calc(25% - 0.5px), rgba(169, 133, 77, 0.06) 25%, transparent calc(25% + 0.5px), transparent calc(50% - 0.5px), rgba(169, 133, 77, 0.06) 50%, transparent calc(50% + 0.5px), transparent calc(75% - 0.5px), rgba(169, 133, 77, 0.06) 75%, transparent calc(75% + 0.5px));
+}
+
+@media (max-width: 767px) {
+  .editorial-grid {
+    background: linear-gradient(to right, transparent calc(10% - 0.5px), rgba(169, 133, 77, 0.06) 10%, transparent calc(10% + 0.5px), transparent calc(90% - 0.5px), rgba(169, 133, 77, 0.06) 90%, transparent calc(90% + 0.5px));
+  }
 }
 
 .btn-sweep {

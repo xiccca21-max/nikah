@@ -619,6 +619,24 @@ function Watermark() {
   );
 }
 
+function CornerOrnaments() {
+  const Svg = ({ className }: { className: string }) => (
+    <svg className={`absolute w-8 h-8 text-champagne opacity-40 pointer-events-none ${className}`} viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1">
+       <path d="M 0 0 C 20 0 40 20 40 40" />
+       <path d="M 0 0 C 0 20 20 40 40 40" />
+       <circle cx="20" cy="20" r="1.5" fill="currentColor" stroke="none"/>
+    </svg>
+  );
+  return (
+    <>
+      <Svg className="top-4 left-4" />
+      <Svg className="top-4 right-4 rotate-90" />
+      <Svg className="bottom-4 right-4 rotate-180" />
+      <Svg className="bottom-4 left-4 -rotate-90" />
+    </>
+  );
+}
+
 export default function Home() {
   const [isPreloaderDone, setIsPreloaderDone] = useState(false);
   const [isRsvpOpen, setIsRsvpOpen] = useState(false);
@@ -701,6 +719,7 @@ export default function Home() {
       </AnimatePresence>
 
       <div className="vignette-overlay" />
+      <div className="editorial-grid" />
       <div className="scroll-blur-top" />
       <div className="scroll-blur-bottom" />
       <div className="botanical-shadow" />
@@ -720,6 +739,7 @@ export default function Home() {
             variants={{ visible: { transition: { staggerChildren: 0.14 } } }}
             className="hero-card"
           >
+            <CornerOrnaments />
             <motion.h1
               variants={textReveal}
               transition={{ duration: 1.1, ease }}
@@ -783,6 +803,9 @@ export default function Home() {
               className="mt-8 flex flex-col items-center"
             >
               <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTEwIDBDMTUgMCAyMCA1IDIwIDEwQzIwIDE1IDE1IDIwIDEwIDIwQzUgMjAgMCAxNSAwIDEwQzAgNSA1IDAgMTAgMFpNMTAgMkM1LjYgMiAyIDUuNiAyIDEwQzIgMTQuNCA1LjYgMTggMTAgMThDMTQuNCAxOCAxOCAxNC40IDE4IDEwQzE4IDUuNiAxNC40IDIgMTAgMlpNMTAgNEMxMy4zIDQgMTYgNi43IDE2IDEwQzE2IDEzLjMgMTMuMyAxNiAxMCAxNkM2LjcgMTYgNCAxMy4zIDQgMTBDNCA2LjcgNi43IDQgMTAgNFpNMTAgNkM3LjggNiA2IDcuOCA2IDEwQzYgMTIyLjIgNy44IDE0IDEwIDE0QzEyLjIgMTQgMTQgMTIuMiAxNCAxMEMxNCA3LjggMTIuMiA2IDEwIDZaIiBmaWxsPSIjYTk4NTRkIi8+PC9zdmc+')] pointer-events-none opacity-20" />
+              <div className="font-display text-4xl md:text-5xl text-champagne opacity-80 mb-6" style={{ direction: "rtl" }}>
+                ﷽
+              </div>
               <p className="font-display text-[1.65rem] md:text-3xl italic text-champagne mb-3 shimmer-gold relative z-10">«Мы сотворили вас парами»</p>
               <p className="text-[0.6rem] tracking-[0.3em] font-bold text-espresso/50 uppercase relative z-10">Коран 78:8</p>
             </motion.div>
@@ -799,7 +822,7 @@ export default function Home() {
               <h2 className="feature-heading shimmer-espresso">День начинается с благословения.</h2>
             </Reveal>
             <Reveal delay={0.08}>
-              <p className="mt-7 text-sm leading-8 text-espresso/64 md:text-base">
+              <p className="drop-cap mt-7 text-sm leading-8 text-espresso/64 md:text-base">
                 Никах пройдёт в кругу семьи и близких. Мы хотим, чтобы этот день был спокойным, красивым и наполненным уважением к традициям.
               </p>
             </Reveal>
@@ -950,6 +973,7 @@ export default function Home() {
 
       <Section eyebrow="Анкета гостя">
         <Card className="text-center mx-auto max-w-xl">
+          <CornerOrnaments />
           <Reveal>
             <h2 className="heading shimmer-espresso">Присутствие</h2>
           </Reveal>
