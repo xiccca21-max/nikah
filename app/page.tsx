@@ -172,10 +172,10 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
           strokeWidth="1.5"
           style={{ fontFamily: "var(--font-script)" }}
           className="text-[4.5rem]"
-          initial={{ strokeDasharray: 1000, strokeDashoffset: 1000 }}
+          initial={{ strokeDasharray: 3000, strokeDashoffset: 3000 }}
           animate={{ strokeDashoffset: 0, fill: "var(--champagne)" }}
           transition={{
-            strokeDashoffset: { duration: 2, ease: "easeInOut" },
+            strokeDashoffset: { duration: 2.2, ease: "easeInOut" },
             fill: { duration: 0.8, delay: 1.5, ease: "easeIn" }
           }}
         >
@@ -812,7 +812,7 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.08}>
               <p className="drop-cap mt-7 text-sm leading-8 text-espresso/64 md:text-base">
-                Никах пройдёт в кругу семьи и близких. Мы хотим, чтобы этот день был спокойным, красивым и наполненным уважением к традициям.
+                Никах пройдёт в кругу семьи, родственников и друзей. Мы хотим, чтобы этот день был спокойным, красивым и наполненным уважением к традициям.
               </p>
             </Reveal>
           </Card>
