@@ -710,8 +710,6 @@ export default function Home() {
       <div className="passepartout-frame" />
       <div className="vignette-overlay" />
       <div className="editorial-grid" />
-      <div className="scroll-blur-top" />
-      <div className="scroll-blur-bottom" />
       <div className="botanical-shadow" />
       <Watermark />
       <MagicDust />

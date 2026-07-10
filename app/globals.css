@@ -581,21 +581,11 @@ textarea {
   }
 }
 
-.scroll-blur-top {
-  top: 0;
-  background: linear-gradient(to bottom, var(--ivory) 15%, transparent);
-}
-
-.scroll-blur-bottom {
-  bottom: 0;
-  background: linear-gradient(to top, var(--ivory) 15%, transparent);
-}
-
 .vignette-overlay {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 40;
+  z-index: 0;
   background: radial-gradient(
     circle at center,
     transparent 50%,
