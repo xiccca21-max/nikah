@@ -529,6 +529,48 @@ textarea {
   background: linear-gradient(to top, var(--ivory) 15%, transparent);
 }
 
+.vignette-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  background: radial-gradient(
+    circle at center,
+    transparent 50%,
+    rgba(31, 24, 20, 0.08) 130%
+  );
+}
+
+.btn-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-sweep::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: sweep 6s infinite;
+  z-index: 20;
+  pointer-events: none;
+}
+
+@keyframes sweep {
+  0% { left: -100%; }
+  15% { left: 200%; }
+  100% { left: 200%; }
+}
+
 .audio-btn {
   position: fixed;
   bottom: 2rem;

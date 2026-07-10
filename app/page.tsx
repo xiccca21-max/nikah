@@ -364,16 +364,41 @@ function Reveal({
 function DecorativeDivider({ className = "", delay = 0 }: { className?: string; delay?: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scaleX: 0.8 }}
-      whileInView={{ opacity: 1, scaleX: 1 }}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true }}
-      transition={{ duration: 1.2, ease: "easeInOut", delay }}
       className={`flex w-full items-center justify-center ${className}`}
     >
-      <div className="h-[1px] w-16 bg-gradient-to-r from-transparent to-champagne/60" />
-      <div className="mx-3 h-2 w-2 rotate-45 border border-champagne/60" />
-      <div className="h-[1px] w-16 bg-gradient-to-l from-transparent to-champagne/60" />
+      <motion.div
+        variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1 } }}
+        transition={{ duration: 1.2, ease: "easeInOut", delay }}
+        className="h-[1px] w-16 bg-gradient-to-r from-transparent to-champagne/60 origin-right"
+      />
+      <motion.div
+        variants={{ hidden: { scale: 0, rotate: 0 }, visible: { scale: 1, rotate: 45 } }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: delay + 0.4 }}
+        className="mx-3 h-2 w-2 border border-champagne/60"
+      />
+      <motion.div
+        variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1 } }}
+        transition={{ duration: 1.2, ease: "easeInOut", delay }}
+        className="h-[1px] w-16 bg-gradient-to-l from-transparent to-champagne/60 origin-left"
+      />
     </motion.div>
+  );
+}
+
+function FloatingText({ text, offset = 100, className = "" }: { text: string; offset?: number; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [-offset, offset]);
+
+  return (
+    <div ref={ref} className={`absolute inset-0 overflow-hidden pointer-events-none flex items-center justify-center z-0 ${className}`}>
+      <motion.div style={{ y }} className="text-[18rem] md:text-[30rem] font-display text-champagne/[0.04] whitespace-nowrap select-none">
+        {text}
+      </motion.div>
+    </div>
   );
 }
 
@@ -675,6 +700,7 @@ export default function Home() {
         {!isPreloaderDone && <Preloader onComplete={() => setIsPreloaderDone(true)} />}
       </AnimatePresence>
 
+      <div className="vignette-overlay" />
       <div className="scroll-blur-top" />
       <div className="scroll-blur-bottom" />
       <div className="botanical-shadow" />
@@ -764,8 +790,9 @@ export default function Home() {
         </div>
       </section>
 
-      <Section eyebrow="О дне">
-        <div className="feature-pair grid gap-6 md:grid-cols-2 md:items-center">
+      <Section eyebrow="О дне" className="relative">
+        <FloatingText text="08.08" offset={200} />
+        <div className="feature-pair grid gap-6 md:grid-cols-2 md:items-center relative z-10">
           <SilkImage src="/couple-rsvp.png" alt="Danis and Inessa" className="feature-block" uncropped />
           <Card className="feature-block flex flex-col justify-center">
             <Reveal>
@@ -812,19 +839,20 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.16}>
             <a
-              className="mt-8 inline-flex rounded-full border border-champagne/35 bg-champagne px-7 py-4 text-[0.68rem] font-bold uppercase tracking-[0.26em] text-ivory transition duration-1000 ease-in-out hover:bg-espresso"
+              className="btn-sweep mt-8 inline-flex rounded-full border border-champagne/35 bg-champagne px-7 py-4 text-[0.68rem] font-bold uppercase tracking-[0.26em] text-ivory transition duration-1000 ease-in-out hover:bg-espresso relative"
               href="https://www.google.com/maps/search/?api=1&query=%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D1%8B%D0%B5%20%D0%A7%D0%B5%D0%BB%D0%BD%D1%8B%2C%20%D0%9E%D1%80%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20209"
               target="_blank"
               rel="noreferrer"
             >
-              Открыть в приложении
+              <span className="relative z-10">Открыть в приложении</span>
             </a>
           </Reveal>
         </Card>
       </Section>
 
-      <Section eyebrow="Программа">
-        <div className="relative">
+      <Section eyebrow="Программа" className="relative">
+        <FloatingText text="Д & И" offset={180} />
+        <div className="relative z-10">
           <Reveal>
             <h2 className="heading text-center shimmer-espresso">Расписание дня</h2>
           </Reveal>
@@ -931,15 +959,15 @@ export default function Home() {
             </p>
           </Reveal>
           <Reveal delay={0.12}>
-            <MagneticButton 
+            <button 
               onClick={() => {
                 vibrate();
                 setIsRsvpOpen(true);
               }}
-              className="rsvp-button mt-9"
+              className="btn-sweep rsvp-button mt-9 transition duration-500 ease-out hover:scale-105"
             >
-              Подтвердить присутствие
-            </MagneticButton>
+              <span className="relative z-10">Подтвердить присутствие</span>
+            </button>
           </Reveal>
         </Card>
       </Section>
