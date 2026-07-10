@@ -819,47 +819,94 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section eyebrow="Церемония">
-        <Card className="text-center">
-          <Reveal>
-              <h2 className="heading shimmer-espresso">{ceremony.venue}</h2>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <p className="mx-auto mt-6 max-w-xl text-sm leading-8 text-espresso/64 md:text-base">
-              {ceremony.address}
-            </p>
-          </Reveal>
-          <Reveal delay={0.12}>
-            <div className="mt-8 overflow-hidden rounded-[1.2rem] border border-champagne/30 h-64 w-full relative opacity-90 transition-opacity hover:opacity-100">
-              <iframe 
-                src="https://maps.google.com/maps?q=Набережные+Челны,+Орловская+улица,+209&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-                width="100%" 
-                height="100%" 
-                style={{ border: 0, filter: 'grayscale(1) sepia(0.3) hue-rotate(5deg) contrast(0.8) opacity(0.8)' }} 
-                allowFullScreen 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-                className="pointer-events-none"
-              />
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none pb-8">
-                <div className="relative w-4 h-4 bg-champagne rounded-full shadow-[0_0_15px_rgba(169,133,77,0.8)]">
-                  <span className="absolute inset-0 rounded-full bg-champagne animate-ping opacity-75"></span>
-                  <div className="absolute -bottom-1 left-1/2 w-1 h-2 bg-champagne -translate-x-1/2 translate-y-full" style={{ clipPath: 'polygon(0 0, 100% 0, 50% 100%)' }}></div>
+      <Section eyebrow="Геолокация">
+        <div className="grid gap-12">
+          {/* Орловский дворец */}
+          <Card className="text-center">
+            <Reveal>
+                <div className="text-champagne font-bold text-sm tracking-widest uppercase mb-4">10:30</div>
+                <h2 className="heading shimmer-espresso">{ceremony.venue}</h2>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p className="mx-auto mt-6 max-w-xl text-sm leading-8 text-espresso/64 md:text-base">
+                {ceremony.address}
+              </p>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <div className="mt-8 overflow-hidden rounded-[1.2rem] border border-champagne/30 h-64 w-full relative opacity-90 transition-opacity hover:opacity-100">
+                <iframe 
+                  src="https://maps.google.com/maps?q=Набережные+Челны,+Орловская+улица,+209&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0, filter: 'grayscale(1) sepia(0.3) hue-rotate(5deg) contrast(0.8) opacity(0.8)' }} 
+                  allowFullScreen 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="pointer-events-none"
+                />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none pb-8">
+                  <div className="relative w-4 h-4 bg-champagne rounded-full shadow-[0_0_15px_rgba(169,133,77,0.8)]">
+                    <span className="absolute inset-0 rounded-full bg-champagne animate-ping opacity-75"></span>
+                    <div className="absolute -bottom-1 left-1/2 w-1 h-2 bg-champagne -translate-x-1/2 translate-y-full" style={{ clipPath: 'polygon(0 0, 100% 0, 50% 100%)' }}></div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Reveal>
-          <Reveal delay={0.16}>
-            <a
-              className="btn-sweep mt-8 inline-flex rounded-full border border-champagne/35 bg-champagne px-7 py-4 text-[0.68rem] font-bold uppercase tracking-[0.26em] text-ivory transition duration-1000 ease-in-out hover:bg-espresso relative"
-              href="https://www.google.com/maps/search/?api=1&query=%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D1%8B%D0%B5%20%D0%A7%D0%B5%D0%BB%D0%BD%D1%8B%2C%20%D0%9E%D1%80%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20209"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className="relative z-10">Открыть в приложении</span>
-            </a>
-          </Reveal>
-        </Card>
+            </Reveal>
+            <Reveal delay={0.16}>
+              <a
+                className="btn-sweep mt-8 inline-flex rounded-full border border-champagne/35 bg-champagne px-7 py-4 text-[0.68rem] font-bold uppercase tracking-[0.26em] text-ivory transition duration-1000 ease-in-out hover:bg-espresso relative"
+                href="https://www.google.com/maps/search/?api=1&query=%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D1%8B%D0%B5%20%D0%A7%D0%B5%D0%BB%D0%BD%D1%8B%2C%20%D0%9E%D1%80%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20209"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="relative z-10">Открыть в приложении</span>
+              </a>
+            </Reveal>
+          </Card>
+
+          {/* База отдыха Агдаш */}
+          <Card className="text-center">
+            <Reveal>
+                <div className="text-champagne font-bold text-sm tracking-widest uppercase mb-4">18:00</div>
+                <h2 className="heading shimmer-espresso">База отдыха «Агдаш»</h2>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p className="mx-auto mt-6 max-w-xl text-sm leading-8 text-espresso/64 md:text-base">
+                Набережные Челны, Боровецкий лес
+              </p>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <div className="mt-8 overflow-hidden rounded-[1.2rem] border border-champagne/30 h-64 w-full relative opacity-90 transition-opacity hover:opacity-100">
+                <iframe 
+                  src="https://maps.google.com/maps?q=База+отдыха+Агдаш,+Набережные+Челны&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0, filter: 'grayscale(1) sepia(0.3) hue-rotate(5deg) contrast(0.8) opacity(0.8)' }} 
+                  allowFullScreen 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="pointer-events-none"
+                />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none pb-8">
+                  <div className="relative w-4 h-4 bg-champagne rounded-full shadow-[0_0_15px_rgba(169,133,77,0.8)]">
+                    <span className="absolute inset-0 rounded-full bg-champagne animate-ping opacity-75"></span>
+                    <div className="absolute -bottom-1 left-1/2 w-1 h-2 bg-champagne -translate-x-1/2 translate-y-full" style={{ clipPath: 'polygon(0 0, 100% 0, 50% 100%)' }}></div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+            <Reveal delay={0.16}>
+              <a
+                className="btn-sweep mt-8 inline-flex rounded-full border border-champagne/35 bg-champagne px-7 py-4 text-[0.68rem] font-bold uppercase tracking-[0.26em] text-ivory transition duration-1000 ease-in-out hover:bg-espresso relative"
+                href="https://www.google.com/maps/search/?api=1&query=%D0%91%D0%B0%D0%B7%D0%B0+%D0%BE%D1%82%D0%B4%D1%8B%D1%85%D0%B0+%D0%90%D0%B3%D0%B4%D0%B0%D1%88,+%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D1%8B%D0%B5+%D0%A7%D0%B5%D0%BB%D0%BD%D1%8B"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="relative z-10">Открыть в приложении</span>
+              </a>
+            </Reveal>
+          </Card>
+        </div>
       </Section>
 
       <Section eyebrow="Программа" className="relative">
