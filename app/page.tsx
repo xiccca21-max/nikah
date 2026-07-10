@@ -155,10 +155,10 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-ivory"
-      initial={{ opacity: 1 }}
-      animate={{ opacity: 0 }}
-      transition={{ duration: 1, delay: 2.2, ease: "easeInOut" }}
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-ivory rounded-b-[2rem] md:rounded-b-[4rem]"
+      initial={{ y: 0 }}
+      animate={{ y: "-100%" }}
+      transition={{ duration: 1.2, delay: 2.2, ease: [0.76, 0, 0.24, 1] }}
       onAnimationComplete={onComplete}
     >
       <svg width="400" height="200" viewBox="-50 -25 400 200" className="text-champagne drop-shadow-sm overflow-visible">
@@ -620,6 +620,7 @@ function Watermark() {
 }
 
 export default function Home() {
+  const { scrollYProgress: pageProgress } = useScroll();
   const [isPreloaderDone, setIsPreloaderDone] = useState(false);
   const [isRsvpOpen, setIsRsvpOpen] = useState(false);
   const [selectedGuest, setSelectedGuest] = useState("");
@@ -696,6 +697,12 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-ivory font-sans text-espresso">
+      {/* Reading Progress */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[2.5px] bg-champagne z-[100] origin-left pointer-events-none"
+        style={{ scaleX: pageProgress }}
+      />
+
       <AnimatePresence>
         {!isPreloaderDone && <Preloader onComplete={() => setIsPreloaderDone(true)} />}
       </AnimatePresence>

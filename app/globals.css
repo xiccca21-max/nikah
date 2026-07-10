@@ -36,6 +36,17 @@ html {
   scroll-behavior: auto;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--champagne);
+  border-radius: 10px;
+}
+
 body {
   min-height: 100vh;
   margin: 0;
