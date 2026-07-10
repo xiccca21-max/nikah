@@ -800,6 +800,7 @@ export default function Home() {
                 allowFullScreen 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade"
+                className="pointer-events-none"
               />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none pb-8">
                 <div className="relative w-4 h-4 bg-champagne rounded-full shadow-[0_0_15px_rgba(169,133,77,0.8)]">
