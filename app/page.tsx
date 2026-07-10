@@ -619,21 +619,21 @@ function Watermark() {
   );
 }
 
-function CornerOrnaments() {
-  const Svg = ({ className }: { className: string }) => (
-    <svg className={`absolute w-8 h-8 text-champagne opacity-40 pointer-events-none ${className}`} viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1">
-       <path d="M 0 0 C 20 0 40 20 40 40" />
-       <path d="M 0 0 C 0 20 20 40 40 40" />
-       <circle cx="20" cy="20" r="1.5" fill="currentColor" stroke="none"/>
-    </svg>
-  );
+function FloralCrest({ className = "" }: { className?: string }) {
   return (
-    <>
-      <Svg className="top-4 left-4" />
-      <Svg className="top-4 right-4 rotate-90" />
-      <Svg className="bottom-4 right-4 rotate-180" />
-      <Svg className="bottom-4 left-4 -rotate-90" />
-    </>
+    <motion.div 
+      initial={{ scale: 0.8, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 1.5, ease: "easeOut" }}
+      className={`flex justify-center pointer-events-none ${className}`}
+    >
+      <svg viewBox="0 0 40 40" className="w-10 h-10 text-champagne opacity-60" fill="none" stroke="currentColor" strokeWidth="0.8">
+        <path d="M 20 2 Q 28 20 20 38 Q 12 20 20 2" />
+        <path d="M 2 20 Q 20 28 38 20 Q 20 12 2 20" />
+        <circle cx="20" cy="20" r="1" fill="currentColor" stroke="none" />
+      </svg>
+    </motion.div>
   );
 }
 
@@ -739,7 +739,7 @@ export default function Home() {
             variants={{ visible: { transition: { staggerChildren: 0.14 } } }}
             className="hero-card"
           >
-            <CornerOrnaments />
+            <FloralCrest className="mb-8 mt-2" />
             <motion.h1
               variants={textReveal}
               transition={{ duration: 1.1, ease }}
@@ -973,7 +973,7 @@ export default function Home() {
 
       <Section eyebrow="Анкета гостя">
         <Card className="text-center mx-auto max-w-xl">
-          <CornerOrnaments />
+          <FloralCrest className="mb-6" />
           <Reveal>
             <h2 className="heading shimmer-espresso">Присутствие</h2>
           </Reveal>
