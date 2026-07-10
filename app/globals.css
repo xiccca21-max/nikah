@@ -207,21 +207,19 @@ textarea {
 }
 
 .shimmer-gold {
-  background: linear-gradient(110deg, var(--champagne) 35%, #fff 50%, var(--champagne) 65%);
-  background-size: 200% auto;
+  background: linear-gradient(135deg, #a9854d 0%, #f4e2c7 20%, #a9854d 40%, #ffffff 60%, #a9854d 80%, #f4e2c7 100%);
+  background-attachment: fixed;
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  animation: textShimmer 4s linear infinite;
 }
 
 .shimmer-espresso {
-  background: linear-gradient(110deg, var(--espresso) 35%, #a9854d 50%, var(--espresso) 65%);
-  background-size: 200% auto;
+  background: linear-gradient(135deg, var(--espresso) 0%, #8c6a38 20%, var(--espresso) 40%, #c4a36f 60%, var(--espresso) 80%, #8c6a38 100%);
+  background-attachment: fixed;
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  animation: textShimmer 4s linear infinite;
 }
 
 .hero-names {
@@ -474,6 +472,25 @@ textarea {
 }
 
 @media (max-width: 767px) {
+  .hero-card,
+  .premium-card {
+    backdrop-filter: blur(12px) saturate(1.18);
+    -webkit-backdrop-filter: blur(12px) saturate(1.18);
+  }
+
+  .glass-strip,
+  .glass-pill,
+  .image-frame,
+  .field-input,
+  .menu-option {
+    backdrop-filter: blur(10px) saturate(1.12);
+    -webkit-backdrop-filter: blur(10px) saturate(1.12);
+  }
+
+  .botanical-shadow {
+    display: none;
+  }
+
   .feature-block {
     min-height: auto;
   }
@@ -588,6 +605,19 @@ textarea {
 
 .audio-btn:hover {
   transform: scale(1.05);
+}
+
+.hairline-border {
+  position: relative;
+}
+.hairline-border::after {
+  content: "";
+  position: absolute;
+  inset: 0.4rem;
+  border: 1px solid rgba(169, 133, 77, 0.4);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 20;
 }
 
 @media (max-width: 767px) {

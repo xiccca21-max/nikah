@@ -520,7 +520,7 @@ function SilkImage({
           viewport={{ once: true, margin: "-12% 0px" }}
           variants={cardReveal}
           transition={{ duration: 1.1, ease }}
-          className={`w-full overflow-hidden rounded-[1.65rem] shadow-luxury relative z-10 bg-white ${className}`}
+          className={`w-full overflow-hidden rounded-[1.65rem] shadow-luxury relative z-10 bg-white hairline-border ${className}`}
         >
           <Image
             src={src!}
@@ -547,7 +547,7 @@ function SilkImage({
         transition={{ duration: 1.1, ease }}
         className={`image-frame relative overflow-hidden z-10 ${className}`}
       >
-      <div className="silk-image relative h-full w-full overflow-hidden rounded-[1.65rem]">
+      <div className="silk-image hairline-border relative h-full w-full overflow-hidden rounded-[1.65rem]">
         {src ? (
           <motion.div style={{ y, height: "124%", top: "-12%" }} className="absolute w-full">
             <motion.div
@@ -588,7 +588,7 @@ function GlassPeekImage({
       viewport={{ once: true, margin: "-12% 0px" }}
       variants={cardReveal}
       transition={{ duration: 1.1, ease }}
-      className="relative mx-auto w-full max-w-sm overflow-hidden rounded-[8rem] border border-champagne/30 shadow-luxury md:max-w-md aspect-[3/4]"
+      className="hairline-border relative mx-auto w-full max-w-sm overflow-hidden rounded-[8rem] border border-champagne/30 shadow-luxury md:max-w-md aspect-[3/4]"
     >
       <div className="absolute inset-0 z-10 rounded-[8rem] shadow-[inset_0_0_40px_rgba(31,24,20,0.2)] pointer-events-none" />
       <div className="absolute inset-0 z-10 rounded-[8rem] border border-white/40 mix-blend-overlay pointer-events-none" />
