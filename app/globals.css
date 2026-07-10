@@ -432,11 +432,12 @@ textarea {
 
 .drop-cap::first-letter {
   font-family: var(--font-display), serif;
-  font-size: 3.8em;
+  font-size: 3.1em;
   float: left;
-  line-height: 0.75;
-  padding-top: 0.05em;
-  padding-right: 0.12em;
+  line-height: 0.85;
+  padding-top: 0.12em;
+  padding-right: 0.08em;
+  margin-bottom: -0.1em;
   color: var(--champagne);
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8), -1px -1px 1px rgba(31, 24, 20, 0.05);
 }
