@@ -619,24 +619,6 @@ function Watermark() {
   );
 }
 
-function FloralCrest({ className = "" }: { className?: string }) {
-  return (
-    <motion.div 
-      initial={{ scale: 0.8, opacity: 0 }}
-      whileInView={{ scale: 1, opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 1.5, ease: "easeOut" }}
-      className={`flex justify-center pointer-events-none ${className}`}
-    >
-      <svg viewBox="0 0 40 40" className="w-10 h-10 text-champagne opacity-60" fill="none" stroke="currentColor" strokeWidth="0.8">
-        <path d="M 20 2 Q 28 20 20 38 Q 12 20 20 2" />
-        <path d="M 2 20 Q 20 28 38 20 Q 20 12 2 20" />
-        <circle cx="20" cy="20" r="1" fill="currentColor" stroke="none" />
-      </svg>
-    </motion.div>
-  );
-}
-
 export default function Home() {
   const [isPreloaderDone, setIsPreloaderDone] = useState(false);
   const [isRsvpOpen, setIsRsvpOpen] = useState(false);
@@ -739,7 +721,6 @@ export default function Home() {
             variants={{ visible: { transition: { staggerChildren: 0.14 } } }}
             className="hero-card"
           >
-            <FloralCrest className="mb-8 mt-2" />
             <motion.h1
               variants={textReveal}
               transition={{ duration: 1.1, ease }}
@@ -973,7 +954,6 @@ export default function Home() {
 
       <Section eyebrow="Анкета гостя">
         <Card className="text-center mx-auto max-w-xl">
-          <FloralCrest className="mb-6" />
           <Reveal>
             <h2 className="heading shimmer-espresso">Присутствие</h2>
           </Reveal>
