@@ -591,6 +591,7 @@ textarea {
 }
 
 .guest-options {
+  display: none;
   position: relative;
   z-index: 40;
   margin-top: 0.5rem;
@@ -603,6 +604,11 @@ textarea {
   animation: guestOptionsEnter 140ms ease-out both;
 }
 
+.guest-picker:focus-within .guest-options,
+.guest-options.is-open {
+  display: block;
+}
+
 .guest-option {
   display: block;
   width: 100%;
@@ -613,6 +619,11 @@ textarea {
   letter-spacing: 0.02em;
   text-align: center;
   transition: background-color 100ms ease-out, color 100ms ease-out;
+}
+
+.guest-option[hidden],
+.guest-empty[hidden] {
+  display: none;
 }
 
 .guest-option:last-child {

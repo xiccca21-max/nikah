@@ -661,9 +661,14 @@ export default function Home() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   
   const scheduleRef = useRef<HTMLDivElement>(null);
-  const visibleGuests = guestList
-    .filter((guest) => guest.toLocaleLowerCase("ru").includes(guestSearch.trim().toLocaleLowerCase("ru")))
-    .slice(0, 5);
+  const guestQuery = guestSearch.trim().toLocaleLowerCase("ru");
+  const visibleGuestIndexes = new Set(
+    guestList
+      .map((guest, index) => ({ guest, index }))
+      .filter(({ guest }) => guest.toLocaleLowerCase("ru").includes(guestQuery))
+      .slice(0, 5)
+      .map(({ index }) => index)
+  );
   
   // Безопасный таймер для мобилок на случай, если прелоудер зависнет
   useEffect(() => {
@@ -1157,6 +1162,7 @@ export default function Home() {
                         <label htmlFor="guest-search">Ваше имя</label>
                         <p className="mt-2 mb-3 text-[0.6rem] normal-case tracking-normal text-espresso/40">Обязательно выберите свое имя из списка, чтобы мы ничего не перепутали.</p>
                         <div
+                          id="guest-picker"
                           className="guest-picker relative"
                           onBlur={(event) => {
                             if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
@@ -1173,8 +1179,9 @@ export default function Home() {
                             value={guestSearch}
                             onFocus={() => setIsGuestPickerOpen(true)}
                             onChange={(event) => {
-                              setGuestSearch(event.target.value);
-                              setSelectedGuest("");
+                              const value = event.target.value;
+                              setGuestSearch(value);
+                              setSelectedGuest(guestList.includes(value) ? value : "");
                               setIsGuestPickerOpen(true);
                             }}
                             className="field-input guest-search w-full text-center font-medium rounded-[1.8rem] !py-[1.15rem]"
@@ -1197,29 +1204,37 @@ export default function Home() {
                               <path d="m16.5 16.5 4 4" strokeLinecap="round" />
                             </svg>
                           </div>
-                          {isGuestPickerOpen && (
-                            <div id="guest-options" role="listbox" className="guest-options">
-                              {visibleGuests.length > 0 ? visibleGuests.map((guest, index) => (
-                                <button
-                                  key={`${guest}-${index}`}
-                                  type="button"
-                                  role="option"
-                                  aria-selected={selectedGuest === guest}
-                                  className="guest-option"
-                                  onPointerDown={(event) => {
-                                    event.preventDefault();
-                                    setGuestSearch(guest);
-                                    setSelectedGuest(guest);
-                                    setIsGuestPickerOpen(false);
-                                  }}
-                                >
-                                  {guest}
-                                </button>
-                              )) : (
-                                <p className="guest-empty">Имя не найдено</p>
-                              )}
-                            </div>
-                          )}
+                          <div
+                            id="guest-options"
+                            role="listbox"
+                            className={`guest-options ${isGuestPickerOpen ? "is-open" : ""}`}
+                          >
+                            {guestList.map((guest, index) => (
+                              <button
+                                key={`${guest}-${index}`}
+                                type="button"
+                                role="option"
+                                data-guest={guest}
+                                hidden={!visibleGuestIndexes.has(index)}
+                                aria-selected={selectedGuest === guest}
+                                className="guest-option"
+                                onPointerDown={(event) => {
+                                  event.preventDefault();
+                                  setGuestSearch(guest);
+                                  setSelectedGuest(guest);
+                                  setIsGuestPickerOpen(false);
+                                }}
+                              >
+                                {guest}
+                              </button>
+                            ))}
+                            <p className="guest-empty" hidden={visibleGuestIndexes.size > 0}>Имя не найдено</p>
+                          </div>
+                          <script
+                            dangerouslySetInnerHTML={{
+                              __html: `(function(){var picker=document.getElementById("guest-picker");if(!picker||picker.getAttribute("data-native-ready")==="1")return;picker.setAttribute("data-native-ready","1");var input=document.getElementById("guest-search");var selected=picker.querySelector('input[name="guestSelected"]');var options=document.getElementById("guest-options");var buttons=options?options.querySelectorAll("[data-guest]"):[];function filter(){var query=(input.value||"").toLocaleLowerCase("ru");var shown=0;for(var i=0;i<buttons.length;i++){var match=buttons[i].getAttribute("data-guest").toLocaleLowerCase("ru").indexOf(query)!==-1&&shown<5;buttons[i].hidden=!match;if(match)shown++;}var empty=options.querySelector(".guest-empty");if(empty)empty.hidden=shown>0;}function choose(button){var value=button.getAttribute("data-guest");var setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,"value").set;setter.call(input,value);input.dispatchEvent(new Event("input",{bubbles:true}));input.dispatchEvent(new Event("change",{bubbles:true}));selected.checked=true;input.blur();}input.addEventListener("focus",filter);input.addEventListener("input",function(){selected.checked=false;filter();});if(options){options.addEventListener("pointerdown",function(event){var button=event.target.closest("[data-guest]");if(button){event.preventDefault();choose(button);}});}filter();})();`
+                            }}
+                          />
                         </div>
                       </div>
                     </div>
