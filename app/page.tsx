@@ -1087,7 +1087,7 @@ export default function Home() {
                 vibrate();
                 setIsRsvpOpen(true);
               }}
-              className="btn-sweep rsvp-button mt-9 inline-flex cursor-pointer touch-manipulation transition duration-500 ease-out hover:scale-105"
+              className="btn-sweep mt-9 inline-flex cursor-pointer touch-manipulation rounded-full border border-champagne/35 bg-champagne px-7 py-4 text-[0.68rem] font-bold uppercase tracking-[0.26em] text-ivory transition duration-500 ease-out hover:scale-105 hover:bg-espresso"
             >
               <span className="relative z-10">Подтвердить присутствие</span>
             </a>

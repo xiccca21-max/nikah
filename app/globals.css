@@ -704,6 +704,16 @@ textarea {
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8), -1px -1px 1px rgba(31, 24, 20, 0.05);
 }
 
+.heading,
+.feature-heading,
+.timeline-title {
+  background: linear-gradient(110deg, var(--espresso) 28%, #a9854d 50%, var(--espresso) 72%);
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
 .drop-cap::first-letter {
   font-family: var(--font-display), serif;
   font-size: 3.2em;
