@@ -232,7 +232,6 @@ function Countdown() {
 function AudioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const interacted = useRef(false);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -247,55 +246,63 @@ function AudioPlayer() {
     }
 
     // Если браузер заблокировал автовоспроизведение, запускаем при первом касании/скролле
-    const handleFirstInteraction = () => {
-      if (!interacted.current && audioRef.current && audioRef.current.paused) {
-        interacted.current = true;
-        audioRef.current.play()
-          .then(() => setIsPlaying(true))
-          .catch(() => console.log("Autoplay still blocked"));
+    const handleFirstInteraction = (event: Event) => {
+      const target = event.target as Element | null;
+      if (target?.closest("[data-audio-control]")) return;
+
+      if (audioRef.current?.paused) {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+          removeInteractionListeners();
+        }).catch(() => {
+          // Safari может разрешить звук только при следующем касании.
+        });
       }
-      
-      // Удаляем слушатели, чтобы не нагружать страницу
+    };
+
+    const removeInteractionListeners = () => {
       document.removeEventListener('click', handleFirstInteraction);
       document.removeEventListener('touchstart', handleFirstInteraction);
-      document.removeEventListener('scroll', handleFirstInteraction);
     };
 
     document.addEventListener('click', handleFirstInteraction);
     document.addEventListener('touchstart', handleFirstInteraction, { passive: true });
-    document.addEventListener('scroll', handleFirstInteraction, { passive: true });
 
     return () => {
-      document.removeEventListener('click', handleFirstInteraction);
-      document.removeEventListener('touchstart', handleFirstInteraction);
-      document.removeEventListener('scroll', handleFirstInteraction);
+      removeInteractionListeners();
     };
   }, []);
 
-  const togglePlay = (e: React.MouseEvent) => {
-    e.stopPropagation(); // чтобы клик не перехватывался глобальным слушателем
+  const togglePlay = () => {
     vibrate();
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        audioRef.current.play()
-          .then(() => setIsPlaying(true))
-          .catch((err) => {
-            console.error("Audio play failed:", err);
-            setIsPlaying(false);
-          });
-      }
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (!audio.paused) {
+      audio.pause();
+      setIsPlaying(false);
+    } else {
+      audio.play()
+        .then(() => setIsPlaying(true))
+        .catch((err) => {
+          console.error("Audio play failed:", err);
+          setIsPlaying(false);
+        });
     }
   };
 
   return (
-    <div className="audio-btn glass-pill shadow-xl cursor-pointer" onClick={togglePlay}>
+    <div className="audio-btn glass-pill shadow-xl">
       {!isPlaying && (
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-champagne/40 opacity-75"></span>
+        <span className="pointer-events-none absolute inline-flex h-full w-full animate-ping rounded-full bg-champagne/40 opacity-75"></span>
       )}
-      <button className="w-full h-full flex items-center justify-center rounded-full text-champagne relative z-10">
+      <button
+        type="button"
+        data-audio-control
+        aria-label={isPlaying ? "Выключить музыку" : "Включить музыку"}
+        onClick={togglePlay}
+        className="w-full h-full cursor-pointer touch-manipulation flex items-center justify-center rounded-full text-champagne relative z-10"
+      >
         {isPlaying ? (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <rect x="6" y="4" width="4" height="16" fill="currentColor"/>
@@ -671,16 +678,6 @@ export default function Home() {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    if (!isPreloaderDone) {
-      document.body.style.overflow = "hidden";
-      lenisRef.current?.stop();
-    } else {
-      document.body.style.overflow = "";
-      lenisRef.current?.start();
-    }
-  }, [isPreloaderDone]);
-
-  useEffect(() => {
     const isMobileDevice =
       typeof window !== "undefined" &&
       (window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches);
@@ -1046,11 +1043,12 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.12}>
             <button 
+              type="button"
               onClick={() => {
                 vibrate();
                 setIsRsvpOpen(true);
               }}
-              className="btn-sweep rsvp-button mt-9 transition duration-500 ease-out hover:scale-105"
+              className="btn-sweep rsvp-button mt-9 cursor-pointer touch-manipulation transition duration-500 ease-out hover:scale-105"
             >
               <span className="relative z-10">Подтвердить присутствие</span>
             </button>
