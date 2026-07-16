@@ -200,25 +200,36 @@ function Countdown() {
   }, []);
 
   return (
-    <div className="flex justify-center items-center gap-2 md:gap-4 mt-8 px-2 max-w-sm mx-auto">
-      {Object.entries(timeLeft).map(([unit, value], idx, arr) => (
-        <React.Fragment key={unit}>
-          <div className="flex flex-col items-center">
-            <span className="number-value text-3xl md:text-4xl text-champagne min-w-[2.5rem] text-center">
-              {value.toString().padStart(2, '0')}
-            </span>
-            <span className="text-[0.55rem] uppercase tracking-widest text-espresso/50 mt-2 font-bold">
-              {unit === 'days' ? 'Дней' : unit === 'hours' ? 'Часов' : unit === 'minutes' ? 'Минут' : 'Секунд'}
-            </span>
-          </div>
-          {idx < arr.length - 1 && (
-            <div className="timer-colon text-2xl md:text-3xl text-champagne/60 pb-5">
-              :
+    <>
+      <div className="flex justify-center items-center gap-2 md:gap-4 mt-8 px-2 max-w-sm mx-auto">
+        {Object.entries(timeLeft).map(([unit, value], idx, arr) => (
+          <React.Fragment key={unit}>
+            <div className="flex flex-col items-center">
+              <span
+                id={`countdown-${unit}`}
+                suppressHydrationWarning
+                className="number-value text-3xl md:text-4xl text-champagne min-w-[2.5rem] text-center"
+              >
+                {value.toString().padStart(2, '0')}
+              </span>
+              <span className="text-[0.55rem] uppercase tracking-widest text-espresso/50 mt-2 font-bold">
+                {unit === 'days' ? 'Дней' : unit === 'hours' ? 'Часов' : unit === 'minutes' ? 'Минут' : 'Секунд'}
+              </span>
             </div>
-          )}
-        </React.Fragment>
-      ))}
-    </div>
+            {idx < arr.length - 1 && (
+              <div className="timer-colon text-2xl md:text-3xl text-champagne/60 pb-5">
+                :
+              </div>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(){var target=Date.UTC(2026,7,8,7,30,0);function tick(){var diff=Math.max(0,target-Date.now());var values={days:Math.floor(diff/86400000),hours:Math.floor(diff/3600000)%24,minutes:Math.floor(diff/60000)%60,seconds:Math.floor(diff/1000)%60};for(var key in values){var el=document.getElementById("countdown-"+key);if(el){el.textContent=String(values[key]).padStart(2,"0");}}}tick();window.setInterval(tick,1000);window.addEventListener("pageshow",tick);document.addEventListener("visibilitychange",tick);})();`
+        }}
+      />
+    </>
   );
 }
 
