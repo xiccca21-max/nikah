@@ -1273,7 +1273,7 @@ export default function Home() {
                           </div>
                           <script
                             dangerouslySetInnerHTML={{
-                              __html: `(function(){var picker=document.getElementById("guest-picker");if(!picker||picker.getAttribute("data-native-ready")==="1")return;picker.setAttribute("data-native-ready","1");var input=document.getElementById("guest-search");var selected=picker.querySelector('input[name="guestSelected"]');var options=document.getElementById("guest-options");var buttons=options?options.querySelectorAll("[data-guest]"):[];function filter(){var query=(input.value||"").toLocaleLowerCase("ru");var shown=0;for(var i=0;i<buttons.length;i++){var match=buttons[i].getAttribute("data-guest").toLocaleLowerCase("ru").indexOf(query)!==-1&&shown<5;buttons[i].hidden=!match;if(match)shown++;}var empty=options.querySelector(".guest-empty");if(empty)empty.hidden=shown>0;}function choose(button){var value=button.getAttribute("data-guest");var setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,"value").set;setter.call(input,value);input.dispatchEvent(new Event("input",{bubbles:true}));input.dispatchEvent(new Event("change",{bubbles:true}));selected.checked=true;input.blur();}input.addEventListener("focus",filter);input.addEventListener("input",function(){selected.checked=false;filter();});if(options){options.addEventListener("pointerdown",function(event){var button=event.target.closest("[data-guest]");if(button){event.preventDefault();choose(button);}});}filter();})();`
+                              __html: `(function(){var picker=document.getElementById("guest-picker");if(!picker||picker.getAttribute("data-native-ready")==="1")return;picker.setAttribute("data-native-ready","1");var input=document.getElementById("guest-search");var selected=picker.querySelector('input[name="guestSelected"]');var options=document.getElementById("guest-options");var buttons=options?options.querySelectorAll("[data-guest]"):[];function filter(){var query=(input.value||"").trim().toLocaleLowerCase("ru");var shown=0;options.classList.toggle("has-query",query.length>0&&!selected.checked);for(var i=0;i<buttons.length;i++){var match=query.length>0&&buttons[i].getAttribute("data-guest").toLocaleLowerCase("ru").indexOf(query)!==-1&&shown<5;buttons[i].hidden=!match;if(match)shown++;}var empty=options.querySelector(".guest-empty");if(empty)empty.hidden=query.length===0||shown>0;}function choose(button){var value=button.getAttribute("data-guest");var setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,"value").set;setter.call(input,value);input.dispatchEvent(new Event("input",{bubbles:true}));input.dispatchEvent(new Event("change",{bubbles:true}));selected.checked=true;options.classList.remove("has-query");input.blur();}input.addEventListener("focus",filter);input.addEventListener("blur",function(){options.classList.remove("has-query");});input.addEventListener("input",function(){selected.checked=false;filter();});if(options){options.addEventListener("pointerdown",function(event){var button=event.target.closest("[data-guest]");if(button){event.preventDefault();choose(button);}});}filter();})();`
                             }}
                           />
                         </div>
@@ -1304,7 +1304,8 @@ export default function Home() {
                               onChange={(e) => setCourse1(e.target.value)}
                               className="peer sr-only" 
                             />
-                            <span className="relative z-10 flex flex-col items-center gap-2">
+                            <span className="menu-option-selection" aria-hidden="true" />
+                            <span className="menu-option-content relative z-10 flex flex-col items-center gap-2">
                               <span className="font-display text-lg leading-tight">{item.split(' с ')[0]}</span>
                               {item.includes(' с ') && <span className="text-[0.65rem] uppercase tracking-widest opacity-70">с {item.split(' с ')[1]}</span>}
                             </span>
@@ -1339,7 +1340,8 @@ export default function Home() {
                               onChange={(e) => setCourse2(e.target.value)}
                               className="peer sr-only" 
                             />
-                            <span className="relative z-10 flex flex-col items-center gap-2">
+                            <span className="menu-option-selection" aria-hidden="true" />
+                            <span className="menu-option-content relative z-10 flex flex-col items-center gap-2">
                               <span className="font-display text-lg leading-tight">{item.split(' с ')[0]}</span>
                               {item.includes(' с ') && <span className="text-[0.65rem] uppercase tracking-widest opacity-70">с {item.split(' с ')[1]}</span>}
                             </span>
@@ -1373,7 +1375,8 @@ export default function Home() {
                               onChange={(e) => setCourse3(e.target.value)}
                               className="peer sr-only" 
                             />
-                            <span className="relative z-10 flex flex-col items-center gap-2">
+                            <span className="menu-option-selection" aria-hidden="true" />
+                            <span className="menu-option-content relative z-10 flex flex-col items-center gap-2">
                               <span className="font-display text-lg leading-tight">{item.split(' с ')[0]}</span>
                               {item.includes(' с ') && <span className="text-[0.65rem] uppercase tracking-widest opacity-70">с {item.split(' с ')[1]}</span>}
                             </span>
