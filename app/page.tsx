@@ -675,6 +675,28 @@ export default function Home() {
       .slice(0, 5)
       .map(({ index }) => index)
   );
+
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    const resetScroll = () => window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    if (window.location.hash) {
+      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+    }
+
+    resetScroll();
+    const frame = requestAnimationFrame(resetScroll);
+    const timer = window.setTimeout(resetScroll, 150);
+    window.addEventListener("pageshow", resetScroll);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+      window.removeEventListener("pageshow", resetScroll);
+    };
+  }, []);
   
   // Безопасный таймер для мобилок на случай, если прелоудер зависнет
   useEffect(() => {
@@ -731,6 +753,11 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-ivory font-sans text-espresso">
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(){if("scrollRestoration" in history){history.scrollRestoration="manual";}if(location.hash){history.replaceState(null,"",location.pathname+location.search);}function top(){window.scrollTo(0,0);document.documentElement.scrollTop=0;if(document.body){document.body.scrollTop=0;}}top();requestAnimationFrame(top);setTimeout(top,150);window.addEventListener("pageshow",top);})();`
+        }}
+      />
       {/* Reading Progress */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-[2.5px] bg-champagne z-[100] origin-left pointer-events-none"
