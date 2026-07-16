@@ -355,7 +355,7 @@ function Reveal({
 }) {
   return (
     <motion.div
-      initial={false}
+      initial={{ opacity: 1, y: 8 }}
       whileInView="visible"
       viewport={{ once: true, margin: "-12% 0px" }}
       variants={textReveal}
@@ -1254,15 +1254,8 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <AnimatePresence>
-                      {selectedGuest && course1 && course2 && course3 && !isSubmitting && (
-                        <motion.div 
-                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.95 }}
-                          transition={{ duration: 0.5, ease: "easeOut" }}
-                          className="mt-10 rounded-2xl border border-champagne/30 bg-ivory/80 p-6 shadow-sm relative overflow-hidden"
-                        >
+                    {selectedGuest && course1 && course2 && course3 && !isSubmitting && (
+                        <div className="menu-summary mt-10 rounded-2xl border border-champagne/30 bg-ivory/90 p-5 relative overflow-hidden">
                           <div className="absolute inset-0 paper-grain opacity-20 pointer-events-none" />
                           <h4 className="font-display text-xl text-champagne mb-4 relative z-10 text-center">Ваше меню:</h4>
                           <ul className="text-left text-[0.8rem] space-y-2 text-espresso/70 relative z-10">
@@ -1279,9 +1272,8 @@ export default function Home() {
                               <span className="font-medium text-espresso">{course3.split(' с ')[0]}</span>
                             </li>
                           </ul>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                        </div>
+                    )}
 
                     <div className="mt-10">
                       <button 

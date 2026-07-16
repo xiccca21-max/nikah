@@ -519,6 +519,27 @@ textarea {
   transform: scale(1);
 }
 
+.menu-option:active,
+.rsvp-button:active {
+  transform: scale(0.985);
+  transition-duration: 70ms;
+}
+
+.menu-summary {
+  position: sticky;
+  bottom: 1rem;
+  z-index: 20;
+  box-shadow: 0 12px 32px rgba(31, 24, 20, 0.08);
+  animation: menuSummaryEnter 260ms ease-out both;
+}
+
+@keyframes menuSummaryEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
 .rsvp-step {
   width: 0.625rem;
   height: 0.625rem;
@@ -546,7 +567,7 @@ textarea {
 .rsvp-form:has(input[name="course1"]:checked) .rsvp-step-line-1,
 .rsvp-form:has(input[name="course2"]:checked) .rsvp-step-line-2,
 .rsvp-form:has(input[name="course3"]:checked) .rsvp-step-line-3 {
-  background: rgba(169, 133, 77, 0.72);
+  background: linear-gradient(90deg, rgba(169, 133, 77, 0.45), var(--champagne));
 }
 
 .timeline-title {
@@ -985,6 +1006,20 @@ textarea {
   .shimmer-gold,
   .shimmer-espresso {
     animation-duration: 7s;
+  }
+
+  .section-label {
+    animation: none;
+    background: none;
+    color: var(--champagne);
+    -webkit-text-fill-color: var(--champagne);
+    text-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.9),
+      0 -1px 0 rgba(92, 67, 45, 0.12);
+  }
+
+  .menu-summary {
+    box-shadow: 0 8px 20px rgba(31, 24, 20, 0.06);
   }
 }
 
