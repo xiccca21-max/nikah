@@ -599,13 +599,13 @@ textarea {
 
 .check-indicator {
   opacity: 0;
-  transform: translateY(-50%) scale(0.5);
+  transform: scale(0.5);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .guest-picker:has(input[name="guestSelected"]:checked) .check-indicator {
   opacity: 1;
-  transform: translateY(-50%) scale(1);
+  transform: scale(1);
 }
 
 .guest-options {
