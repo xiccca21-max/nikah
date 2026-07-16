@@ -722,6 +722,18 @@ export default function Home() {
     };
   }, []);
 
+  const openConfirmationIfComplete = (
+    nextGuest = selectedGuest,
+    nextCourse1 = course1,
+    nextCourse2 = course2,
+    nextCourse3 = course3
+  ) => {
+    if (nextGuest && nextCourse1 && nextCourse2 && nextCourse3) {
+      setIsConfirmModalOpen(true);
+      vibrate();
+    }
+  };
+
   const handleRSVPSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedGuest || !course1 || !course2 || !course3) return;
@@ -1148,7 +1160,7 @@ export default function Home() {
                 </svg>
               </a>
               
-              <form onSubmit={handleRSVPSubmit} className="rsvp-form mt-8 pb-16">
+              <form id="rsvp-form" onSubmit={handleRSVPSubmit} className="rsvp-form mt-8 pb-16">
                 {!isSubmitted && (
                   <div className="mb-10 flex justify-center gap-2 items-center">
                     {[1, 2, 3, 4].map((step) => {
@@ -1254,6 +1266,7 @@ export default function Home() {
                                   setGuestSearch(guest.name);
                                   setSelectedGuest(guest.id);
                                   setIsGuestPickerOpen(false);
+                                  openConfirmationIfComplete(guest.id);
                                 }}
                               >
                                 {guest.name}
@@ -1286,7 +1299,10 @@ export default function Home() {
                               name="course1" 
                               value={item}
                               checked={course1 === item}
-                              onChange={(e) => setCourse1(e.target.value)}
+                              onChange={(e) => {
+                                setCourse1(e.target.value);
+                                openConfirmationIfComplete(selectedGuest, e.target.value);
+                              }}
                               className="peer sr-only" 
                             />
                             <span className="menu-option-selection" aria-hidden="true" />
@@ -1322,7 +1338,10 @@ export default function Home() {
                               name="course2" 
                               value={item}
                               checked={course2 === item}
-                              onChange={(e) => setCourse2(e.target.value)}
+                              onChange={(e) => {
+                                setCourse2(e.target.value);
+                                openConfirmationIfComplete(selectedGuest, course1, e.target.value);
+                              }}
                               className="peer sr-only" 
                             />
                             <span className="menu-option-selection" aria-hidden="true" />
@@ -1357,7 +1376,10 @@ export default function Home() {
                               name="course3" 
                               value={item}
                               checked={course3 === item}
-                              onChange={(e) => setCourse3(e.target.value)}
+                              onChange={(e) => {
+                                setCourse3(e.target.value);
+                                openConfirmationIfComplete(selectedGuest, course1, course2, e.target.value);
+                              }}
                               className="peer sr-only" 
                             />
                             <span className="menu-option-selection" aria-hidden="true" />
@@ -1370,81 +1392,80 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {selectedGuest && course1 && course2 && course3 && (
-                      <button
-                        type="button"
-                        onClick={() => setIsConfirmModalOpen(true)}
-                        className="rsvp-button relative z-10 mt-10 w-full flex items-center justify-center gap-3"
-                      >
-                        Продолжить
-                      </button>
-                    )}
-
-                    <AnimatePresence>
-                      {isConfirmModalOpen && (
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          className="fixed inset-0 z-[100] flex items-center justify-center px-4 bg-espresso/40 backdrop-blur-md"
-                        >
-                          <motion.div
-                            initial={{ scale: 0.95, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.95, opacity: 0 }}
-                            className="w-full max-w-sm rounded-[2rem] border border-champagne/30 bg-ivory/95 p-8 relative overflow-hidden shadow-2xl"
-                          >
-                            <div className="absolute inset-0 paper-grain opacity-20 pointer-events-none" />
-                            <h4 className="font-display text-2xl text-champagne mb-6 relative z-10 text-center">
-                              Ваше меню, {guests.find(g => g.id === selectedGuest)?.name.split(' ')[0]}
-                            </h4>
-                            <ul className="text-left text-[0.85rem] space-y-3 text-espresso/80 relative z-10 mb-8">
-                              <li className="flex justify-between items-center border-b border-champagne/10 pb-2">
-                                <span className="opacity-60">Салат</span>
-                                <span className="font-medium text-right text-espresso">{course1}</span>
-                              </li>
-                              <li className="flex justify-between items-center border-b border-champagne/10 pb-2">
-                                <span className="opacity-60">Суп</span>
-                                <span className="font-medium text-espresso">{course2.split(' с ')[0]}</span>
-                              </li>
-                              <li className="flex justify-between items-center border-b border-champagne/10 pb-2">
-                                <span className="opacity-60">Горячее</span>
-                                <span className="font-medium text-espresso">{course3.split(' с ')[0]}</span>
-                              </li>
-                            </ul>
-                            <div className="flex flex-col gap-3 relative z-10">
-                              <button 
-                                type="submit" 
-                                disabled={isSubmitting}
-                                className={`rsvp-button w-full flex items-center justify-center gap-3 transition-opacity ${isSubmitting ? 'opacity-70 cursor-not-allowed hover:transform-none' : ''}`}
-                              >
-                                {isSubmitting ? (
-                                  <svg className="animate-spin h-5 w-5 text-ivory" viewBox="0 0 24 24" fill="none">
-                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                  </svg>
-                                ) : (
-                                  "Отправить"
-                                )}
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => setIsConfirmModalOpen(false)}
-                                disabled={isSubmitting}
-                                className="w-full py-3.5 rounded-full border border-champagne/50 text-champagne font-medium tracking-widest uppercase text-xs transition-colors hover:bg-champagne/10"
-                              >
-                                Изменить
-                              </button>
-                            </div>
-                          </motion.div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </>
                 )}
               </form>
             </div>
       </div>
+
+      <AnimatePresence>
+        {isConfirmModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-espresso/45 px-4 backdrop-blur-sm"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="menu-confirmation-title"
+          >
+            <motion.div
+              initial={{ scale: 0.96, opacity: 0, y: 12 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.96, opacity: 0, y: 12 }}
+              transition={{ duration: 0.22, ease }}
+              className="relative w-full max-w-sm overflow-hidden rounded-[2rem] border border-champagne/30 bg-ivory p-8 shadow-2xl"
+            >
+              <div className="absolute inset-0 paper-grain opacity-20 pointer-events-none" />
+              <h4
+                id="menu-confirmation-title"
+                className="relative z-10 mb-6 text-center font-display text-2xl text-champagne"
+              >
+                Ваше меню, {guests.find((guest) => guest.id === selectedGuest)?.name.split(" ")[0]}
+              </h4>
+              <ul className="relative z-10 mb-8 space-y-3 text-left text-[0.85rem] text-espresso/80">
+                <li className="flex items-center justify-between border-b border-champagne/10 pb-2">
+                  <span className="opacity-60">Салат</span>
+                  <span className="font-medium text-right text-espresso">{course1}</span>
+                </li>
+                <li className="flex items-center justify-between border-b border-champagne/10 pb-2">
+                  <span className="opacity-60">Суп</span>
+                  <span className="font-medium text-espresso">{course2.split(" с ")[0]}</span>
+                </li>
+                <li className="flex items-center justify-between border-b border-champagne/10 pb-2">
+                  <span className="opacity-60">Горячее</span>
+                  <span className="font-medium text-espresso">{course3.split(" с ")[0]}</span>
+                </li>
+              </ul>
+              <div className="relative z-10 flex flex-col gap-3">
+                <button
+                  type="submit"
+                  form="rsvp-form"
+                  disabled={isSubmitting}
+                  className={`rsvp-button flex w-full items-center justify-center gap-3 transition-opacity ${isSubmitting ? "cursor-not-allowed opacity-70 hover:transform-none" : ""}`}
+                >
+                  {isSubmitting ? (
+                    <svg className="h-5 w-5 animate-spin text-ivory" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                  ) : (
+                    "Отправить"
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsConfirmModalOpen(false)}
+                  disabled={isSubmitting}
+                  className="w-full rounded-full border border-champagne/50 py-3.5 text-xs font-medium uppercase tracking-widest text-champagne transition-colors hover:bg-champagne/10"
+                >
+                  Изменить
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

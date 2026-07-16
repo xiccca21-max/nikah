@@ -336,7 +336,7 @@ textarea {
   align-items: center;
   justify-content: center;
   font-family: var(--font-script), cursive;
-  font-size: clamp(3.2rem, 15vw, 11rem);
+  font-size: clamp(3.5rem, 16vw, 11rem);
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.1;
