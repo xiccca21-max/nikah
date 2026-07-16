@@ -1192,10 +1192,17 @@ export default function Home() {
                     </div>
 
                     <div className="mt-10">
-                      <div className="flex items-center justify-center gap-3 mb-6">
-                        <div className="h-px w-8 bg-gradient-to-r from-transparent to-champagne/40" />
-                        <h3 className="font-display text-2xl italic text-champagne/90">Салаты</h3>
-                        <div className="h-px w-8 bg-gradient-to-l from-transparent to-champagne/40" />
+                      <div className="flex flex-col items-center justify-center gap-2 mb-6">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="text-champagne/70">
+                          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" strokeDasharray="2 2" />
+                          <path d="M8 12C8 12 9.5 9 12 9C14.5 9 16 12 16 12C16 12 14.5 15 12 15C9.5 15 8 12 8 12Z" />
+                          <path d="M12 9V5" />
+                        </svg>
+                        <div className="flex items-center gap-3">
+                          <div className="h-px w-8 bg-gradient-to-r from-transparent to-champagne/40" />
+                          <h3 className="font-display text-2xl italic text-champagne/90">Салаты</h3>
+                          <div className="h-px w-8 bg-gradient-to-l from-transparent to-champagne/40" />
+                        </div>
                       </div>
                       <div className="grid gap-3">
                         {menuCourses.course1.map((item) => (
@@ -1223,10 +1230,18 @@ export default function Home() {
                     </div>
 
                     <div className="mt-10">
-                      <div className="flex items-center justify-center gap-3 mb-6">
-                        <div className="h-px w-8 bg-gradient-to-r from-transparent to-champagne/40" />
-                        <h3 className="font-display text-2xl italic text-champagne/90">Супы</h3>
-                        <div className="h-px w-8 bg-gradient-to-l from-transparent to-champagne/40" />
+                      <div className="flex flex-col items-center justify-center gap-2 mb-6">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="text-champagne/70">
+                          <path d="M4 10C4 10 7 14 12 14C17 14 20 10 20 10" />
+                          <path d="M2 12L4 10M22 12L20 10" />
+                          <path d="M7 6Q8 4 9 6T11 4" strokeDasharray="1 2" />
+                          <path d="M13 6Q14 4 15 6T17 4" strokeDasharray="1 2" />
+                        </svg>
+                        <div className="flex items-center gap-3">
+                          <div className="h-px w-8 bg-gradient-to-r from-transparent to-champagne/40" />
+                          <h3 className="font-display text-2xl italic text-champagne/90">Супы</h3>
+                          <div className="h-px w-8 bg-gradient-to-l from-transparent to-champagne/40" />
+                        </div>
                       </div>
                       <div className="grid gap-3">
                         {menuCourses.course2.map((item) => (
@@ -1254,10 +1269,18 @@ export default function Home() {
                     </div>
 
                     <div className="mt-10">
-                      <div className="flex items-center justify-center gap-3 mb-6">
-                        <div className="h-px w-8 bg-gradient-to-r from-transparent to-champagne/40" />
-                        <h3 className="font-display text-2xl italic text-champagne/90">Горячее</h3>
-                        <div className="h-px w-8 bg-gradient-to-l from-transparent to-champagne/40" />
+                      <div className="flex flex-col items-center justify-center gap-2 mb-6">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="text-champagne/70">
+                          <path d="M12 4C9 4 5 7 5 12H19C19 7 15 4 12 4Z" />
+                          <path d="M12 2V4" />
+                          <path d="M3 14H21" />
+                          <path d="M12 4A1 1 0 1012 2A1 1 0 1012 4Z" fill="currentColor" stroke="none" />
+                        </svg>
+                        <div className="flex items-center gap-3">
+                          <div className="h-px w-8 bg-gradient-to-r from-transparent to-champagne/40" />
+                          <h3 className="font-display text-2xl italic text-champagne/90">Горячее</h3>
+                          <div className="h-px w-8 bg-gradient-to-l from-transparent to-champagne/40" />
+                        </div>
                       </div>
                       <div className="grid gap-3">
                         {menuCourses.course3.map((item) => (
@@ -1283,6 +1306,35 @@ export default function Home() {
                         ))}
                       </div>
                     </div>
+
+                    <AnimatePresence>
+                      {selectedGuest && course1 && course2 && course3 && !isSubmitting && (
+                        <motion.div 
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ duration: 0.5, ease: "easeOut" }}
+                          className="mt-10 rounded-2xl border border-champagne/30 bg-ivory/80 p-6 shadow-sm relative overflow-hidden"
+                        >
+                          <div className="absolute inset-0 paper-grain opacity-20 pointer-events-none" />
+                          <h4 className="font-display text-xl text-champagne mb-4 relative z-10 text-center">Ваше меню:</h4>
+                          <ul className="text-left text-[0.8rem] space-y-2 text-espresso/70 relative z-10">
+                            <li className="flex justify-between items-center border-b border-champagne/10 pb-1">
+                              <span className="opacity-60">Салат</span>
+                              <span className="font-medium text-espresso">{course1.split(' с ')[0]}</span>
+                            </li>
+                            <li className="flex justify-between items-center border-b border-champagne/10 pb-1">
+                              <span className="opacity-60">Суп</span>
+                              <span className="font-medium text-espresso">{course2.split(' с ')[0]}</span>
+                            </li>
+                            <li className="flex justify-between items-center border-b border-champagne/10 pb-1">
+                              <span className="opacity-60">Горячее</span>
+                              <span className="font-medium text-espresso">{course3.split(' с ')[0]}</span>
+                            </li>
+                          </ul>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
                     <div className="mt-10">
                       <button 
