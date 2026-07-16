@@ -622,10 +622,12 @@ textarea {
 }
 
 .guest-picker:has(input[name="guestSelected"]:checked) .guest-search {
-  border-color: var(--champagne);
-  background: rgba(169, 133, 77, 0.08);
-  color: var(--champagne);
-  box-shadow: inset 0 0 15px rgba(169, 133, 77, 0.05);
+  border-color: var(--espresso);
+  background: var(--espresso);
+  color: var(--ivory);
+  -webkit-text-fill-color: var(--ivory);
+  caret-color: var(--champagne);
+  box-shadow: 0 10px 25px rgba(31, 24, 20, 0.15);
 }
 
 .check-indicator {
@@ -653,7 +655,7 @@ textarea {
   animation: guestOptionsEnter 140ms ease-out both;
 }
 
-.guest-picker:focus-within .guest-options,
+.guest-picker:focus-within:has(.guest-search:not(:placeholder-shown)):not(:has(input[name="guestSelected"]:checked)) .guest-options,
 .guest-options.is-open {
   display: block;
 }

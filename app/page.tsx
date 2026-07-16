@@ -1248,7 +1248,7 @@ export default function Home() {
                           <div
                             id="guest-options"
                             role="listbox"
-                            className={`guest-options ${isGuestPickerOpen ? "is-open" : ""}`}
+                            className={`guest-options ${isGuestPickerOpen && guestSearch.trim() && !selectedGuest ? "is-open" : ""}`}
                           >
                             {guestList.map((guest, index) => (
                               <button
