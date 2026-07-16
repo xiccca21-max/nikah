@@ -644,14 +644,14 @@ export default function Home() {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    if (!isPreloaderDone || isRsvpOpen) {
+    if (!isPreloaderDone) {
       document.body.style.overflow = "hidden";
       lenisRef.current?.stop();
     } else {
       document.body.style.overflow = "";
       lenisRef.current?.start();
     }
-  }, [isPreloaderDone, isRsvpOpen]);
+  }, [isPreloaderDone]);
 
   useEffect(() => {
     const isMobileDevice =
@@ -710,6 +710,9 @@ export default function Home() {
       <div className="vignette-overlay" />
       <div className="editorial-grid" />
       <div className="botanical-shadow" />
+      {isRsvpOpen && (
+        <style dangerouslySetInnerHTML={{__html: `body { overflow: hidden; }`}} />
+      )}
       <Watermark />
       <MagicDust />
       <AudioPlayer />
@@ -1078,7 +1081,8 @@ export default function Home() {
               exit={{ x: "100%" }}
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               className="fixed inset-y-0 right-0 z-50 h-[100dvh] w-full max-w-md overflow-y-auto overscroll-contain touch-pan-y bg-ivory/95 px-6 py-12 shadow-2xl md:px-10"
-              style={{ WebkitOverflowScrolling: "touch" }}
+              style={{ WebkitOverflowScrolling: "touch", pointerEvents: "auto" }}
+              onWheel={(e) => e.stopPropagation()}
             >
               <button 
                 onClick={() => {
