@@ -748,10 +748,6 @@ textarea {
     -webkit-backdrop-filter: blur(10px) saturate(1.12);
   }
 
-  .botanical-shadow {
-    display: none;
-  }
-
   .feature-block {
     min-height: auto;
   }
@@ -767,24 +763,6 @@ textarea {
   .feature-heading {
     font-size: clamp(2.55rem, 12vw, 3.7rem);
   }
-}
-
-.botanical-shadow {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-  background:
-    radial-gradient(ellipse at 15% 10%, rgba(31, 24, 20, 0.035) 0%, transparent 45%),
-    radial-gradient(ellipse at 85% 45%, rgba(31, 24, 20, 0.025) 0%, transparent 50%),
-    radial-gradient(ellipse at 35% 85%, rgba(31, 24, 20, 0.035) 0%, transparent 45%);
-  filter: blur(8px);
-  animation: sway 20s ease-in-out infinite alternate;
-}
-
-@keyframes sway {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  100% { transform: translate(-3%, 3%) rotate(2deg); }
 }
 
 .scroll-blur-top,
@@ -809,18 +787,6 @@ textarea {
   .passepartout-frame {
     border-width: 8px;
   }
-}
-
-.vignette-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(
-    circle at center,
-    transparent 50%,
-    rgba(31, 24, 20, 0.08) 130%
-  );
 }
 
 .editorial-grid {
