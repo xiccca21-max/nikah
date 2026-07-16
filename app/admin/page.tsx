@@ -117,9 +117,9 @@ export default function AdminPage() {
       ["Имя", "Салат", "Суп", "Горячее", "Дата ответа"],
       ...responses.map((guest) => [
         guest.name,
-        guest.course_1 ?? "",
-        guest.course_2 ?? "",
-        guest.course_3 ?? "",
+        guest.responded_at ? guest.course_1 ?? "" : "",
+        guest.responded_at ? guest.course_2 ?? "" : "",
+        guest.responded_at ? guest.course_3 ?? "" : "",
         guest.responded_at
           ? new Date(guest.responded_at).toLocaleString("ru-RU")
           : ""
@@ -132,6 +132,36 @@ export default function AdminPage() {
     anchor.download = `invitedi-answers-${new Date().toISOString().slice(0, 10)}.csv`;
     anchor.click();
     URL.revokeObjectURL(url);
+  };
+
+  const annulGuest = async (guestId: string) => {
+    if (!session) return;
+
+    const ok = window.confirm("Аннулировать заказ для тестов? Статус снова станет 'Не отвечал'.");
+    if (!ok) return;
+
+    setIsLoading(true);
+    setError("");
+    try {
+      const response = await fetch("/api/admin/cancel", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`
+        },
+        body: JSON.stringify({ guestId })
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error ?? "Не удалось аннулировать заказ");
+      }
+
+      await loadResponses(session.access_token);
+    } catch (annulError) {
+      setError(annulError instanceof Error ? annulError.message : "Не удалось аннулировать заказ");
+      setIsLoading(false);
+    }
   };
 
   if (!session) {
@@ -238,12 +268,13 @@ export default function AdminPage() {
                 <th className="px-5 py-4">Суп</th>
                 <th className="px-5 py-4">Горячее</th>
                 <th className="px-5 py-4">Ответ</th>
+                <th className="px-5 py-4">Действия</th>
               </tr>
             </thead>
             <tbody>
               {isLoading ? (
                 <tr>
-                  <td colSpan={5} className="px-5 py-12 text-center text-espresso/50">
+                  <td colSpan={6} className="px-5 py-12 text-center text-espresso/50">
                     Загрузка...
                   </td>
                 </tr>
@@ -251,9 +282,9 @@ export default function AdminPage() {
                 filteredResponses.map((guest) => (
                   <tr key={guest.id} className="border-t border-champagne/15">
                     <td className="px-5 py-4 font-semibold">{guest.name}</td>
-                    <td className="px-5 py-4">{guest.course_1 ?? "—"}</td>
-                    <td className="px-5 py-4">{guest.course_2 ?? "—"}</td>
-                    <td className="px-5 py-4">{guest.course_3 ?? "—"}</td>
+                    <td className="px-5 py-4">{guest.responded_at ? guest.course_1 ?? "—" : "—"}</td>
+                    <td className="px-5 py-4">{guest.responded_at ? guest.course_2 ?? "—" : "—"}</td>
+                    <td className="px-5 py-4">{guest.responded_at ? guest.course_3 ?? "—" : "—"}</td>
                     <td className="px-5 py-4">
                       {guest.responded_at ? (
                         <span className="text-green-700">
@@ -261,6 +292,19 @@ export default function AdminPage() {
                         </span>
                       ) : (
                         <span className="text-espresso/35">Не отвечал</span>
+                      )}
+                    </td>
+                    <td className="px-5 py-4">
+                      {guest.responded_at ? (
+                        <button
+                          type="button"
+                          onClick={() => annulGuest(guest.id)}
+                          className="rounded-full border border-champagne/40 px-4 py-2 text-xs font-bold uppercase tracking-wider text-espresso transition-colors hover:bg-champagne/10"
+                        >
+                          Аннулировать
+                        </button>
+                      ) : (
+                        <span className="text-espresso/35 text-xs">—</span>
                       )}
                     </td>
                   </tr>
