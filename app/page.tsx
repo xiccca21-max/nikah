@@ -1178,7 +1178,7 @@ export default function Home() {
                             tabIndex={-1}
                             className="sr-only"
                           />
-                          <div className="absolute left-5 top-1/2 -translate-y-1/2 pointer-events-none text-champagne/60">
+                          <div className="absolute left-5 top-[2.4rem] -translate-y-1/2 pointer-events-none text-champagne/60">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
                               <circle cx="11" cy="11" r="7" />
                               <path d="m16.5 16.5 4 4" strokeLinecap="round" />

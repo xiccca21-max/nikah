@@ -591,10 +591,9 @@ textarea {
 }
 
 .guest-options {
-  position: absolute;
+  position: relative;
   z-index: 40;
-  top: calc(100% + 0.5rem);
-  left: 0;
+  margin-top: 0.5rem;
   width: 100%;
   overflow: hidden;
   border: 1px solid rgba(169, 133, 77, 0.25);
