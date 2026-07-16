@@ -451,12 +451,12 @@ function Section({
         {eyebrow ? (
           <div className="mb-10 flex flex-col items-center">
             <Reveal>
-              <p className="section-label text-center shimmer-gold">
+              <p className="section-label text-center">
                 {eyebrow}
               </p>
             </Reveal>
             <Reveal delay={0.1}>
-              <div className="mt-4 flex items-center justify-center shimmer-gold">
+              <div className="mt-4 flex items-center justify-center">
                 <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-champagne/50" />
                 <div className="mx-2 h-1.5 w-1.5 rotate-45 bg-champagne/50" />
                 <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-champagne/50" />
@@ -794,10 +794,10 @@ export default function Home() {
             <motion.h1
               variants={textReveal}
               transition={{ duration: 1.1, ease }}
-              className="hero-names shimmer-espresso"
+              className="hero-names"
             >
               <span className="hero-name shimmer-espresso">Данис</span>
-              <span className="hero-amp shimmer-gold">&amp;</span>
+              <span className="hero-amp shimmer-espresso">&amp;</span>
               <span className="hero-name shimmer-espresso">Инесса</span>
             </motion.h1>
 
@@ -806,7 +806,7 @@ export default function Home() {
             <motion.p
               variants={textReveal}
               transition={{ duration: 0.9, ease }}
-              className="section-label mb-4 shimmer-gold mx-auto w-fit text-center"
+              className="section-label mb-4 mx-auto w-fit text-center"
             >
               Приглашение на никах
             </motion.p>
@@ -857,7 +857,7 @@ export default function Home() {
               <div className="font-display text-4xl md:text-5xl text-champagne opacity-80 mb-6" style={{ direction: "rtl" }}>
                 ﷽
               </div>
-              <p className="font-display text-[1.65rem] md:text-3xl italic text-champagne mb-3 shimmer-gold relative z-10">«Мы сотворили вас парами»</p>
+              <p className="font-display text-[1.65rem] md:text-3xl italic text-champagne mb-3 relative z-10">«Мы сотворили вас парами»</p>
               <p className="text-[0.6rem] tracking-[0.3em] font-bold text-espresso/50 uppercase relative z-10">Коран 78:8</p>
             </motion.div>
           </motion.div>
@@ -870,7 +870,7 @@ export default function Home() {
           <SilkImage src="/couple-rsvp.png" alt="Danis and Inessa" className="feature-block" uncropped />
           <Card className="feature-block flex flex-col justify-center">
             <Reveal>
-              <h2 className="feature-heading shimmer-espresso">День начинается с благословения.</h2>
+              <h2 className="feature-heading">День начинается с благословения.</h2>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="drop-cap mt-7 text-sm leading-8 text-espresso/64 md:text-base">
@@ -887,7 +887,7 @@ export default function Home() {
           <Card className="text-center">
             <Reveal>
                 <div className="text-champagne font-bold text-sm tracking-widest uppercase mb-4">10:30</div>
-                <h2 className="heading shimmer-espresso">{ceremony.venue}</h2>
+                <h2 className="heading">{ceremony.venue}</h2>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="mx-auto mt-6 max-w-xl text-sm leading-8 text-espresso/64 md:text-base">
@@ -930,7 +930,7 @@ export default function Home() {
           <Card className="text-center">
             <Reveal>
                 <div className="text-champagne font-bold text-sm tracking-widest uppercase mb-4">18:00</div>
-                <h2 className="heading shimmer-espresso">База отдыха «Агдаш»</h2>
+                <h2 className="heading">База отдыха «Агдаш»</h2>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="mx-auto mt-6 max-w-xl text-sm leading-8 text-espresso/64 md:text-base">
@@ -975,7 +975,7 @@ export default function Home() {
         <FloatingText text="Д & И" offset={180} />
         <div className="relative z-10">
           <Reveal>
-            <h2 className="heading text-center shimmer-espresso">Расписание дня</h2>
+            <h2 className="heading text-center">Расписание дня</h2>
           </Reveal>
           <div className="mt-14 relative" ref={scheduleRef}>
             {/* Background thread */}
@@ -1002,10 +1002,10 @@ export default function Home() {
                   
                   <Card delay={index * 0.08} className="grid gap-4 p-6 md:p-8 transition-opacity duration-500 opacity-60 hover:opacity-100">
                     <div>
-                      <p className="number-value text-3xl text-champagne shimmer-gold">{item.time}</p>
+                      <p className="number-value text-3xl text-champagne">{item.time}</p>
                     </div>
                     <div>
-                      <h3 className="timeline-title shimmer-espresso">{item.title}</h3>
+                      <h3 className="timeline-title">{item.title}</h3>
                       <p className="mt-2 text-sm leading-7 text-espresso/62">{item.text}</p>
                     </div>
                   </Card>
@@ -1020,7 +1020,7 @@ export default function Home() {
         <div className="max-w-2xl mx-auto">
           <Card>
             <Reveal>
-              <h2 className="heading shimmer-espresso">Классика и уважение к традициям.</h2>
+              <h2 className="heading">Классика и уважение к традициям.</h2>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="mt-7 text-sm leading-8 text-espresso/64 md:text-base">
@@ -1050,7 +1050,7 @@ export default function Home() {
       <Section eyebrow="Пожелания">
         <Card className="text-center mx-auto max-w-2xl px-6 py-12 md:px-12 md:py-16">
           <Reveal>
-            <h2 className="heading shimmer-espresso text-2xl md:text-3xl">О подарках</h2>
+            <h2 className="heading text-2xl md:text-3xl">О подарках</h2>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mx-auto mt-6 text-sm leading-8 text-espresso/64 md:text-base">
@@ -1073,7 +1073,7 @@ export default function Home() {
         <Card className="text-center mx-auto max-w-xl" >
           <span id="guest-rsvp" className="absolute -top-24" />
           <Reveal>
-            <h2 className="heading shimmer-espresso">Присутствие</h2>
+            <h2 className="heading">Присутствие</h2>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mx-auto mt-6 text-sm leading-8 text-espresso/62">
@@ -1099,12 +1099,12 @@ export default function Home() {
         <div className="mx-auto w-full max-w-[31rem] md:max-w-3xl">
           <Card>
             <Reveal>
-              <p className="section-label mb-8 shimmer-gold">С любовью</p>
+              <p className="section-label mb-8">С любовью</p>
             </Reveal>
             <Reveal delay={0.08}>
-              <h2 className="hero-names mt-4 shimmer-espresso">
+              <h2 className="hero-names mt-4">
                 <span className="hero-name shimmer-espresso">Данис</span>
-                <span className="hero-amp shimmer-gold">&amp;</span>
+                <span className="hero-amp shimmer-espresso">&amp;</span>
                 <span className="hero-name shimmer-espresso">Инесса</span>
               </h2>
             </Reveal>
@@ -1115,7 +1115,7 @@ export default function Home() {
             </Reveal>
             <DecorativeDivider className="my-9" delay={0.16} />
             <Reveal delay={0.2}>
-              <p className="number-value mt-8 text-4xl text-champagne shimmer-gold">08.08.2026</p>
+              <p className="number-value mt-8 text-4xl text-champagne">08.08.2026</p>
             </Reveal>
             <Reveal delay={0.3}>
               <InteractiveRings />
@@ -1188,7 +1188,7 @@ export default function Home() {
                   </motion.div>
                 ) : (
                   <>
-                    <h2 className="heading mb-8 text-3xl shimmer-espresso">Ждем вас</h2>
+                    <h2 className="heading mb-8 text-3xl">Ждем вас</h2>
                     
                     <div className="grid gap-6">
                       <div className="field-label">
