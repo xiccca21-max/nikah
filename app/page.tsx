@@ -110,39 +110,22 @@ function Unroll({ children }: { children: ReactNode }) {
 }
 
 function InteractiveRings() {
-  const { scrollYProgress } = useScroll();
-  const rotate1 = useTransform(scrollYProgress, [0, 1], [0, 180]);
-  const rotate2 = useTransform(scrollYProgress, [0, 1], [0, -180]);
-
   return (
-    <motion.div
-      initial={{ scale: 0, opacity: 0 }}
-      whileInView={{ scale: 1, opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 1.5, ease: "easeOut", delay: 0.3 }}
-      className="mx-auto mt-10 mb-2 relative flex h-24 w-24 items-center justify-center"
+    <div
+      className="rings-enter mx-auto mt-10 mb-2 relative flex h-24 w-24 items-center justify-center"
+      aria-hidden="true"
     >
-      <motion.div 
-        style={{ rotate: rotate1 }} 
-        className="absolute w-16 h-16 rounded-full border-[1.5px] border-champagne/60 -ml-6"
+      <div 
+        className="ring-left absolute w-16 h-16 rounded-full border-[1.5px] border-champagne/60 -ml-6"
       >
-        <motion.div 
-          className="absolute inset-0 rounded-full border-t-[1.5px] border-champagne opacity-80"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-        />
-      </motion.div>
-      <motion.div 
-        style={{ rotate: rotate2 }} 
-        className="absolute w-16 h-16 rounded-full border-[1.5px] border-champagne/60 ml-6"
+        <div className="ring-glare ring-glare-clockwise absolute inset-0 rounded-full border-t-[1.5px] border-champagne opacity-80" />
+      </div>
+      <div 
+        className="ring-right absolute w-16 h-16 rounded-full border-[1.5px] border-champagne/60 ml-6"
       >
-        <motion.div 
-          className="absolute inset-0 rounded-full border-t-[1.5px] border-champagne opacity-80"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-        />
-      </motion.div>
-    </motion.div>
+        <div className="ring-glare ring-glare-counterclockwise absolute inset-0 rounded-full border-t-[1.5px] border-champagne opacity-80" />
+      </div>
+    </div>
   );
 }
 

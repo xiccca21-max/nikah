@@ -168,6 +168,50 @@ textarea {
   }
 }
 
+.rings-enter {
+  animation: ringsEnter 1.4s ease-out both;
+}
+
+.ring-left {
+  transform: rotate(-8deg);
+}
+
+.ring-right {
+  transform: rotate(8deg);
+}
+
+.ring-glare {
+  will-change: transform;
+  filter: drop-shadow(0 0 3px rgba(169, 133, 77, 0.65));
+}
+
+.ring-glare-clockwise {
+  animation: ringGlareClockwise 3s linear infinite;
+}
+
+.ring-glare-counterclockwise {
+  animation: ringGlareCounterclockwise 3s linear infinite;
+}
+
+@keyframes ringsEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ringGlareClockwise {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ringGlareCounterclockwise {
+  to { transform: rotate(-360deg); }
+}
+
 .hero-card {
   border-radius: 2.6rem;
   padding: 3.25rem 1.55rem;
