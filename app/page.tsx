@@ -11,14 +11,14 @@ const ceremony = {
   date: "08.08.2026",
   time: "10:30",
   venue: "Орловский дворец",
-  address: "Набережные Челны, Орловская улица, 209"
+  address: "Орловская ул., 209, посёлок Орловка, Набережные Челны"
 };
 
 const timeline = [
   {
     time: "10:30",
     title: "Сбор гостей",
-    text: "Рады будем встретить вас в Орловском дворце.",
+    text: "Рады будем встретить вас в Орловском дворце, зал «Милли».",
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
@@ -49,7 +49,7 @@ const timeline = [
   {
     time: "18:00",
     title: "Вечерний отдых на базе",
-    text: "Продолжение вечера на базе отдыха. Свободный внешний вид, чтобы можно было расслабиться и не париться.",
+    text: "Продолжение вечера на базе отдыха «Агдаш», дом № 5. Свободный внешний вид, чтобы можно было расслабиться и не париться.",
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 15.631a9 9 0 11-12.261-12.26 9.001 9.001 0 0012.26 12.261z" />
@@ -888,6 +888,9 @@ export default function Home() {
             <Reveal>
                 <div className="text-champagne font-bold text-sm tracking-widest uppercase mb-4">10:30</div>
                 <h2 className="heading">{ceremony.venue}</h2>
+                <div className="mx-auto mt-4 w-fit rounded-full border border-champagne/40 bg-champagne/10 px-5 py-2 text-xs font-bold uppercase tracking-[0.22em] text-champagne">
+                  Зал «Милли»
+                </div>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="mx-auto mt-6 max-w-xl text-sm leading-8 text-espresso/64 md:text-base">
@@ -897,7 +900,7 @@ export default function Home() {
             <Reveal delay={0.12}>
               <div className="mt-8 overflow-hidden rounded-[1.2rem] border border-champagne/30 h-64 w-full relative opacity-90 transition-opacity hover:opacity-100">
                 <iframe 
-                  src="https://maps.google.com/maps?q=Набережные+Челны,+Орловская+улица,+209&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                  src="https://maps.google.com/maps?q=Орловская+ул.,+209,+посёлок+Орловка,+Набережные+Челны&t=&z=15&ie=UTF8&iwloc=&output=embed" 
                   width="100%" 
                   height="100%" 
                   style={{ border: 0, filter: 'grayscale(1) sepia(0.3) hue-rotate(5deg) contrast(0.8) opacity(0.8)' }} 
@@ -917,7 +920,7 @@ export default function Home() {
             <Reveal delay={0.16}>
               <a
                 className="btn-sweep mt-8 inline-flex rounded-full border border-champagne/35 bg-champagne px-7 py-4 text-[0.68rem] font-bold uppercase tracking-[0.26em] text-ivory transition duration-1000 ease-in-out hover:bg-espresso relative"
-                href="https://www.google.com/maps/search/?api=1&query=%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D1%8B%D0%B5%20%D0%A7%D0%B5%D0%BB%D0%BD%D1%8B%2C%20%D0%9E%D1%80%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20209"
+                href="https://www.google.com/maps/search/?api=1&query=%D0%9E%D1%80%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20%D1%83%D0%BB.%2C%20209%2C%20%D0%BF%D0%BE%D1%81%D1%91%D0%BB%D0%BE%D0%BA%20%D0%9E%D1%80%D0%BB%D0%BE%D0%B2%D0%BA%D0%B0%2C%20%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D1%8B%D0%B5%20%D0%A7%D0%B5%D0%BB%D0%BD%D1%8B"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -931,6 +934,9 @@ export default function Home() {
             <Reveal>
                 <div className="text-champagne font-bold text-sm tracking-widest uppercase mb-4">18:00</div>
                 <h2 className="heading">База отдыха «Агдаш»</h2>
+                <div className="mx-auto mt-4 w-fit rounded-full border border-champagne/40 bg-champagne/10 px-5 py-2 text-xs font-bold uppercase tracking-[0.22em] text-champagne">
+                  Дом № 5
+                </div>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="mx-auto mt-6 max-w-xl text-sm leading-8 text-espresso/64 md:text-base">
@@ -940,7 +946,7 @@ export default function Home() {
             <Reveal delay={0.12}>
               <div className="mt-8 overflow-hidden rounded-[1.2rem] border border-champagne/30 h-64 w-full relative opacity-90 transition-opacity hover:opacity-100">
                 <iframe 
-                  src="https://maps.google.com/maps?q=База+отдыха+Агдаш,+Набережные+Челны&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                  src="https://maps.google.com/maps?q=База+отдыха+Агдаш,+Дом+5,+Набережные+Челны&t=&z=15&ie=UTF8&iwloc=&output=embed" 
                   width="100%" 
                   height="100%" 
                   style={{ border: 0, filter: 'grayscale(1) sepia(0.3) hue-rotate(5deg) contrast(0.8) opacity(0.8)' }} 
@@ -960,7 +966,7 @@ export default function Home() {
             <Reveal delay={0.16}>
               <a
                 className="btn-sweep mt-8 inline-flex rounded-full border border-champagne/35 bg-champagne px-7 py-4 text-[0.68rem] font-bold uppercase tracking-[0.26em] text-ivory transition duration-1000 ease-in-out hover:bg-espresso relative"
-                href="https://www.google.com/maps/search/?api=1&query=%D0%91%D0%B0%D0%B7%D0%B0+%D0%BE%D1%82%D0%B4%D1%8B%D1%85%D0%B0+%D0%90%D0%B3%D0%B4%D0%B0%D1%88,+%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D1%8B%D0%B5+%D0%A7%D0%B5%D0%BB%D0%BD%D1%8B"
+                href="https://www.google.com/maps/search/?api=1&query=%D0%91%D0%B0%D0%B7%D0%B0+%D0%BE%D1%82%D0%B4%D1%8B%D1%85%D0%B0+%D0%90%D0%B3%D0%B4%D0%B0%D1%88,+%D0%94%D0%BE%D0%BC+5,+%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D1%8B%D0%B5+%D0%A7%D0%B5%D0%BB%D0%BD%D1%8B"
                 target="_blank"
                 rel="noreferrer"
               >
