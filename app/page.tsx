@@ -148,7 +148,7 @@ function InteractiveRings() {
 
 function Preloader({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
-    const timer = setTimeout(onComplete, 3000);
+    const timer = setTimeout(onComplete, 3800);
     return () => clearTimeout(timer);
   }, [onComplete]);
 
@@ -160,7 +160,10 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
       transition={{ duration: 1.2, delay: 2.2, ease: [0.76, 0, 0.24, 1] }}
       onAnimationComplete={onComplete}
     >
-      <svg width="400" height="200" viewBox="-50 -25 400 200" className="text-champagne drop-shadow-sm overflow-visible">
+      <span className="preloader-monogram-fallback" aria-hidden="true">
+        Д &amp; И
+      </span>
+      <svg width="400" height="200" viewBox="-50 -25 400 200" className="preloader-monogram-drawing text-champagne drop-shadow-sm overflow-visible" aria-label="Д и И">
         <motion.text
           x="150"
           y="50%"
@@ -754,7 +757,7 @@ export default function Home() {
       <div className="ambient-layer" />
       <div className="paper-grain" />
 
-      <section className="relative z-10 flex min-h-screen items-center px-5 py-10 text-center">
+      <section className="hero-section relative z-10 flex min-h-screen items-center px-5 py-10 text-center">
         <div className="mx-auto w-full max-w-[31rem] md:max-w-4xl relative">
           
           <motion.div

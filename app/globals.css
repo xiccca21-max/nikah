@@ -135,6 +135,20 @@ textarea {
     0 2px 12px rgba(255, 255, 255, 0.48);
 }
 
+.preloader-monogram-fallback {
+  position: absolute;
+  color: rgba(169, 133, 77, 0.2);
+  font-family: var(--font-script), cursive;
+  font-size: 4.5rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.preloader-monogram-drawing {
+  position: relative;
+  z-index: 1;
+}
+
 .hero-card {
   border-radius: 2.6rem;
   padding: 3.25rem 1.55rem;
@@ -506,10 +520,25 @@ textarea {
 }
 
 @media (max-width: 767px) {
-  .hero-card,
   .premium-card {
     backdrop-filter: blur(12px) saturate(1.18);
     -webkit-backdrop-filter: blur(12px) saturate(1.18);
+  }
+
+  .hero-card {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    background:
+      linear-gradient(136deg, rgba(255, 255, 255, 0.92), rgba(251, 247, 239, 0.76)),
+      var(--ivory);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .hero-section {
+    isolation: isolate;
   }
 
   .glass-strip,
