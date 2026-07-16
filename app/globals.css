@@ -590,6 +590,24 @@ textarea {
   display: none;
 }
 
+.guest-picker:has(input[name="guestSelected"]:checked) .guest-search {
+  border-color: var(--champagne);
+  background: rgba(169, 133, 77, 0.08);
+  color: var(--champagne);
+  box-shadow: inset 0 0 15px rgba(169, 133, 77, 0.05);
+}
+
+.check-indicator {
+  opacity: 0;
+  transform: translateY(-50%) scale(0.5);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.guest-picker:has(input[name="guestSelected"]:checked) .check-indicator {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
 .guest-options {
   display: none;
   position: relative;

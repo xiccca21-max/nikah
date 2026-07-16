@@ -1194,6 +1194,7 @@ export default function Home() {
                             aria-label="Поиск имени в списке гостей"
                             aria-expanded={isGuestPickerOpen}
                             aria-controls="guest-options"
+                            spellCheck={false}
                             required
                           />
                           <input
@@ -1208,6 +1209,11 @@ export default function Home() {
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
                               <circle cx="11" cy="11" r="7" />
                               <path d="m16.5 16.5 4 4" strokeLinecap="round" />
+                            </svg>
+                          </div>
+                          <div className="check-indicator absolute right-5 top-[2.4rem] -translate-y-1/2 pointer-events-none">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-champagne">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                             </svg>
                           </div>
                           <div
