@@ -1100,6 +1100,18 @@ export default function Home() {
               </button>
               
               <form onSubmit={handleRSVPSubmit} className="mt-8 pb-16">
+                {!isSubmitted && (
+                  <div className="mb-10 flex justify-center gap-2 items-center">
+                    {[1, 2, 3, 4].map((step) => {
+                      const stepsCompleted = [selectedGuest, course1, course2, course3].filter(Boolean).length;
+                      return (
+                      <React.Fragment key={step}>
+                        <div className={`h-2.5 w-2.5 rounded-full transition-all duration-500 ${stepsCompleted >= step ? 'bg-champagne shadow-[0_0_8px_rgba(169,133,77,0.8)] scale-110' : 'bg-champagne/10 border border-champagne/30 scale-100'}`} />
+                        {step < 4 && <div className={`h-[1px] w-6 transition-colors duration-500 ${stepsCompleted >= step ? 'bg-champagne/70' : 'bg-champagne/20'}`} />}
+                      </React.Fragment>
+                    )})}
+                  </div>
+                )}
                 {isSubmitted ? (
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.9 }}

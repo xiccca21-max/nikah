@@ -759,11 +759,6 @@ textarea {
 }
 
 @media (max-width: 767px) {
-  .rsvp-backdrop {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
   .magic-dust {
     display: none;
   }
