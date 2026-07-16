@@ -522,9 +522,10 @@ textarea {
 }
 
 .menu-option:has(input:checked) {
-  border-color: var(--champagne);
-  background: rgba(169, 133, 77, 0.09);
-  color: var(--champagne);
+  border-color: var(--espresso);
+  background: var(--espresso);
+  color: var(--ivory);
+  box-shadow: 0 10px 25px rgba(31, 24, 20, 0.15);
 }
 
 .menu-option::after {
