@@ -1032,7 +1032,8 @@ export default function Home() {
       <Marquee />
 
       <Section eyebrow="Анкета гостя">
-        <Card className="text-center mx-auto max-w-xl">
+        <Card className="text-center mx-auto max-w-xl" >
+          <span id="guest-rsvp" className="absolute -top-24" />
           <Reveal>
             <h2 className="heading shimmer-espresso">Присутствие</h2>
           </Reveal>
@@ -1042,16 +1043,16 @@ export default function Home() {
             </p>
           </Reveal>
           <Reveal delay={0.12}>
-            <button 
-              type="button"
+            <a
+              href="#rsvp-menu"
               onClick={() => {
                 vibrate();
                 setIsRsvpOpen(true);
               }}
-              className="btn-sweep rsvp-button mt-9 cursor-pointer touch-manipulation transition duration-500 ease-out hover:scale-105"
+              className="btn-sweep rsvp-button mt-9 inline-flex cursor-pointer touch-manipulation transition duration-500 ease-out hover:scale-105"
             >
               <span className="relative z-10">Подтвердить присутствие</span>
-            </button>
+            </a>
           </Reveal>
         </Card>
       </Section>
@@ -1085,44 +1086,41 @@ export default function Home() {
         </div>
       </section>
 
-      <AnimatePresence>
-        {isRsvpOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+      <div
+        id="rsvp-menu"
+        className={`rsvp-modal fixed inset-0 z-50 ${isRsvpOpen ? "is-open" : ""}`}
+      >
+            <a
+              href="#guest-rsvp"
+              aria-label="Закрыть анкету"
               onClick={() => {
                 if (!isSubmitting) {
                   vibrate();
                   setIsRsvpOpen(false);
                 }
               }}
-              className="fixed inset-0 z-40 bg-espresso/50 rsvp-backdrop"
+              className="rsvp-modal-backdrop absolute inset-0 bg-espresso/50 rsvp-backdrop"
             />
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-y-0 right-0 z-50 h-[100dvh] w-full max-w-md overflow-y-auto overscroll-contain touch-pan-y bg-ivory/95 px-6 py-12 shadow-2xl md:px-10"
+            <div
+              className="rsvp-modal-drawer absolute inset-y-0 right-0 z-10 h-[100dvh] w-full max-w-md overflow-y-auto overscroll-contain touch-pan-y bg-ivory/95 px-6 py-12 shadow-2xl md:px-10"
               style={{ WebkitOverflowScrolling: "touch", pointerEvents: "auto" }}
               onWheel={(e) => e.stopPropagation()}
             >
-              <button 
+              <a
+                href="#guest-rsvp"
+                aria-label="Закрыть анкету"
                 onClick={() => {
                   if (!isSubmitting) {
                     vibrate();
                     setIsRsvpOpen(false);
                   }
                 }}
-                disabled={isSubmitting}
-                className="absolute right-6 top-6 rounded-full p-2 text-espresso/60 transition-colors hover:bg-champagne/10 hover:text-espresso disabled:opacity-50"
+                className="absolute right-6 top-6 rounded-full p-2 text-espresso/60 transition-colors hover:bg-champagne/10 hover:text-espresso"
               >
                 <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
-              </button>
+              </a>
               
               <form onSubmit={handleRSVPSubmit} className="mt-8 pb-16">
                 {!isSubmitted && (
@@ -1347,10 +1345,8 @@ export default function Home() {
                   </>
                 )}
               </form>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+            </div>
+      </div>
     </main>
   );
 }
