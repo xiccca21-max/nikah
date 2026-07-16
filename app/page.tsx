@@ -156,20 +156,33 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
     <div
       className="preloader-shell fixed inset-0 z-[9999] flex items-center justify-center bg-ivory rounded-b-[2rem] md:rounded-b-[4rem]"
     >
-      <span className="preloader-monogram-fallback" aria-hidden="true">
-        Д &amp; И
-      </span>
       <svg width="400" height="200" viewBox="-50 -25 400 200" className="preloader-monogram-drawing text-champagne drop-shadow-sm overflow-visible" aria-label="Д и И">
+        <defs>
+          <clipPath id="preloader-reveal">
+            <rect x="-50" y="-25" width="0" height="200">
+              <animate
+                attributeName="width"
+                from="0"
+                to="400"
+                dur="2.15s"
+                calcMode="spline"
+                keySplines="0.42 0 0.58 1"
+                fill="freeze"
+              />
+            </rect>
+          </clipPath>
+        </defs>
         <text
           x="150"
           y="50%"
           textAnchor="middle"
           dominantBaseline="middle"
-          fill="none"
+          fill="currentColor"
           stroke="currentColor"
-          strokeWidth="1.5"
+          strokeWidth="0.8"
           style={{ fontFamily: "var(--font-script)" }}
-          className="preloader-monogram-stroke text-[4.5rem]"
+          className="text-[4.5rem]"
+          clipPath="url(#preloader-reveal)"
         >
           Д & И
         </text>

@@ -141,40 +141,9 @@ textarea {
   will-change: transform;
 }
 
-.preloader-monogram-fallback {
-  position: absolute;
-  color: rgba(169, 133, 77, 0.16);
-  font-family: var(--font-script), cursive;
-  font-size: 4.5rem;
-  line-height: 1;
-  white-space: nowrap;
-  animation: preloaderFallback 0.5s ease 1.85s forwards;
-}
-
 .preloader-monogram-drawing {
   position: relative;
   z-index: 1;
-}
-
-.preloader-monogram-stroke {
-  fill: transparent;
-  stroke-dasharray: 3000;
-  stroke-dashoffset: 3000;
-  animation:
-    preloaderDraw 2.15s ease-in-out forwards,
-    preloaderFill 0.65s ease 1.55s forwards;
-}
-
-@keyframes preloaderDraw {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes preloaderFill {
-  to { fill: var(--champagne); }
-}
-
-@keyframes preloaderFallback {
-  to { opacity: 0; }
 }
 
 @keyframes preloaderExit {
