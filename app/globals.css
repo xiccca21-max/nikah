@@ -31,6 +31,10 @@
 }
 
 html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
   background: var(--ivory);
   color: var(--espresso);
   scroll-behavior: auto;
@@ -52,14 +56,25 @@ html {
 }
 
 body {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
+  overscroll-behavior-x: none;
   background:
     radial-gradient(circle at 14% 4%, rgba(251, 247, 239, 0.92), transparent 26rem),
     radial-gradient(circle at 86% 20%, rgba(139, 118, 99, 0.16), transparent 28rem),
     linear-gradient(180deg, #f7f1e9 0%, #e7dbcc 48%, #f4ede4 100%);
   color: var(--espresso);
+}
+
+@supports (overflow: clip) {
+  html,
+  body {
+    overflow-x: clip;
+  }
 }
 
 button,
