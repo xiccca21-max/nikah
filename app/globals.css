@@ -31,8 +31,6 @@
 }
 
 html {
-  width: 100%;
-  max-width: 100%;
   overflow-x: hidden;
   overscroll-behavior-x: none;
   touch-action: pan-y pinch-zoom;
@@ -57,9 +55,6 @@ html {
 }
 
 body {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
@@ -1028,12 +1023,12 @@ textarea {
 .marquee-container {
   overflow: hidden;
   white-space: nowrap;
-  width: 100vw;
+  width: 100%;
   position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  left: 0;
+  right: auto;
+  margin-left: 0;
+  margin-right: 0;
   padding: 1.25rem 0;
   border-top: 1px solid rgba(169, 133, 77, 0.2);
   border-bottom: 1px solid rgba(169, 133, 77, 0.2);

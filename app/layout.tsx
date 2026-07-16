@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Manrope, Playfair_Display, Cormorant_Garamond } from "next/font/google";
 import localFont from "next/font/local";
@@ -62,6 +62,12 @@ const garamond = localFont({
 export const metadata: Metadata = {
   title: "Данис и Инесса | Приглашение на никах",
   description: "Онлайн-приглашение на никах Данис & Инесса, 08.08.2026."
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "auto"
 };
 
 export default function RootLayout({
