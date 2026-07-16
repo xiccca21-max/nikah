@@ -720,7 +720,9 @@ export default function Home() {
       </AnimatePresence>
 
       <div className="passepartout-frame" />
+      <div className="vignette-overlay" />
       <div className="editorial-grid" />
+      <div className="botanical-shadow" />
       {isRsvpOpen && (
         <style dangerouslySetInnerHTML={{__html: `body { overflow: hidden; }`}} />
       )}
