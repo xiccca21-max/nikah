@@ -484,24 +484,69 @@ textarea {
   font-size: 0.82rem;
   font-weight: 700;
   transition:
-    border-color 0.5s ease-in-out,
-    background 0.5s ease-in-out,
-    color 0.5s ease-in-out,
-    box-shadow 0.5s ease-in-out,
-    transform 0.5s ease-in-out;
+    border-color 120ms ease-out,
+    background-color 120ms ease-out,
+    color 120ms ease-out;
+  border-color: rgba(169, 133, 77, 0.2);
+  background: transparent;
 }
 
-.menu-option:hover {
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .menu-option:hover {
+    border-color: rgba(169, 133, 77, 0.42);
+  }
 }
 
 .menu-option:has(input:checked) {
-  border-color: rgba(169, 133, 77, 0.68);
-  background:
-    linear-gradient(145deg, rgba(169, 133, 77, 0.18), rgba(251, 247, 239, 0.28)),
-    rgba(169, 133, 77, 0.12);
-  color: var(--espresso);
-  transform: translateY(-1px);
+  border-color: var(--champagne);
+  background: rgba(169, 133, 77, 0.09);
+  color: var(--champagne);
+}
+
+.menu-option::after {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.9rem;
+  content: "✓";
+  color: var(--champagne);
+  font-size: 0.85rem;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.menu-option:has(input:checked)::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.rsvp-step {
+  width: 0.625rem;
+  height: 0.625rem;
+  border: 1px solid rgba(169, 133, 77, 0.34);
+  border-radius: 999px;
+  background: rgba(169, 133, 77, 0.08);
+  transition: background-color 120ms ease-out, border-color 120ms ease-out;
+}
+
+.rsvp-step-line {
+  width: 1.5rem;
+  height: 1px;
+  background: rgba(169, 133, 77, 0.2);
+  transition: background-color 120ms ease-out;
+}
+
+.rsvp-form:has(select:valid) .rsvp-step-1,
+.rsvp-form:has(input[name="course1"]:checked) .rsvp-step-2,
+.rsvp-form:has(input[name="course2"]:checked) .rsvp-step-3,
+.rsvp-form:has(input[name="course3"]:checked) .rsvp-step-4 {
+  border-color: var(--champagne);
+  background: var(--champagne);
+}
+
+.rsvp-form:has(input[name="course1"]:checked) .rsvp-step-line-1,
+.rsvp-form:has(input[name="course2"]:checked) .rsvp-step-line-2,
+.rsvp-form:has(input[name="course3"]:checked) .rsvp-step-line-3 {
+  background: rgba(169, 133, 77, 0.72);
 }
 
 .timeline-title {
@@ -894,13 +939,6 @@ textarea {
   transform: translate3d(0, 0, 0);
 }
 
-.menu-option:has(input:checked) {
-  border-color: var(--champagne);
-  background: rgba(169, 133, 77, 0.05);
-  box-shadow: inset 0 0 20px rgba(169, 133, 77, 0.1);
-  color: var(--champagne);
-}
-
 @media (max-width: 767px) {
   .magic-dust {
     display: none;
@@ -909,6 +947,44 @@ textarea {
   .paper-grain {
     opacity: 0.14;
     mix-blend-mode: normal;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .hero-card,
+  .premium-card,
+  .glass-strip,
+  .glass-pill,
+  .image-frame,
+  .field-input {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .premium-card,
+  .glass-strip,
+  .glass-pill,
+  .field-input {
+    background-color: rgba(251, 247, 239, 0.82);
+  }
+
+  .rsvp-backdrop {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  .marquee-container {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .ring-glare {
+    filter: none;
+  }
+
+  .shimmer-gold,
+  .shimmer-espresso {
+    animation-duration: 7s;
   }
 }
 

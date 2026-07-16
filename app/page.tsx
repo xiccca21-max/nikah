@@ -1095,15 +1095,14 @@ export default function Home() {
                 </svg>
               </a>
               
-              <form onSubmit={handleRSVPSubmit} className="mt-8 pb-16">
+              <form onSubmit={handleRSVPSubmit} className="rsvp-form mt-8 pb-16">
                 {!isSubmitted && (
                   <div className="mb-10 flex justify-center gap-2 items-center">
                     {[1, 2, 3, 4].map((step) => {
-                      const stepsCompleted = [selectedGuest, course1, course2, course3].filter(Boolean).length;
                       return (
                       <React.Fragment key={step}>
-                        <div className={`h-2.5 w-2.5 rounded-full transition-all duration-500 ${stepsCompleted >= step ? 'bg-champagne shadow-[0_0_8px_rgba(169,133,77,0.8)] scale-110' : 'bg-champagne/10 border border-champagne/30 scale-100'}`} />
-                        {step < 4 && <div className={`h-[1px] w-6 transition-colors duration-500 ${stepsCompleted >= step ? 'bg-champagne/70' : 'bg-champagne/20'}`} />}
+                        <div className={`rsvp-step rsvp-step-${step}`} />
+                        {step < 4 && <div className={`rsvp-step-line rsvp-step-line-${step}`} />}
                       </React.Fragment>
                     )})}
                   </div>
@@ -1168,7 +1167,7 @@ export default function Home() {
                       </div>
                       <div className="grid gap-3">
                         {menuCourses.course1.map((item) => (
-                          <label key={item} className={`menu-option relative overflow-hidden transition-all duration-500 cursor-pointer border px-4 py-4 text-center rounded-[1.2rem] ${course1 === item ? 'border-champagne bg-champagne/5 shadow-[inset_0_0_20px_rgba(169,133,77,0.1)]' : 'border-champagne/20 bg-transparent hover:border-champagne/40'}`}>
+                          <label key={item} className="menu-option relative overflow-hidden cursor-pointer border px-4 py-4 text-center rounded-[1.2rem]">
                             <input 
                               type="radio" 
                               name="course1" 
@@ -1177,15 +1176,10 @@ export default function Home() {
                               onChange={(e) => setCourse1(e.target.value)}
                               className="peer sr-only" 
                             />
-                            <span className={`relative z-10 flex flex-col items-center gap-2 transition-colors duration-500 ${course1 === item ? 'text-champagne' : 'text-espresso/70'}`}>
+                            <span className="relative z-10 flex flex-col items-center gap-2">
                               <span className="font-display text-lg leading-tight">{item.split(' с ')[0]}</span>
                               {item.includes(' с ') && <span className="text-[0.65rem] uppercase tracking-widest opacity-70">с {item.split(' с ')[1]}</span>}
                             </span>
-                            <div className={`absolute top-3 right-4 transition-all duration-500 ${course1 === item ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-champagne">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                              </svg>
-                            </div>
                           </label>
                         ))}
                       </div>
@@ -1208,7 +1202,7 @@ export default function Home() {
                       </div>
                       <div className="grid gap-3">
                         {menuCourses.course2.map((item) => (
-                          <label key={item} className={`menu-option relative overflow-hidden transition-all duration-500 cursor-pointer border px-4 py-4 text-center rounded-[1.2rem] ${course2 === item ? 'border-champagne bg-champagne/5 shadow-[inset_0_0_20px_rgba(169,133,77,0.1)]' : 'border-champagne/20 bg-transparent hover:border-champagne/40'}`}>
+                          <label key={item} className="menu-option relative overflow-hidden cursor-pointer border px-4 py-4 text-center rounded-[1.2rem]">
                             <input 
                               type="radio" 
                               name="course2" 
@@ -1217,15 +1211,10 @@ export default function Home() {
                               onChange={(e) => setCourse2(e.target.value)}
                               className="peer sr-only" 
                             />
-                            <span className={`relative z-10 flex flex-col items-center gap-2 transition-colors duration-500 ${course2 === item ? 'text-champagne' : 'text-espresso/70'}`}>
+                            <span className="relative z-10 flex flex-col items-center gap-2">
                               <span className="font-display text-lg leading-tight">{item.split(' с ')[0]}</span>
                               {item.includes(' с ') && <span className="text-[0.65rem] uppercase tracking-widest opacity-70">с {item.split(' с ')[1]}</span>}
                             </span>
-                            <div className={`absolute top-3 right-4 transition-all duration-500 ${course2 === item ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-champagne">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                              </svg>
-                            </div>
                           </label>
                         ))}
                       </div>
@@ -1247,7 +1236,7 @@ export default function Home() {
                       </div>
                       <div className="grid gap-3">
                         {menuCourses.course3.map((item) => (
-                          <label key={item} className={`menu-option relative overflow-hidden transition-all duration-500 cursor-pointer border px-4 py-4 text-center rounded-[1.2rem] ${course3 === item ? 'border-champagne bg-champagne/5 shadow-[inset_0_0_20px_rgba(169,133,77,0.1)]' : 'border-champagne/20 bg-transparent hover:border-champagne/40'}`}>
+                          <label key={item} className="menu-option relative overflow-hidden cursor-pointer border px-4 py-4 text-center rounded-[1.2rem]">
                             <input 
                               type="radio" 
                               name="course3" 
@@ -1256,15 +1245,10 @@ export default function Home() {
                               onChange={(e) => setCourse3(e.target.value)}
                               className="peer sr-only" 
                             />
-                            <span className={`relative z-10 flex flex-col items-center gap-2 transition-colors duration-500 ${course3 === item ? 'text-champagne' : 'text-espresso/70'}`}>
+                            <span className="relative z-10 flex flex-col items-center gap-2">
                               <span className="font-display text-lg leading-tight">{item.split(' с ')[0]}</span>
                               {item.includes(' с ') && <span className="text-[0.65rem] uppercase tracking-widest opacity-70">с {item.split(' с ')[1]}</span>}
                             </span>
-                            <div className={`absolute top-3 right-4 transition-all duration-500 ${course3 === item ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-champagne">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                              </svg>
-                            </div>
                           </label>
                         ))}
                       </div>
