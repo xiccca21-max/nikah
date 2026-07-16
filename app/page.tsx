@@ -156,37 +156,23 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
     <div
       className="preloader-shell fixed inset-0 z-[9999] flex items-center justify-center bg-ivory rounded-b-[2rem] md:rounded-b-[4rem]"
     >
-      <svg width="400" height="200" viewBox="-50 -25 400 200" className="preloader-monogram-drawing text-champagne drop-shadow-sm overflow-visible" aria-label="Д и И">
-        <defs>
-          <clipPath id="preloader-reveal">
-            <rect x="-50" y="-25" width="0" height="200">
-              <animate
-                attributeName="width"
-                from="0"
-                to="400"
-                dur="2.15s"
-                calcMode="spline"
-                keySplines="0.42 0 0.58 1"
-                fill="freeze"
-              />
-            </rect>
-          </clipPath>
-        </defs>
-        <text
-          x="150"
-          y="50%"
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fill="currentColor"
-          stroke="currentColor"
-          strokeWidth="0.8"
-          style={{ fontFamily: "var(--font-script)" }}
-          className="text-[4.5rem]"
-          clipPath="url(#preloader-reveal)"
-        >
-          Д & И
-        </text>
-      </svg>
+      <div className="preloader-monogram-reveal">
+        <svg viewBox="-100 -50 500 250" className="preloader-monogram-drawing text-champagne drop-shadow-sm" aria-label="Д и И">
+          <text
+            x="150"
+            y="50%"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fill="currentColor"
+            stroke="currentColor"
+            strokeWidth="0.8"
+            style={{ fontFamily: "var(--font-script)" }}
+            className="text-[4.5rem]"
+          >
+            Д & И
+          </text>
+        </svg>
+      </div>
     </div>
   );
 }
@@ -286,35 +272,14 @@ function AudioPlayer() {
     };
   }, []);
 
-  const togglePlay = () => {
-    vibrate();
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (!audio.paused) {
-      audio.pause();
-      setIsPlaying(false);
-    } else {
-      audio.play()
-        .then(() => setIsPlaying(true))
-        .catch((err) => {
-          console.error("Audio play failed:", err);
-          setIsPlaying(false);
-        });
-    }
-  };
-
   return (
     <div className="audio-btn glass-pill shadow-xl">
       {!isPlaying && (
         <span className="pointer-events-none absolute inline-flex h-full w-full animate-ping rounded-full bg-champagne/40 opacity-75"></span>
       )}
-      <button
-        type="button"
-        data-audio-control
-        aria-label={isPlaying ? "Выключить музыку" : "Включить музыку"}
-        onClick={togglePlay}
-        className="w-full h-full cursor-pointer touch-manipulation flex items-center justify-center rounded-full text-champagne relative z-10"
+      <div
+        aria-hidden="true"
+        className="pointer-events-none w-full h-full flex items-center justify-center rounded-full text-champagne relative z-10"
       >
         {isPlaying ? (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -328,8 +293,20 @@ function AudioPlayer() {
             <circle cx="18" cy="16" r="3" fill="currentColor"/>
           </svg>
         )}
-      </button>
-      <audio ref={audioRef} loop autoPlay src="/music.mp3" preload="auto" />
+      </div>
+      <audio
+        ref={audioRef}
+        loop
+        autoPlay
+        controls
+        src="/music.mp3"
+        preload="auto"
+        aria-label="Музыкальное сопровождение"
+        data-audio-control
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        className="native-audio-control"
+      />
     </div>
   );
 }

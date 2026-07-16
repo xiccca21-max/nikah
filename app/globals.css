@@ -142,8 +142,23 @@ textarea {
 }
 
 .preloader-monogram-drawing {
-  position: relative;
-  z-index: 1;
+  display: block;
+  width: min(90vw, 25rem);
+  height: auto;
+}
+
+.preloader-monogram-reveal {
+  -webkit-clip-path: inset(0 100% 0 0);
+  clip-path: inset(0 100% 0 0);
+  animation: preloaderReveal 2.15s ease-in-out forwards;
+  will-change: clip-path;
+}
+
+@keyframes preloaderReveal {
+  to {
+    -webkit-clip-path: inset(0 -10% 0 0);
+    clip-path: inset(0 -10% 0 0);
+  }
 }
 
 @keyframes preloaderExit {
@@ -690,6 +705,17 @@ textarea {
 
 .audio-btn:hover {
   transform: scale(1.05);
+}
+
+.native-audio-control {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.01;
+  cursor: pointer;
 }
 
 .hairline-border {
