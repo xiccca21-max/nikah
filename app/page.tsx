@@ -1232,14 +1232,14 @@ export default function Home() {
                             tabIndex={-1}
                             className="sr-only"
                           />
-                          <div className="absolute left-5 top-[2.4rem] -translate-y-1/2 pointer-events-none text-champagne/60">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                          <div className="absolute left-5 top-[2.55rem] -translate-y-1/2 pointer-events-none text-champagne/60">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
                               <circle cx="11" cy="11" r="7" />
                               <path d="m16.5 16.5 4 4" strokeLinecap="round" />
                             </svg>
                           </div>
-                          <div className="check-indicator absolute right-5 top-[2.4rem] -translate-y-1/2 pointer-events-none">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-champagne">
+                          <div className="check-indicator absolute right-5 top-[2.55rem] -translate-y-1/2 pointer-events-none">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-champagne">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                             </svg>
                           </div>
@@ -1387,7 +1387,7 @@ export default function Home() {
                           <ul className="text-left text-[0.8rem] space-y-2 text-espresso/70 relative z-10">
                             <li className="flex justify-between items-center border-b border-champagne/10 pb-1">
                               <span className="opacity-60">Салат</span>
-                              <span className="font-medium text-espresso">{course1.split(' с ')[0]}</span>
+                              <span className="font-medium text-right text-espresso">{course1}</span>
                             </li>
                             <li className="flex justify-between items-center border-b border-champagne/10 pb-1">
                               <span className="opacity-60">Суп</span>
