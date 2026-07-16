@@ -240,7 +240,7 @@ function AudioPlayer() {
   useEffect(() => {
     const audio = audioRef.current;
     if (audio) {
-      audio.volume = 0.75;
+      audio.volume = 0.6;
       
       // Пытаемся запустить музыку сразу (сработает на десктопе, но может блокироваться на iOS/Android)
       const playPromise = audio.play();
@@ -308,7 +308,13 @@ function AudioPlayer() {
         preload="auto"
         aria-label="Музыкальное сопровождение"
         data-audio-control
-        onPlay={() => setIsPlaying(true)}
+        onLoadedMetadata={(event) => {
+          event.currentTarget.volume = 0.6;
+        }}
+        onPlay={(event) => {
+          event.currentTarget.volume = 0.6;
+          setIsPlaying(true);
+        }}
         onPause={() => setIsPlaying(false)}
         className="native-audio-control"
       />
