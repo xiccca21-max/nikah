@@ -1158,10 +1158,14 @@ export default function Home() {
                     </div>
 
                     <div className="mt-10">
-                      <p className="menu-title mb-4">Салат</p>
+                      <div className="flex items-center justify-center gap-3 mb-6">
+                        <div className="h-px w-8 bg-gradient-to-r from-transparent to-champagne/40" />
+                        <h3 className="font-display text-2xl italic text-champagne/90">Салаты</h3>
+                        <div className="h-px w-8 bg-gradient-to-l from-transparent to-champagne/40" />
+                      </div>
                       <div className="grid gap-3">
                         {menuCourses.course1.map((item) => (
-                          <label key={item} className="menu-option relative overflow-hidden">
+                          <label key={item} className={`menu-option relative overflow-hidden transition-all duration-500 cursor-pointer border px-4 py-4 text-center rounded-[1.2rem] ${course1 === item ? 'border-champagne bg-champagne/5 shadow-[inset_0_0_20px_rgba(169,133,77,0.1)]' : 'border-champagne/20 bg-transparent hover:border-champagne/40'}`}>
                             <input 
                               type="radio" 
                               name="course1" 
@@ -1170,23 +1174,29 @@ export default function Home() {
                               onChange={(e) => setCourse1(e.target.value)}
                               className="peer sr-only" 
                             />
-                            <div className="absolute inset-0 bg-gradient-to-r from-champagne/20 to-transparent opacity-0 peer-checked:opacity-100 transition-opacity duration-500" />
-                            <span className="relative z-10 flex items-center gap-3">
-                              <span className="flex-shrink-0 flex items-center justify-center w-4 h-4 rounded-full border border-champagne/50 peer-checked:border-champagne bg-white/50 shadow-inner transition-all duration-300">
-                                <span className={`w-2 h-2 rounded-full bg-champagne shadow-[0_0_8px_rgba(169,133,77,0.8)] transition-transform duration-300 ${course1 === item ? 'scale-100' : 'scale-0'}`} />
-                              </span>
-                              {item}
+                            <span className={`relative z-10 flex flex-col items-center gap-2 transition-colors duration-500 ${course1 === item ? 'text-champagne' : 'text-espresso/70'}`}>
+                              <span className="font-display text-lg leading-tight">{item.split(' с ')[0]}</span>
+                              {item.includes(' с ') && <span className="text-[0.65rem] uppercase tracking-widest opacity-70">с {item.split(' с ')[1]}</span>}
                             </span>
+                            <div className={`absolute top-3 right-4 transition-all duration-500 ${course1 === item ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-champagne">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                              </svg>
+                            </div>
                           </label>
                         ))}
                       </div>
                     </div>
 
-                    <div className="mt-8">
-                      <p className="menu-title mb-4">Суп</p>
+                    <div className="mt-10">
+                      <div className="flex items-center justify-center gap-3 mb-6">
+                        <div className="h-px w-8 bg-gradient-to-r from-transparent to-champagne/40" />
+                        <h3 className="font-display text-2xl italic text-champagne/90">Супы</h3>
+                        <div className="h-px w-8 bg-gradient-to-l from-transparent to-champagne/40" />
+                      </div>
                       <div className="grid gap-3">
                         {menuCourses.course2.map((item) => (
-                          <label key={item} className="menu-option relative overflow-hidden">
+                          <label key={item} className={`menu-option relative overflow-hidden transition-all duration-500 cursor-pointer border px-4 py-4 text-center rounded-[1.2rem] ${course2 === item ? 'border-champagne bg-champagne/5 shadow-[inset_0_0_20px_rgba(169,133,77,0.1)]' : 'border-champagne/20 bg-transparent hover:border-champagne/40'}`}>
                             <input 
                               type="radio" 
                               name="course2" 
@@ -1195,23 +1205,29 @@ export default function Home() {
                               onChange={(e) => setCourse2(e.target.value)}
                               className="peer sr-only" 
                             />
-                            <div className="absolute inset-0 bg-gradient-to-r from-champagne/20 to-transparent opacity-0 peer-checked:opacity-100 transition-opacity duration-500" />
-                            <span className="relative z-10 flex items-center gap-3">
-                              <span className="flex-shrink-0 flex items-center justify-center w-4 h-4 rounded-full border border-champagne/50 peer-checked:border-champagne bg-white/50 shadow-inner transition-all duration-300">
-                                <span className={`w-2 h-2 rounded-full bg-champagne shadow-[0_0_8px_rgba(169,133,77,0.8)] transition-transform duration-300 ${course2 === item ? 'scale-100' : 'scale-0'}`} />
-                              </span>
-                              {item}
+                            <span className={`relative z-10 flex flex-col items-center gap-2 transition-colors duration-500 ${course2 === item ? 'text-champagne' : 'text-espresso/70'}`}>
+                              <span className="font-display text-lg leading-tight">{item.split(' с ')[0]}</span>
+                              {item.includes(' с ') && <span className="text-[0.65rem] uppercase tracking-widest opacity-70">с {item.split(' с ')[1]}</span>}
                             </span>
+                            <div className={`absolute top-3 right-4 transition-all duration-500 ${course2 === item ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-champagne">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                              </svg>
+                            </div>
                           </label>
                         ))}
                       </div>
                     </div>
 
-                    <div className="mt-8">
-                      <p className="menu-title mb-4">Горячее</p>
+                    <div className="mt-10">
+                      <div className="flex items-center justify-center gap-3 mb-6">
+                        <div className="h-px w-8 bg-gradient-to-r from-transparent to-champagne/40" />
+                        <h3 className="font-display text-2xl italic text-champagne/90">Горячее</h3>
+                        <div className="h-px w-8 bg-gradient-to-l from-transparent to-champagne/40" />
+                      </div>
                       <div className="grid gap-3">
                         {menuCourses.course3.map((item) => (
-                          <label key={item} className="menu-option relative overflow-hidden">
+                          <label key={item} className={`menu-option relative overflow-hidden transition-all duration-500 cursor-pointer border px-4 py-4 text-center rounded-[1.2rem] ${course3 === item ? 'border-champagne bg-champagne/5 shadow-[inset_0_0_20px_rgba(169,133,77,0.1)]' : 'border-champagne/20 bg-transparent hover:border-champagne/40'}`}>
                             <input 
                               type="radio" 
                               name="course3" 
@@ -1220,13 +1236,15 @@ export default function Home() {
                               onChange={(e) => setCourse3(e.target.value)}
                               className="peer sr-only" 
                             />
-                            <div className="absolute inset-0 bg-gradient-to-r from-champagne/20 to-transparent opacity-0 peer-checked:opacity-100 transition-opacity duration-500" />
-                            <span className="relative z-10 flex items-center gap-3">
-                              <span className="flex-shrink-0 flex items-center justify-center w-4 h-4 rounded-full border border-champagne/50 peer-checked:border-champagne bg-white/50 shadow-inner transition-all duration-300">
-                                <span className={`w-2 h-2 rounded-full bg-champagne shadow-[0_0_8px_rgba(169,133,77,0.8)] transition-transform duration-300 ${course3 === item ? 'scale-100' : 'scale-0'}`} />
-                              </span>
-                              {item}
+                            <span className={`relative z-10 flex flex-col items-center gap-2 transition-colors duration-500 ${course3 === item ? 'text-champagne' : 'text-espresso/70'}`}>
+                              <span className="font-display text-lg leading-tight">{item.split(' с ')[0]}</span>
+                              {item.includes(' с ') && <span className="text-[0.65rem] uppercase tracking-widest opacity-70">с {item.split(' с ')[1]}</span>}
                             </span>
+                            <div className={`absolute top-3 right-4 transition-all duration-500 ${course3 === item ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-champagne">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                              </svg>
+                            </div>
                           </label>
                         ))}
                       </div>
