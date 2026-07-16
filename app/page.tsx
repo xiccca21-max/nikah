@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Lenis from "lenis";
-import { guests, menuCourses } from "@/lib/invitation-data";
+import { menuCourses, type Guest } from "@/lib/invitation-data";
 
 const ceremony = {
   date: "08.08.2026",
@@ -649,6 +649,9 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [guests, setGuests] = useState<Guest[]>([]);
+  const [guestLoadError, setGuestLoadError] = useState("");
+  const [submitError, setSubmitError] = useState("");
   
   const scheduleRef = useRef<HTMLDivElement>(null);
   const guestQuery = guestSearch.trim().toLocaleLowerCase("ru");
@@ -686,6 +689,32 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => setIsPreloaderDone(true), 3500);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    let isActive = true;
+
+    fetch("/api/guests", { cache: "no-store" })
+      .then(async (response) => {
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error ?? "Не удалось загрузить список гостей");
+        }
+        if (isActive) {
+          setGuests(data);
+        }
+      })
+      .catch((error) => {
+        if (isActive) {
+          setGuestLoadError(
+            error instanceof Error ? error.message : "Не удалось загрузить список гостей"
+          );
+        }
+      });
+
+    return () => {
+      isActive = false;
+    };
   }, []);
   const { scrollYProgress: scheduleProgress } = useScroll({
     target: scheduleRef,
@@ -734,18 +763,42 @@ export default function Home() {
     }
   };
 
-  const handleRSVPSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleRSVPSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedGuest || !course1 || !course2 || !course3) return;
-    
+
     setIsSubmitting(true);
-    // Имитация отправки данных
-    setTimeout(() => {
+    setSubmitError("");
+
+    try {
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          guestId: selectedGuest,
+          course1,
+          course2,
+          course3
+        })
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "Не удалось сохранить ответ");
+      }
+
       setIsSubmitting(false);
       setIsSubmitted(true);
       setIsConfirmModalOpen(false);
       vibrate();
-    }, 1500);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Не удалось сохранить ответ"
+      );
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -1215,8 +1268,9 @@ export default function Home() {
                               name="guestName"
                               type="search"
                               autoComplete="off"
-                              placeholder="Ввести имя"
+                              placeholder={guests.length ? "Ввести имя" : "Загрузка списка..."}
                               value={guestSearch}
+                              disabled={!guests.length || Boolean(guestLoadError)}
                               onFocus={() => setIsGuestPickerOpen(true)}
                               onChange={(event) => {
                                 const value = event.target.value;
@@ -1281,6 +1335,11 @@ export default function Home() {
                             <p className="guest-empty" hidden={visibleGuestIndexes.size > 0}>Имя не найдено</p>
                           </div>
                         </div>
+                        {guestLoadError && (
+                          <p className="mt-3 text-center text-xs normal-case tracking-normal text-red-700">
+                            {guestLoadError}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -1443,6 +1502,11 @@ export default function Home() {
                   <span className="font-medium text-espresso">{course3.split(" с ")[0]}</span>
                 </li>
               </ul>
+              {submitError && (
+                <p className="relative z-10 mb-5 text-center text-sm text-red-700">
+                  {submitError}
+                </p>
+              )}
               <div className="relative z-10 flex flex-col gap-3">
                 <button
                   type="submit"
