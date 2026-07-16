@@ -755,7 +755,7 @@ export default function Home() {
     <main className="relative min-h-screen overflow-hidden bg-ivory font-sans text-espresso">
       <script
         dangerouslySetInnerHTML={{
-          __html: `(function(){if("scrollRestoration" in history){history.scrollRestoration="manual";}if(location.hash){history.replaceState(null,"",location.pathname+location.search);}function top(){window.scrollTo(0,0);document.documentElement.scrollTop=0;if(document.body){document.body.scrollTop=0;}}top();requestAnimationFrame(top);setTimeout(top,150);window.addEventListener("pageshow",top);})();`
+          __html: `(function(){if("scrollRestoration" in history){history.scrollRestoration="manual";}if(location.hash){history.replaceState(null,"",location.pathname+location.search);}function top(){window.scrollTo(0,0);document.documentElement.scrollTop=0;if(document.body){document.body.scrollTop=0;}}top();requestAnimationFrame(top);setTimeout(top,150);window.addEventListener("pageshow",top);if(!window.__nikahHorizontalLock){window.__nikahHorizontalLock=true;var startX=0,startY=0;document.addEventListener("touchstart",function(event){if(event.touches.length===1){startX=event.touches[0].clientX;startY=event.touches[0].clientY;}},{passive:true});document.addEventListener("touchmove",function(event){if(event.touches.length!==1)return;var dx=event.touches[0].clientX-startX;var dy=event.touches[0].clientY-startY;if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>4){event.preventDefault();}},{passive:false});}})();`
         }}
       />
       {/* Reading Progress */}

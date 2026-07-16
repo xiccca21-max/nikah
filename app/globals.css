@@ -35,6 +35,7 @@ html {
   max-width: 100%;
   overflow-x: hidden;
   overscroll-behavior-x: none;
+  touch-action: pan-y pinch-zoom;
   background: var(--ivory);
   color: var(--espresso);
   scroll-behavior: auto;
@@ -63,6 +64,7 @@ body {
   margin: 0;
   overflow-x: hidden;
   overscroll-behavior-x: none;
+  touch-action: pan-y pinch-zoom;
   background:
     radial-gradient(circle at 14% 4%, rgba(251, 247, 239, 0.92), transparent 26rem),
     radial-gradient(circle at 86% 20%, rgba(139, 118, 99, 0.16), transparent 28rem),
