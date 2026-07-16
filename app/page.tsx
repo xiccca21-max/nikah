@@ -58,13 +58,12 @@ const timeline = [
 ];
 
 const menuCourses = {
-  course1: ["Салат с ростбифом", "Цезарь с креветками"],
-  course2: ["Домашняя лапша", "Уха"],
-  course3: ["Стейк из лосося", "Стейк из говядины"]
+  course1: ["Салат с Ростбифом", "Цезарь с креветкой"],
+  course2: ["Лапша по домашнему с треугольником", "Уха сливочная"],
+  course3: ["Стейк из говядины с брусничным соусом", "Стейк из сёмги с соусом сливочное песто"]
 };
 
 const guestList = [
-  "Выберите свое имя",
   "Алина и Руслан",
   "Тимур",
   "Эльвира",
@@ -684,7 +683,7 @@ export default function Home() {
 
   const handleRSVPSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!selectedGuest || selectedGuest === guestList[0] || !course1 || !course2 || !course3) return;
+    if (!selectedGuest || !course1 || !course2 || !course3) return;
     
     setIsSubmitting(true);
     // Имитация отправки данных
@@ -1121,13 +1120,14 @@ export default function Home() {
                         <p className="mt-2 mb-3 text-[0.6rem] normal-case tracking-normal text-espresso/40">Обязательно выберите свое имя из списка, чтобы мы ничего не перепутали.</p>
                         <div className="relative">
                           <select 
-                            className="field-input appearance-none bg-transparent w-full"
+                            className="field-input appearance-none bg-transparent w-full text-center font-medium shadow-sm transition-all hover:shadow-md cursor-pointer rounded-[1.8rem] !py-[1.15rem]"
                             value={selectedGuest}
                             onChange={(e) => setSelectedGuest(e.target.value)}
                             required
                           >
-                            {guestList.map((guest, idx) => (
-                              <option key={guest} value={guest} disabled={idx === 0} className="text-espresso bg-ivory">
+                            <option value="" disabled className="text-espresso/50 bg-ivory">Выбрать имя</option>
+                            {guestList.map((guest) => (
+                              <option key={guest} value={guest} className="text-espresso bg-ivory">
                                 {guest}
                               </option>
                             ))}
@@ -1219,8 +1219,8 @@ export default function Home() {
                     <div className="mt-10">
                       <button 
                         type="submit" 
-                        disabled={isSubmitting || !selectedGuest || selectedGuest === guestList[0] || !course1 || !course2 || !course3}
-                        className={`rsvp-button w-full flex items-center justify-center gap-3 transition-opacity ${(isSubmitting || !selectedGuest || selectedGuest === guestList[0] || !course1 || !course2 || !course3) ? 'opacity-50 cursor-not-allowed hover:transform-none' : ''}`}
+                        disabled={isSubmitting || !selectedGuest || !course1 || !course2 || !course3}
+                        className={`rsvp-button w-full flex items-center justify-center gap-3 transition-opacity ${(isSubmitting || !selectedGuest || !course1 || !course2 || !course3) ? 'opacity-50 cursor-not-allowed hover:transform-none' : ''}`}
                       >
                         {isSubmitting ? (
                           <svg className="animate-spin h-5 w-5 text-ivory" viewBox="0 0 24 24" fill="none">
