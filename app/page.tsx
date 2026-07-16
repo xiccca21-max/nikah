@@ -900,7 +900,7 @@ export default function Home() {
             <Reveal delay={0.12}>
               <div className="mt-8 overflow-hidden rounded-[1.2rem] border border-champagne/30 h-64 w-full relative opacity-90 transition-opacity hover:opacity-100">
                 <iframe 
-                  src="https://maps.google.com/maps?q=Орловская+ул.,+209,+посёлок+Орловка,+Набережные+Челны&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                  src="https://maps.google.com/maps?q=Орловский+дворец,+Орловская+Центральная+ул.,+209,+Набережные+Челны&t=&z=15&ie=UTF8&iwloc=&output=embed" 
                   width="100%" 
                   height="100%" 
                   style={{ border: 0, filter: 'grayscale(1) sepia(0.3) hue-rotate(5deg) contrast(0.8) opacity(0.8)' }} 
@@ -920,7 +920,7 @@ export default function Home() {
             <Reveal delay={0.16}>
               <a
                 className="btn-sweep mt-8 inline-flex rounded-full border border-champagne/35 bg-champagne px-7 py-4 text-[0.68rem] font-bold uppercase tracking-[0.26em] text-ivory transition duration-1000 ease-in-out hover:bg-espresso relative"
-                href="https://www.google.com/maps/search/?api=1&query=%D0%9E%D1%80%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20%D1%83%D0%BB.%2C%20209%2C%20%D0%BF%D0%BE%D1%81%D1%91%D0%BB%D0%BE%D0%BA%20%D0%9E%D1%80%D0%BB%D0%BE%D0%B2%D0%BA%D0%B0%2C%20%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D1%8B%D0%B5%20%D0%A7%D0%B5%D0%BB%D0%BD%D1%8B"
+                href="https://www.google.com/maps/search/?api=1&query=%D0%9E%D1%80%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B4%D0%B2%D0%BE%D1%80%D0%B5%D1%86%2C%20%D0%9E%D1%80%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F%20%D1%83%D0%BB.%2C%20209%2C%20%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D1%8B%D0%B5%20%D0%A7%D0%B5%D0%BB%D0%BD%D1%8B"
                 target="_blank"
                 rel="noreferrer"
               >
