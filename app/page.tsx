@@ -1385,7 +1385,7 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {selectedGuest && course1 && course2 && course3 && !isSubmitting && (
+                    {selectedGuest && course1 && course2 && course3 && (
                         <div className="menu-summary mt-10 rounded-2xl border border-champagne/30 bg-ivory/90 p-5 relative overflow-hidden">
                           <div className="absolute inset-0 paper-grain opacity-20 pointer-events-none" />
                           <h4 className="font-display text-xl text-champagne mb-4 relative z-10 text-center">Ваше меню:</h4>
@@ -1403,25 +1403,22 @@ export default function Home() {
                               <span className="font-medium text-espresso">{course3.split(' с ')[0]}</span>
                             </li>
                           </ul>
+                          <button 
+                            type="submit" 
+                            disabled={isSubmitting}
+                            className={`rsvp-button relative z-10 mt-6 w-full flex items-center justify-center gap-3 transition-opacity ${isSubmitting ? 'opacity-70 cursor-not-allowed hover:transform-none' : ''}`}
+                          >
+                            {isSubmitting ? (
+                              <svg className="animate-spin h-5 w-5 text-ivory" viewBox="0 0 24 24" fill="none">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                              </svg>
+                            ) : (
+                              "Отправить"
+                            )}
+                          </button>
                         </div>
                     )}
-
-                    <div className="mt-10">
-                      <button 
-                        type="submit" 
-                        disabled={isSubmitting || !selectedGuest || !course1 || !course2 || !course3}
-                        className={`rsvp-button w-full flex items-center justify-center gap-3 transition-opacity ${(isSubmitting || !selectedGuest || !course1 || !course2 || !course3) ? 'opacity-50 cursor-not-allowed hover:transform-none' : ''}`}
-                      >
-                        {isSubmitting ? (
-                          <svg className="animate-spin h-5 w-5 text-ivory" viewBox="0 0 24 24" fill="none">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                        ) : (
-                          "Отправить"
-                        )}
-                      </button>
-                    </div>
                   </>
                 )}
               </form>
