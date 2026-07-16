@@ -148,23 +148,19 @@ function InteractiveRings() {
 
 function Preloader({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
-    const timer = setTimeout(onComplete, 3800);
+    const timer = setTimeout(onComplete, 3400);
     return () => clearTimeout(timer);
   }, [onComplete]);
 
   return (
-    <motion.div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-ivory rounded-b-[2rem] md:rounded-b-[4rem]"
-      initial={{ y: 0 }}
-      animate={{ y: "-100%" }}
-      transition={{ duration: 1.2, delay: 2.2, ease: [0.76, 0, 0.24, 1] }}
-      onAnimationComplete={onComplete}
+    <div
+      className="preloader-shell fixed inset-0 z-[9999] flex items-center justify-center bg-ivory rounded-b-[2rem] md:rounded-b-[4rem]"
     >
       <span className="preloader-monogram-fallback" aria-hidden="true">
         Д &amp; И
       </span>
       <svg width="400" height="200" viewBox="-50 -25 400 200" className="preloader-monogram-drawing text-champagne drop-shadow-sm overflow-visible" aria-label="Д и И">
-        <motion.text
+        <text
           x="150"
           y="50%"
           textAnchor="middle"
@@ -173,18 +169,12 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
           stroke="currentColor"
           strokeWidth="1.5"
           style={{ fontFamily: "var(--font-script)" }}
-          className="text-[4.5rem]"
-          initial={{ strokeDasharray: 3000, strokeDashoffset: 3000 }}
-          animate={{ strokeDashoffset: 0, fill: "var(--champagne)" }}
-          transition={{
-            strokeDashoffset: { duration: 2.2, ease: "easeInOut" },
-            fill: { duration: 0.8, delay: 1.5, ease: "easeIn" }
-          }}
+          className="preloader-monogram-stroke text-[4.5rem]"
         >
           Д & И
-        </motion.text>
+        </text>
       </svg>
-    </motion.div>
+    </div>
   );
 }
 
