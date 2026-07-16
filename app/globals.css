@@ -1079,8 +1079,7 @@ textarea {
 }
 
 .rsvp-modal-drawer {
-  transform: translate3d(100%, 0, 0);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translate3d(0, 0, 0);
 }
 
 .rsvp-modal:target,
@@ -1096,7 +1095,16 @@ textarea {
 
 .rsvp-modal:target .rsvp-modal-drawer,
 .rsvp-modal.is-open .rsvp-modal-drawer {
-  transform: translate3d(0, 0, 0);
+  animation: rsvpDrawerEnter 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes rsvpDrawerEnter {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 @media (max-width: 767px) {
