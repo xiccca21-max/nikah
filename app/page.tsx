@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Lenis from "lenis";
+import { guests, menuCourses } from "@/lib/invitation-data";
 
 const ceremony = {
   date: "08.08.2026",
@@ -56,24 +57,6 @@ const timeline = [
     )
   }
 ];
-
-const menuCourses = {
-  course1: ["Салат с Ростбифом", "Цезарь с креветкой"],
-  course2: ["Лапша по домашнему с треугольником", "Уха сливочная"],
-  course3: ["Стейк из говядины с брусничным соусом", "Стейк из сёмги с соусом сливочное песто"]
-};
-
-const guestList = [
-  "Фанис", "Ильсеяр", "Фэния Эби", "Равиль Бабай", "Тагир Бабай", "Ильнур",
-  "Венера", "Булат", "Аделина", "Ильмир", "Лилия", "Амин", "Наиля", "Раиль",
-  "Ришат", "Лейсан", "Равия апа", "Равиль абый", "Ильяс абый", "Карима апа",
-  "Миннальфат абый", "Хамайра апа", "Флюр абый", "Наиля апа", "Ильшат абый",
-  "Фирдэуса апа", "Люзия апа", "Дамир", "Руслан", "Амалия", "Газик", "Юля",
-  "Ангелина", "Булат", "Алина", "Тахир", "Кабан", "Голем", "Николай", "Юлия",
-  "Стас", "Егор", "Наташа тетя", "Данил", "Амалия", "Милана", "Ильнур",
-  "Лиана", "Дима", "Леон", "Ян", "Бабуля Красотуля", "Карина", "Андрей",
-  "Мама Карины", "Тетя Энже"
-].sort((a, b) => a.localeCompare(b, "ru", { sensitivity: "base" }));
 
 const dressItems = [
   "Классический закрытый образ",
@@ -446,8 +429,8 @@ function Section({
   className?: string;
 }) {
   return (
-    <section className={`relative z-10 px-5 py-16 md:px-8 md:py-24 ${className}`}>
-      <div className="mx-auto w-full max-w-[31rem] md:max-w-5xl">
+    <section className={`relative z-10 px-4 py-16 md:px-8 md:py-24 w-full ${className}`}>
+      <div className="mx-auto w-full min-w-0 max-w-[31rem] md:max-w-5xl">
         {eyebrow ? (
           <div className="mb-10 flex flex-col items-center">
             <Reveal>
@@ -665,13 +648,14 @@ export default function Home() {
   const [course3, setCourse3] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   
   const scheduleRef = useRef<HTMLDivElement>(null);
   const guestQuery = guestSearch.trim().toLocaleLowerCase("ru");
   const visibleGuestIndexes = new Set(
-    guestList
+    guests
       .map((guest, index) => ({ guest, index }))
-      .filter(({ guest }) => guest.toLocaleLowerCase("ru").startsWith(guestQuery))
+      .filter(({ guest }) => guest.name.toLocaleLowerCase("ru").startsWith(guestQuery))
       .slice(0, 5)
       .map(({ index }) => index)
   );
@@ -747,12 +731,13 @@ export default function Home() {
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
+      setIsConfirmModalOpen(false);
       vibrate();
     }, 1500);
   };
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-ivory font-sans text-espresso">
+    <main className="relative min-h-screen w-full overflow-hidden bg-ivory font-sans text-espresso">
       <script
         dangerouslySetInnerHTML={{
           __html: `(function(){if("scrollRestoration" in history){history.scrollRestoration="manual";}if(location.hash){history.replaceState(null,"",location.pathname+location.search);}function top(){window.scrollTo(0,0);document.documentElement.scrollTop=0;if(document.body){document.body.scrollTop=0;}}top();requestAnimationFrame(top);setTimeout(top,150);window.addEventListener("pageshow",top);if(!window.__nikahHorizontalLock){window.__nikahHorizontalLock=true;var startX=0,startY=0;document.addEventListener("touchstart",function(event){if(event.touches.length===1){startX=event.touches[0].clientX;startY=event.touches[0].clientY;}},{passive:true});document.addEventListener("touchmove",function(event){if(event.touches.length!==1)return;var dx=event.touches[0].clientX-startX;var dy=event.touches[0].clientY-startY;if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>4){event.preventDefault();}},{passive:false});}})();`
@@ -772,8 +757,11 @@ export default function Home() {
       <div className="vignette-overlay" />
       <div className="editorial-grid" />
       <div className="botanical-shadow" />
-      {isRsvpOpen && (
+      {isRsvpOpen && !isConfirmModalOpen && (
         <style dangerouslySetInnerHTML={{__html: `body { overflow: hidden; }`}} />
+      )}
+      {isConfirmModalOpen && (
+        <style dangerouslySetInnerHTML={{__html: `body { overflow: hidden !important; }`}} />
       )}
       <Watermark />
       <MagicDust />
@@ -782,8 +770,8 @@ export default function Home() {
       <div className="ambient-layer" />
       <div className="paper-grain" />
 
-      <section className="hero-section relative z-10 flex min-h-screen items-center px-5 py-10 text-center">
-        <div className="mx-auto w-full max-w-[31rem] md:max-w-4xl relative">
+      <section className="hero-section relative z-10 flex flex-col justify-center min-h-screen items-center px-4 py-10 text-center w-full">
+        <div className="mx-auto w-full min-w-0 max-w-[31rem] md:max-w-4xl relative">
           
           <motion.div
             initial={false}
@@ -1095,8 +1083,8 @@ export default function Home() {
         </Card>
       </Section>
 
-      <section className="relative z-10 flex min-h-screen items-center px-5 py-20 text-center">
-        <div className="mx-auto w-full max-w-[31rem] md:max-w-3xl">
+      <section className="relative z-10 flex flex-col justify-center min-h-screen items-center px-4 py-20 text-center w-full">
+        <div className="mx-auto w-full min-w-0 max-w-[31rem] md:max-w-3xl">
           <Card>
             <Reveal>
               <p className="section-label mb-8">С любовью</p>
@@ -1209,13 +1197,13 @@ export default function Home() {
                               name="guestName"
                               type="search"
                               autoComplete="off"
-                              placeholder="Выбрать имя"
+                              placeholder="Ввести имя"
                               value={guestSearch}
                               onFocus={() => setIsGuestPickerOpen(true)}
                               onChange={(event) => {
                                 const value = event.target.value;
                                 setGuestSearch(value);
-                                setSelectedGuest(guestList.includes(value) ? value : "");
+                                setSelectedGuest("");
                                 setIsGuestPickerOpen(true);
                               }}
                               className="field-input guest-search !mt-0 w-full text-center font-medium rounded-[1.8rem] !py-[1.15rem]"
@@ -1233,6 +1221,7 @@ export default function Home() {
                               tabIndex={-1}
                               className="sr-only"
                             />
+                            <input type="hidden" name="guestId" value={selectedGuest} />
                             <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-champagne/60">
                               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
                                 <circle cx="11" cy="11" r="7" />
@@ -1250,32 +1239,28 @@ export default function Home() {
                             role="listbox"
                             className={`guest-options ${isGuestPickerOpen && guestSearch.trim() && !selectedGuest ? "is-open" : ""}`}
                           >
-                            {guestList.map((guest, index) => (
+                            {guests.map((guest, index) => (
                               <button
-                                key={`${guest}-${index}`}
+                                key={guest.id}
                                 type="button"
                                 role="option"
-                                data-guest={guest}
+                                data-guest={guest.name}
+                                data-guest-id={guest.id}
                                 hidden={!visibleGuestIndexes.has(index)}
-                                aria-selected={selectedGuest === guest}
+                                aria-selected={selectedGuest === guest.id}
                                 className="guest-option"
                                 onPointerDown={(event) => {
                                   event.preventDefault();
-                                  setGuestSearch(guest);
-                                  setSelectedGuest(guest);
+                                  setGuestSearch(guest.name);
+                                  setSelectedGuest(guest.id);
                                   setIsGuestPickerOpen(false);
                                 }}
                               >
-                                {guest}
+                                {guest.name}
                               </button>
                             ))}
                             <p className="guest-empty" hidden={visibleGuestIndexes.size > 0}>Имя не найдено</p>
                           </div>
-                          <script
-                            dangerouslySetInnerHTML={{
-                              __html: `(function(){var picker=document.getElementById("guest-picker");if(!picker||picker.getAttribute("data-native-ready")==="1")return;picker.setAttribute("data-native-ready","1");var input=document.getElementById("guest-search");var selected=picker.querySelector('input[name="guestSelected"]');var options=document.getElementById("guest-options");var buttons=options?options.querySelectorAll("[data-guest]"):[];function filter(){var query=(input.value||"").trim().toLocaleLowerCase("ru");var shown=0;options.classList.toggle("has-query",query.length>0&&!selected.checked);for(var i=0;i<buttons.length;i++){var match=query.length>0&&buttons[i].getAttribute("data-guest").toLocaleLowerCase("ru").indexOf(query)===0&&shown<5;buttons[i].hidden=!match;if(match)shown++;}var empty=options.querySelector(".guest-empty");if(empty)empty.hidden=query.length===0||shown>0;}function choose(button){var value=button.getAttribute("data-guest");var setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,"value").set;setter.call(input,value);input.dispatchEvent(new Event("input",{bubbles:true}));input.dispatchEvent(new Event("change",{bubbles:true}));selected.checked=true;options.classList.remove("has-query");input.blur();}input.addEventListener("focus",filter);input.addEventListener("blur",function(){options.classList.remove("has-query");});input.addEventListener("input",function(){selected.checked=false;filter();});if(options){options.addEventListener("pointerdown",function(event){var button=event.target.closest("[data-guest]");if(button){event.preventDefault();choose(button);}});}filter();})();`
-                            }}
-                          />
                         </div>
                       </div>
                     </div>
@@ -1386,39 +1371,75 @@ export default function Home() {
                     </div>
 
                     {selectedGuest && course1 && course2 && course3 && (
-                        <div className="menu-summary mt-10 rounded-2xl border border-champagne/30 bg-ivory/90 p-5 relative overflow-hidden">
-                          <div className="absolute inset-0 paper-grain opacity-20 pointer-events-none" />
-                          <h4 className="font-display text-xl text-champagne mb-4 relative z-10 text-center">Ваше меню:</h4>
-                          <ul className="text-left text-[0.8rem] space-y-2 text-espresso/70 relative z-10">
-                            <li className="flex justify-between items-center border-b border-champagne/10 pb-1">
-                              <span className="opacity-60">Салат</span>
-                              <span className="font-medium text-right text-espresso">{course1}</span>
-                            </li>
-                            <li className="flex justify-between items-center border-b border-champagne/10 pb-1">
-                              <span className="opacity-60">Суп</span>
-                              <span className="font-medium text-espresso">{course2.split(' с ')[0]}</span>
-                            </li>
-                            <li className="flex justify-between items-center border-b border-champagne/10 pb-1">
-                              <span className="opacity-60">Горячее</span>
-                              <span className="font-medium text-espresso">{course3.split(' с ')[0]}</span>
-                            </li>
-                          </ul>
-                          <button 
-                            type="submit" 
-                            disabled={isSubmitting}
-                            className={`rsvp-button relative z-10 mt-6 w-full flex items-center justify-center gap-3 transition-opacity ${isSubmitting ? 'opacity-70 cursor-not-allowed hover:transform-none' : ''}`}
-                          >
-                            {isSubmitting ? (
-                              <svg className="animate-spin h-5 w-5 text-ivory" viewBox="0 0 24 24" fill="none">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                              </svg>
-                            ) : (
-                              "Отправить"
-                            )}
-                          </button>
-                        </div>
+                      <button
+                        type="button"
+                        onClick={() => setIsConfirmModalOpen(true)}
+                        className="rsvp-button relative z-10 mt-10 w-full flex items-center justify-center gap-3"
+                      >
+                        Продолжить
+                      </button>
                     )}
+
+                    <AnimatePresence>
+                      {isConfirmModalOpen && (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          className="fixed inset-0 z-[100] flex items-center justify-center px-4 bg-espresso/40 backdrop-blur-md"
+                        >
+                          <motion.div
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            className="w-full max-w-sm rounded-[2rem] border border-champagne/30 bg-ivory/95 p-8 relative overflow-hidden shadow-2xl"
+                          >
+                            <div className="absolute inset-0 paper-grain opacity-20 pointer-events-none" />
+                            <h4 className="font-display text-2xl text-champagne mb-6 relative z-10 text-center">
+                              Ваше меню, {guests.find(g => g.id === selectedGuest)?.name.split(' ')[0]}
+                            </h4>
+                            <ul className="text-left text-[0.85rem] space-y-3 text-espresso/80 relative z-10 mb-8">
+                              <li className="flex justify-between items-center border-b border-champagne/10 pb-2">
+                                <span className="opacity-60">Салат</span>
+                                <span className="font-medium text-right text-espresso">{course1}</span>
+                              </li>
+                              <li className="flex justify-between items-center border-b border-champagne/10 pb-2">
+                                <span className="opacity-60">Суп</span>
+                                <span className="font-medium text-espresso">{course2.split(' с ')[0]}</span>
+                              </li>
+                              <li className="flex justify-between items-center border-b border-champagne/10 pb-2">
+                                <span className="opacity-60">Горячее</span>
+                                <span className="font-medium text-espresso">{course3.split(' с ')[0]}</span>
+                              </li>
+                            </ul>
+                            <div className="flex flex-col gap-3 relative z-10">
+                              <button 
+                                type="submit" 
+                                disabled={isSubmitting}
+                                className={`rsvp-button w-full flex items-center justify-center gap-3 transition-opacity ${isSubmitting ? 'opacity-70 cursor-not-allowed hover:transform-none' : ''}`}
+                              >
+                                {isSubmitting ? (
+                                  <svg className="animate-spin h-5 w-5 text-ivory" viewBox="0 0 24 24" fill="none">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                  </svg>
+                                ) : (
+                                  "Отправить"
+                                )}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setIsConfirmModalOpen(false)}
+                                disabled={isSubmitting}
+                                className="w-full py-3.5 rounded-full border border-champagne/50 text-champagne font-medium tracking-widest uppercase text-xs transition-colors hover:bg-champagne/10"
+                              >
+                                Изменить
+                              </button>
+                            </div>
+                          </motion.div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </>
                 )}
               </form>
