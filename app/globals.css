@@ -410,6 +410,16 @@ textarea {
   line-height: 1;
 }
 
+.timer-colon {
+  animation: timerColonPulse 2s ease-in-out infinite;
+}
+
+@keyframes timerColonPulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
 .image-frame {
   min-height: 26rem;
   height: 100%;
@@ -556,7 +566,7 @@ textarea {
   transition: background-color 120ms ease-out;
 }
 
-.rsvp-form:has(select:valid) .rsvp-step-1,
+.rsvp-form:has(input[name="guestSelected"]:checked) .rsvp-step-1,
 .rsvp-form:has(input[name="course1"]:checked) .rsvp-step-2,
 .rsvp-form:has(input[name="course2"]:checked) .rsvp-step-3,
 .rsvp-form:has(input[name="course3"]:checked) .rsvp-step-4 {
@@ -568,6 +578,66 @@ textarea {
 .rsvp-form:has(input[name="course2"]:checked) .rsvp-step-line-2,
 .rsvp-form:has(input[name="course3"]:checked) .rsvp-step-line-3 {
   background: linear-gradient(90deg, rgba(169, 133, 77, 0.45), var(--champagne));
+}
+
+.guest-search {
+  padding-inline: 3rem;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.guest-search::-webkit-search-cancel-button {
+  display: none;
+}
+
+.guest-options {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(169, 133, 77, 0.25);
+  border-radius: 1.25rem;
+  background: rgba(251, 247, 239, 0.98);
+  box-shadow: 0 14px 34px rgba(31, 24, 20, 0.12);
+  animation: guestOptionsEnter 140ms ease-out both;
+}
+
+.guest-option {
+  display: block;
+  width: 100%;
+  height: 2.85rem;
+  border-bottom: 1px solid rgba(169, 133, 77, 0.12);
+  color: rgba(31, 24, 20, 0.76);
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  transition: background-color 100ms ease-out, color 100ms ease-out;
+}
+
+.guest-option:last-child {
+  border-bottom: 0;
+}
+
+.guest-option:hover,
+.guest-option[aria-selected="true"] {
+  background: rgba(169, 133, 77, 0.1);
+  color: var(--champagne);
+}
+
+.guest-empty {
+  padding: 1rem;
+  color: rgba(31, 24, 20, 0.48);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+@keyframes guestOptionsEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
 }
 
 .timeline-title {

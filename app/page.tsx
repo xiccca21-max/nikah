@@ -64,12 +64,16 @@ const menuCourses = {
 };
 
 const guestList = [
-  "Алина и Руслан",
-  "Тимур",
-  "Эльвира",
-  "Марат и Гульназ",
-  "Камилла"
-];
+  "Фанис", "Ильсеяр", "Фэния Эби", "Равиль Бабай", "Тагир Бабай", "Ильнур",
+  "Венера", "Булат", "Аделина", "Ильмир", "Лилия", "Амин", "Наиля", "Раиль",
+  "Ришат", "Лейсан", "Равия апа", "Равиль абый", "Ильяс абый", "Карима апа",
+  "Миннальфат абый", "Хамайра апа", "Флюр абый", "Наиля апа", "Ильшат абый",
+  "Фирдэуса апа", "Люзия апа", "Дамир", "Руслан", "Амалия", "Газик", "Юля",
+  "Ангелина", "Булат", "Алина", "Тахир", "Кабан", "Голем", "Николай", "Юлия",
+  "Стас", "Егор", "Наташа тетя", "Данил", "Амалия", "Милана", "Ильнур",
+  "Лиана", "Дима", "Леон", "Ян", "Бабуля Красотуля", "Карина", "Андрей",
+  "Мама Карины", "Тетя Энже"
+].sort((a, b) => a.localeCompare(b, "ru", { sensitivity: "base" }));
 
 const dressItems = [
   "Классический закрытый образ",
@@ -160,28 +164,39 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
   );
 }
 
+const eventTimestamp = Date.UTC(2026, 7, 8, 7, 30, 0);
+
+function getTimeLeft() {
+  const diff = Math.max(0, eventTimestamp - Date.now());
+  return {
+    days: Math.floor(diff / 86_400_000),
+    hours: Math.floor((diff / 3_600_000) % 24),
+    minutes: Math.floor((diff / 60_000) % 60),
+    seconds: Math.floor((diff / 1_000) % 60),
+  };
+}
+
 function Countdown() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    const target = new Date("2026-08-08T10:30:00").getTime();
-    
+    let timerId: ReturnType<typeof setTimeout>;
+
     const updateTimer = () => {
-      const now = new Date().getTime();
-      const diff = target - now;
-      if (diff > 0) {
-        setTimeLeft({
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((diff / 1000 / 60) % 60),
-          seconds: Math.floor((diff / 1000) % 60),
-        });
-      }
+      setTimeLeft(getTimeLeft());
+      timerId = setTimeout(updateTimer, 1000 - (Date.now() % 1000) + 20);
     };
 
+    const refreshTimer = () => setTimeLeft(getTimeLeft());
     updateTimer();
-    const interval = setInterval(updateTimer, 1000);
-    return () => clearInterval(interval);
+    window.addEventListener("pageshow", refreshTimer);
+    document.addEventListener("visibilitychange", refreshTimer);
+
+    return () => {
+      clearTimeout(timerId);
+      window.removeEventListener("pageshow", refreshTimer);
+      document.removeEventListener("visibilitychange", refreshTimer);
+    };
   }, []);
 
   return (
@@ -197,13 +212,9 @@ function Countdown() {
             </span>
           </div>
           {idx < arr.length - 1 && (
-            <motion.div 
-              animate={{ opacity: [1, 0.3, 1] }} 
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="text-2xl md:text-3xl text-champagne/60 pb-5"
-            >
+            <div className="timer-colon text-2xl md:text-3xl text-champagne/60 pb-5">
               :
-            </motion.div>
+            </div>
           )}
         </React.Fragment>
       ))}
@@ -630,6 +641,8 @@ export default function Home() {
   const [isPreloaderDone, setIsPreloaderDone] = useState(false);
   const [isRsvpOpen, setIsRsvpOpen] = useState(false);
   const [selectedGuest, setSelectedGuest] = useState("");
+  const [guestSearch, setGuestSearch] = useState("");
+  const [isGuestPickerOpen, setIsGuestPickerOpen] = useState(false);
   const [course1, setCourse1] = useState("");
   const [course2, setCourse2] = useState("");
   const [course3, setCourse3] = useState("");
@@ -637,6 +650,9 @@ export default function Home() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   
   const scheduleRef = useRef<HTMLDivElement>(null);
+  const visibleGuests = guestList
+    .filter((guest) => guest.toLocaleLowerCase("ru").includes(guestSearch.trim().toLocaleLowerCase("ru")))
+    .slice(0, 5);
   
   // Безопасный таймер для мобилок на случай, если прелоудер зависнет
   useEffect(() => {
@@ -1126,30 +1142,75 @@ export default function Home() {
                     <h2 className="heading mb-8 text-3xl shimmer-espresso">Ждем вас</h2>
                     
                     <div className="grid gap-6">
-                      <label className="field-label">
-                        Ваше имя
+                      <div className="field-label">
+                        <label htmlFor="guest-search">Ваше имя</label>
                         <p className="mt-2 mb-3 text-[0.6rem] normal-case tracking-normal text-espresso/40">Обязательно выберите свое имя из списка, чтобы мы ничего не перепутали.</p>
-                        <div className="relative">
-                          <select 
-                            className="field-input appearance-none bg-transparent w-full text-center font-medium shadow-sm transition-all hover:shadow-md cursor-pointer rounded-[1.8rem] !py-[1.15rem]"
-                            value={selectedGuest}
-                            onChange={(e) => setSelectedGuest(e.target.value)}
+                        <div
+                          className="guest-picker relative"
+                          onBlur={(event) => {
+                            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                              setIsGuestPickerOpen(false);
+                            }
+                          }}
+                        >
+                          <input
+                            id="guest-search"
+                            name="guestName"
+                            type="search"
+                            autoComplete="off"
+                            placeholder="Выбрать имя"
+                            value={guestSearch}
+                            onFocus={() => setIsGuestPickerOpen(true)}
+                            onChange={(event) => {
+                              setGuestSearch(event.target.value);
+                              setSelectedGuest("");
+                              setIsGuestPickerOpen(true);
+                            }}
+                            className="field-input guest-search w-full text-center font-medium rounded-[1.8rem] !py-[1.15rem]"
+                            aria-label="Поиск имени в списке гостей"
+                            aria-expanded={isGuestPickerOpen}
+                            aria-controls="guest-options"
                             required
-                          >
-                            <option value="" disabled className="text-espresso/50 bg-ivory">Выбрать имя</option>
-                            {guestList.map((guest) => (
-                              <option key={guest} value={guest} className="text-espresso bg-ivory">
-                                {guest}
-                              </option>
-                            ))}
-                          </select>
-                          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-espresso/40">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                              <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                          />
+                          <input
+                            type="checkbox"
+                            name="guestSelected"
+                            checked={Boolean(selectedGuest)}
+                            readOnly
+                            tabIndex={-1}
+                            className="sr-only"
+                          />
+                          <div className="absolute left-5 top-1/2 -translate-y-1/2 pointer-events-none text-champagne/60">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                              <circle cx="11" cy="11" r="7" />
+                              <path d="m16.5 16.5 4 4" strokeLinecap="round" />
                             </svg>
                           </div>
+                          {isGuestPickerOpen && (
+                            <div id="guest-options" role="listbox" className="guest-options">
+                              {visibleGuests.length > 0 ? visibleGuests.map((guest, index) => (
+                                <button
+                                  key={`${guest}-${index}`}
+                                  type="button"
+                                  role="option"
+                                  aria-selected={selectedGuest === guest}
+                                  className="guest-option"
+                                  onPointerDown={(event) => {
+                                    event.preventDefault();
+                                    setGuestSearch(guest);
+                                    setSelectedGuest(guest);
+                                    setIsGuestPickerOpen(false);
+                                  }}
+                                >
+                                  {guest}
+                                </button>
+                              )) : (
+                                <p className="guest-empty">Имя не найдено</p>
+                              )}
+                            </div>
+                          )}
                         </div>
-                      </label>
+                      </div>
                     </div>
 
                     <div className="mt-10">
