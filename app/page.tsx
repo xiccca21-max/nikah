@@ -1194,9 +1194,9 @@ export default function Home() {
                     <div className="mt-10">
                       <div className="flex flex-col items-center justify-center gap-2 mb-6">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="text-champagne/70">
-                          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" strokeDasharray="2 2" />
-                          <path d="M8 12C8 12 9.5 9 12 9C14.5 9 16 12 16 12C16 12 14.5 15 12 15C9.5 15 8 12 8 12Z" />
-                          <path d="M12 9V5" />
+                          <path d="M3 12 C3 17 7 20 12 20 C17 20 21 17 21 12 Z" />
+                          <path d="M6 12 C5 7 9 4 11 8 C11 5 15 5 16 8 C18 6 20 9 18 12" />
+                          <circle cx="12" cy="7" r="1.5" />
                         </svg>
                         <div className="flex items-center gap-3">
                           <div className="h-px w-8 bg-gradient-to-r from-transparent to-champagne/40" />
@@ -1232,10 +1232,11 @@ export default function Home() {
                     <div className="mt-10">
                       <div className="flex flex-col items-center justify-center gap-2 mb-6">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="text-champagne/70">
-                          <path d="M4 10C4 10 7 14 12 14C17 14 20 10 20 10" />
-                          <path d="M2 12L4 10M22 12L20 10" />
-                          <path d="M7 6Q8 4 9 6T11 4" strokeDasharray="1 2" />
-                          <path d="M13 6Q14 4 15 6T17 4" strokeDasharray="1 2" />
+                          <path d="M3 13 C3 17 7 20 12 20 C17 20 21 17 21 13 Z" />
+                          <path d="M1 13 L23 13" />
+                          <path d="M8 9 Q 10 6 8 3" />
+                          <path d="M12 10 Q 14 6 12 3" />
+                          <path d="M16 9 Q 18 6 16 3" />
                         </svg>
                         <div className="flex items-center gap-3">
                           <div className="h-px w-8 bg-gradient-to-r from-transparent to-champagne/40" />
