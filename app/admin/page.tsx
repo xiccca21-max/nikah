@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { createClient, type Session } from "@supabase/supabase-js";
+import { menuCourses } from "@/lib/invitation-data";
 
 type GuestResponse = {
   id: string;
@@ -13,14 +14,23 @@ type GuestResponse = {
   updated_at: string;
 };
 
+type GuestDraft = {
+  course1: string;
+  course2: string;
+  course3: string;
+};
+
 export default function AdminPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [session, setSession] = useState<Session | null>(null);
   const [responses, setResponses] = useState<GuestResponse[]>([]);
+  const [drafts, setDrafts] = useState<Record<string, GuestDraft>>({});
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [savingId, setSavingId] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const supabase = useMemo(() => {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -30,6 +40,18 @@ export default function AdminPage() {
 
     return url && key ? createClient(url, key) : null;
   }, []);
+
+  const syncDrafts = (data: GuestResponse[]) => {
+    const nextDrafts: Record<string, GuestDraft> = {};
+    for (const guest of data) {
+      nextDrafts[guest.id] = {
+        course1: guest.course_1 ?? "",
+        course2: guest.course_2 ?? "",
+        course3: guest.course_3 ?? ""
+      };
+    }
+    setDrafts(nextDrafts);
+  };
 
   const loadResponses = async (accessToken: string) => {
     setIsLoading(true);
@@ -49,6 +71,7 @@ export default function AdminPage() {
       }
 
       setResponses(data);
+      syncDrafts(data);
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : "Неизвестная ошибка");
     } finally {
@@ -103,12 +126,30 @@ export default function AdminPage() {
     await supabase?.auth.signOut();
     setSession(null);
     setResponses([]);
+    setDrafts({});
   };
 
   const filteredResponses = responses.filter((guest) =>
     guest.name.toLocaleLowerCase("ru").includes(query.trim().toLocaleLowerCase("ru"))
   );
   const answeredCount = responses.filter((guest) => guest.responded_at).length;
+
+  const updateDraft = (
+    guestId: string,
+    field: keyof GuestDraft,
+    value: string
+  ) => {
+    setDrafts((prev) => ({
+      ...prev,
+      [guestId]: {
+        course1: prev[guestId]?.course1 ?? "",
+        course2: prev[guestId]?.course2 ?? "",
+        course3: prev[guestId]?.course3 ?? "",
+        [field]: value
+      }
+    }));
+    setSuccess("");
+  };
 
   const exportCsv = () => {
     const escape = (value: string | null) =>
@@ -134,14 +175,57 @@ export default function AdminPage() {
     URL.revokeObjectURL(url);
   };
 
+  const saveGuestMenu = async (guestId: string) => {
+    if (!session) return;
+
+    const draft = drafts[guestId];
+    if (!draft?.course1 || !draft?.course2 || !draft?.course3) {
+      setError("Выберите салат, суп и горячее");
+      return;
+    }
+
+    setSavingId(guestId);
+    setError("");
+    setSuccess("");
+
+    try {
+      const response = await fetch("/api/admin/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`
+        },
+        body: JSON.stringify({
+          guestId,
+          course1: draft.course1,
+          course2: draft.course2,
+          course3: draft.course3
+        })
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error ?? "Не удалось сохранить меню");
+      }
+
+      setSuccess("Меню сохранено");
+      await loadResponses(session.access_token);
+    } catch (saveError) {
+      setError(saveError instanceof Error ? saveError.message : "Не удалось сохранить меню");
+    } finally {
+      setSavingId(null);
+    }
+  };
+
   const annulGuest = async (guestId: string) => {
     if (!session) return;
 
     const ok = window.confirm("Аннулировать заказ для тестов? Статус снова станет 'Не отвечал'.");
     if (!ok) return;
 
-    setIsLoading(true);
+    setSavingId(guestId);
     setError("");
+    setSuccess("");
     try {
       const response = await fetch("/api/admin/cancel", {
         method: "POST",
@@ -157,10 +241,12 @@ export default function AdminPage() {
         throw new Error(data.error ?? "Не удалось аннулировать заказ");
       }
 
+      setSuccess("Заказ аннулирован");
       await loadResponses(session.access_token);
     } catch (annulError) {
       setError(annulError instanceof Error ? annulError.message : "Не удалось аннулировать заказ");
-      setIsLoading(false);
+    } finally {
+      setSavingId(null);
     }
   };
 
@@ -258,9 +344,10 @@ export default function AdminPage() {
         />
 
         {error && <p className="mb-5 rounded-xl bg-red-50 p-4 text-sm text-red-700">{error}</p>}
+        {success && <p className="mb-5 rounded-xl bg-green-50 p-4 text-sm text-green-700">{success}</p>}
 
         <div className="overflow-x-auto rounded-2xl border border-champagne/20 bg-white/65 shadow-soft">
-          <table className="w-full min-w-[900px] border-collapse text-left text-sm">
+          <table className="w-full min-w-[1100px] border-collapse text-left text-sm">
             <thead className="bg-espresso text-ivory">
               <tr>
                 <th className="px-5 py-4">Имя</th>
@@ -279,36 +366,94 @@ export default function AdminPage() {
                   </td>
                 </tr>
               ) : (
-                filteredResponses.map((guest) => (
-                  <tr key={guest.id} className="border-t border-champagne/15">
-                    <td className="px-5 py-4 font-semibold">{guest.name}</td>
-                    <td className="px-5 py-4">{guest.responded_at ? guest.course_1 ?? "—" : "—"}</td>
-                    <td className="px-5 py-4">{guest.responded_at ? guest.course_2 ?? "—" : "—"}</td>
-                    <td className="px-5 py-4">{guest.responded_at ? guest.course_3 ?? "—" : "—"}</td>
-                    <td className="px-5 py-4">
-                      {guest.responded_at ? (
-                        <span className="text-green-700">
-                          {new Date(guest.responded_at).toLocaleString("ru-RU")}
-                        </span>
-                      ) : (
-                        <span className="text-espresso/35">Не отвечал</span>
-                      )}
-                    </td>
-                    <td className="px-5 py-4">
-                      {guest.responded_at ? (
-                        <button
-                          type="button"
-                          onClick={() => annulGuest(guest.id)}
-                          className="rounded-full border border-champagne/40 px-4 py-2 text-xs font-bold uppercase tracking-wider text-espresso transition-colors hover:bg-champagne/10"
+                filteredResponses.map((guest) => {
+                  const draft = drafts[guest.id] ?? {
+                    course1: "",
+                    course2: "",
+                    course3: ""
+                  };
+                  const isBusy = savingId === guest.id;
+                  const canSave = Boolean(draft.course1 && draft.course2 && draft.course3);
+
+                  return (
+                    <tr key={guest.id} className="border-t border-champagne/15 align-top">
+                      <td className="px-5 py-4 font-semibold">{guest.name}</td>
+                      <td className="px-5 py-4">
+                        <select
+                          value={draft.course1}
+                          onChange={(event) => updateDraft(guest.id, "course1", event.target.value)}
+                          className="w-full min-w-[180px] rounded-xl border border-champagne/25 bg-white px-3 py-2 outline-none focus:border-champagne"
                         >
-                          Аннулировать
-                        </button>
-                      ) : (
-                        <span className="text-espresso/35 text-xs">—</span>
-                      )}
-                    </td>
-                  </tr>
-                ))
+                          <option value="">Не выбрано</option>
+                          {menuCourses.course1.map((item) => (
+                            <option key={item} value={item}>
+                              {item}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                      <td className="px-5 py-4">
+                        <select
+                          value={draft.course2}
+                          onChange={(event) => updateDraft(guest.id, "course2", event.target.value)}
+                          className="w-full min-w-[180px] rounded-xl border border-champagne/25 bg-white px-3 py-2 outline-none focus:border-champagne"
+                        >
+                          <option value="">Не выбрано</option>
+                          {menuCourses.course2.map((item) => (
+                            <option key={item} value={item}>
+                              {item}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                      <td className="px-5 py-4">
+                        <select
+                          value={draft.course3}
+                          onChange={(event) => updateDraft(guest.id, "course3", event.target.value)}
+                          className="w-full min-w-[180px] rounded-xl border border-champagne/25 bg-white px-3 py-2 outline-none focus:border-champagne"
+                        >
+                          <option value="">Не выбрано</option>
+                          {menuCourses.course3.map((item) => (
+                            <option key={item} value={item}>
+                              {item}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                      <td className="px-5 py-4">
+                        {guest.responded_at ? (
+                          <span className="text-green-700">
+                            {new Date(guest.responded_at).toLocaleString("ru-RU")}
+                          </span>
+                        ) : (
+                          <span className="text-espresso/35">Не отвечал</span>
+                        )}
+                      </td>
+                      <td className="px-5 py-4">
+                        <div className="flex flex-col gap-2">
+                          <button
+                            type="button"
+                            onClick={() => saveGuestMenu(guest.id)}
+                            disabled={!canSave || isBusy}
+                            className="rounded-full bg-espresso px-4 py-2 text-xs font-bold uppercase tracking-wider text-white disabled:opacity-40"
+                          >
+                            {isBusy ? "Сохранение..." : guest.responded_at ? "Изменить" : "Добавить"}
+                          </button>
+                          {guest.responded_at && (
+                            <button
+                              type="button"
+                              onClick={() => annulGuest(guest.id)}
+                              disabled={isBusy}
+                              className="rounded-full border border-champagne/40 px-4 py-2 text-xs font-bold uppercase tracking-wider text-espresso transition-colors hover:bg-champagne/10 disabled:opacity-40"
+                            >
+                              Аннулировать
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </table>
