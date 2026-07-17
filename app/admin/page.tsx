@@ -26,6 +26,8 @@ export default function AdminPage() {
   const [session, setSession] = useState<Session | null>(null);
   const [responses, setResponses] = useState<GuestResponse[]>([]);
   const [query, setQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<"all" | "answered" | "pending">("all");
+  const [sortOrder, setSortOrder] = useState<"answered-first" | "pending-first">("answered-first");
   const [isLoading, setIsLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState<GuestDraft>({
@@ -121,9 +123,27 @@ export default function AdminPage() {
     setEditingId(null);
   };
 
-  const filteredResponses = responses.filter((guest) =>
-    guest.name.toLocaleLowerCase("ru").includes(query.trim().toLocaleLowerCase("ru"))
-  );
+  const filteredResponses = responses
+    .filter((guest) => {
+      const matchesQuery = guest.name
+        .toLocaleLowerCase("ru")
+        .includes(query.trim().toLocaleLowerCase("ru"));
+      if (!matchesQuery) return false;
+      if (statusFilter === "answered") return Boolean(guest.responded_at);
+      if (statusFilter === "pending") return !guest.responded_at;
+      return true;
+    })
+    .sort((a, b) => {
+      const aAnswered = Boolean(a.responded_at);
+      const bAnswered = Boolean(b.responded_at);
+      if (aAnswered === bAnswered) {
+        return a.name.localeCompare(b.name, "ru", { sensitivity: "base" });
+      }
+      if (sortOrder === "answered-first") {
+        return aAnswered ? -1 : 1;
+      }
+      return aAnswered ? 1 : -1;
+    });
   const answeredCount = responses.filter((guest) => guest.responded_at).length;
 
   const startEditing = (guest: GuestResponse) => {
@@ -329,13 +349,61 @@ export default function AdminPage() {
           </div>
         </header>
 
-        <input
-          type="search"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Поиск по имени"
-          className="mb-5 w-full max-w-md rounded-xl border border-champagne/25 bg-white/70 px-4 py-3 outline-none focus:border-champagne"
-        />
+        <div className="mb-5 flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center">
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Поиск по имени"
+            className="w-full max-w-md rounded-xl border border-champagne/25 bg-white/70 px-4 py-3 outline-none focus:border-champagne"
+          />
+          <div className="flex flex-wrap gap-2">
+            {(
+              [
+                { id: "all", label: "Все" },
+                { id: "answered", label: "С выбором" },
+                { id: "pending", label: "Без выбора" }
+              ] as const
+            ).map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                onClick={() => setStatusFilter(option.id)}
+                className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
+                  statusFilter === option.id
+                    ? "bg-espresso text-ivory"
+                    : "border border-champagne/40 text-espresso hover:bg-champagne/10"
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => setSortOrder("answered-first")}
+              className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
+                sortOrder === "answered-first"
+                  ? "bg-champagne text-white"
+                  : "border border-champagne/40 text-espresso hover:bg-champagne/10"
+              }`}
+            >
+              Сначала с выбором
+            </button>
+            <button
+              type="button"
+              onClick={() => setSortOrder("pending-first")}
+              className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
+                sortOrder === "pending-first"
+                  ? "bg-champagne text-white"
+                  : "border border-champagne/40 text-espresso hover:bg-champagne/10"
+              }`}
+            >
+              Сначала без выбора
+            </button>
+          </div>
+        </div>
 
         {error && <p className="mb-5 rounded-xl bg-red-50 p-4 text-sm text-red-700">{error}</p>}
         {success && <p className="mb-5 rounded-xl bg-green-50 p-4 text-sm text-green-700">{success}</p>}
